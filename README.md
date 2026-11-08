@@ -237,8 +237,9 @@ CI runs syntax checks, tests and npm archive checks on Node 22.19, 24 and 26.
 A separate job tests Pi 1.5.0 and loads the packed `index.ts` through Pi's extension
 loader. Host modules are peer dependencies supplied by Pi, never bundled copies.
 
-Tags such as `v0.5.2` trigger the same checks, npm publishing through OIDC, and a
-GitHub Release. See [release setup and instructions](docs/RELEASING.md).
+Tags such as `v0.5.3` trigger the same checks and a GitHub Release, without requiring
+npm publication. npm publishing through OIDC is an optional manual workflow step.
+See [release setup and instructions](docs/RELEASING.md).
 
 ## License
 

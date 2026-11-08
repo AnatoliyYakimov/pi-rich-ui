@@ -2,6 +2,9 @@
 
 ## [0.5.3] - 2026-11-08
 
+- Create GitHub Releases without requiring npm publication; npm publishing is now
+  an explicit manual opt-in after the existing release checks pass.
+
 - Preserve Rich UI model guidance when an earlier extension (such as pi-memory)
   replaces the complete system prompt. Keep structured injection for ordinary prompts.
 - Test the packed extension's model guidance through Pi's real event runner and prompt
