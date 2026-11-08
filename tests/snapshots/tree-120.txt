@@ -1,0 +1,14 @@
+orders-service · example
+├─ src/main/kotlin
+│  ├─ domain
+│  │  ├─ Order.kt
+│  │  │  Aggregate, invariants
+│  │  └─ OrderRepository.kt
+│  ├─ application
+│  │  └─ PlaceOrder.kt
+│  │     Transaction boundary
+│  └─ infrastructure
+│     ├─ PostgresOrderRepository.kt
+│     └─ OutboxRelay.kt
+│        Idempotent delivery required
+└─ ▸ tests · 2 hidden

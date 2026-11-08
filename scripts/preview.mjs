@@ -1,0 +1,11 @@
+import { readFileSync } from 'node:fs';
+import { renderDocument } from '../lib/render.mjs';
+import { detectColorMode } from '../lib/theme.mjs';
+const args=process.argv.slice(2),arg=(flag,fallback)=>{const i=args.indexOf(flag);return i>=0?args[i+1]:fallback;};
+const xml=readFileSync(arg('--file',new URL('../examples/demo.xml',import.meta.url)),'utf8');
+const width=Number(arg('--width',process.stdout.columns||96));
+if(!Number.isInteger(width)||width<1||width>240)throw Error('--width must be 1..240');
+if(args.includes('--svg'))throw Error('SVG/PNG output is disabled in v0.4');
+const mode=args.includes('--plain')?'none':detectColorMode({...process.env,PI_RICH_UI_COLORS:arg('--colors',process.env.PI_RICH_UI_COLORS)});
+const surface=renderDocument(xml,width,{monochrome:mode==='none'}),appearance=args.includes('--light')?'light':'dark';
+process.stdout.write(surface.ansi({appearance,colors:mode!=='none',colorMode:mode}).join('\n')+'\n');

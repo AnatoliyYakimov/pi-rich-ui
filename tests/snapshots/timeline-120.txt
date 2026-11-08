@@ -1,0 +1,4 @@
+Migration plan · illustrative statuses
+✓ 1. Prepare [done]                    → ▶ 2. Shadow [active]                   → ! 3. Cut over [blocked]
+Schema and outbox table                  Compare deliveries without side          Await reconciliation results
+                                         effects

@@ -1,0 +1,25 @@
+{
+  "node": "v22.16.0",
+  "platform": "linux",
+  "benchmark": "cached parse + layout + ANSI; synthetic, not live Pi",
+  "results": [
+    {
+      "width": 40,
+      "runs": 100,
+      "medianMs": 5.575,
+      "p95Ms": 7.344
+    },
+    {
+      "width": 80,
+      "runs": 100,
+      "medianMs": 6.439,
+      "p95Ms": 13.445
+    },
+    {
+      "width": 120,
+      "runs": 100,
+      "medianMs": 10.873,
+      "p95Ms": 14.369
+    }
+  ]
+}

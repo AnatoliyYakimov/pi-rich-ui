@@ -1,0 +1,13 @@
+<Box title="EVENT DELIVERY / EXAMPLE">
+  <Graph>
+    <Node id="api" label="API Gateway"/>
+    <Node id="orders" label="Orders"/>
+    <Node id="payments" label="Payments" tone="success"/>
+    <Node id="kafka" label="Kafka" tone="warning"/>
+    <Edge from="api" to="orders"/>
+    <Edge from="api" to="payments"/>
+    <Edge from="orders" to="kafka" label="outbox"/>
+    <Edge from="payments" to="kafka" label="events"/>
+  </Graph>
+  <Caption>Layouts adapt to width. Edge labels remain explicit below the diagram.</Caption>
+</Box>

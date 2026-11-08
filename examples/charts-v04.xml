@@ -1,0 +1,10 @@
+<Col>
+  <Chart label="Latency · illustrative data" unit="ms" height={6} x="0,1,2,5,6,9" nice stats>
+    <Series label="p50" values="12,18,14,null,25,20" tone="cyan"/>
+    <Series label="p99" values="30,48,35,62,45,52" tone="purple"/>
+    <Rule label="SLO" value={50} tone="warning"/>
+  </Chart>
+  <Chart label="Queue balance · demo" height={4} stats>
+    <Series label="balance" values="-5,-3,0,4,2,-2,1" tone="info" interpolate="step"/>
+  </Chart>
+</Col>

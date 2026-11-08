@@ -1,0 +1,53 @@
+PI RICH UI 0.4 · illustrative data
+
+╭─ API ───────────╮  ╭─ KAFKA ─────────╮
+│ RPS             │  │ Partitions      │
+│ 600             │  │ 72              │
+╰─────────────────╯  ╰─────────────────╯
+
+╭─ p99 ───────────╮
+│ 600 ms → 120 ms │
+│ Δ -480 ms ·     │
+│ -80%            │
+│ ✓ improved      │
+╰─────────────────╯
+
+Service       │     RPS │ Status
+────────────────────────────────────────
+API           │     600 │ ✓ Healthy
+Orders        │     450 │ ! Check lag
+
+        API         DB         Kafka
+         ┊           ┊           ┊
+1        ┊Save +     ┊           ┊
+         ┊outbox     ┊           ┊
+         ────────────▶           ┊
+         ┊           ┊           ┊
+2        ┊Commit ↩   ┊           ┊
+         ◀╌╌╌╌╌╌╌╌╌╌╌╌           ┊
+         ┊           ┊           ┊
+   i DB: Relay reads committed outbox
+   records.
+         ┊           ┊           ┊
+3        ┊           ┊Relay      ┊
+         ┊           ┊publishes  ┊
+         ┊           ────────────▶
+         ┊           ┊           ┊
+
+Latency · ms
+60 │⠤⠤╌⠤⠤╌⢀⣀⡀⠤⠤╌⠤⠤╌⠤⠤╌⠤⣀⣀⠤⠤⣀⣀⠤╌⠤⠤╌⠤⠤╌⠤⠤╌
+   │ ⣀⡠⠔⠒⠉⠁ ⠈⠉⠑⠒⠒⠤⠤⠒⠒⠉⠉      ⠉⠉⠑⠒⠒⠒⠒⠉⠉⠉⠉
+30 │⠉╌╌⢀⣀⣀⣀⣀⣀⣀⡀╌╌╌╌╌⣀⣀⣀⣀⠤⠤⠤⠤⠤⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀
+ 0 │⠉⠉⠉⠁⡀⡀⡀⡀⡀⡀⠈⠉⠉⠉⠉⠉⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+   └────────────────────────────────────
+    0                                  5
+1 p50  2 p99  SLO = 50
+
+Example modules        ✓ 1. Prepare
+├─ domain            │ [done]
+│  └─ Order.kt       │
+└─ infra               ▶ 2. Shadow
+   └─ OutboxRelay.k  │ [active]
+      t              │
+                       ○ 3. Switch
+                       [pending]

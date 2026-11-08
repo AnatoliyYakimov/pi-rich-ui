@@ -1,0 +1,20 @@
+╭─ API ───────────╮  ╭─ Orders ────────╮
+│ RPS · demo      │  │ p99 · demo      │
+│ 600             │  │ 180 ms          │
+╰─────────────────╯  ╰─────────────────╯
+
+╭─ Kafka ─────────╮
+│ Partitions ·    │
+│ demo            │
+│ 72              │
+╰─────────────────╯
+
+╭─ Decision ───────────────────────────╮
+│ Keep the database write and outbox   │
+│ record in one transaction.           │
+╰──────────────────────────────────────╯
+
+╭─ Status ────────╮
+│ ✓ Ready for     │
+│ review          │
+╰─────────────────╯

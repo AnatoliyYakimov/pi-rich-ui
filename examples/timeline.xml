@@ -1,0 +1,5 @@
+<Timeline title="Migration plan · illustrative statuses">
+  <Timeline.Step label="Prepare" status="done" detail="Schema and outbox table"/>
+  <Timeline.Step label="Shadow" status="active" detail="Compare deliveries without side effects"/>
+  <Timeline.Step label="Cut over" status="blocked" detail="Await reconciliation results"/>
+</Timeline>

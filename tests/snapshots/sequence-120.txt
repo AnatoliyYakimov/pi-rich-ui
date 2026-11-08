@@ -1,0 +1,27 @@
+Transactional outbox · example
+                API                       Postgres                       Relay                        Kafka
+                 ┊                            ┊                            ┊                            ┊
+1                ┊BEGIN; order + outbox       ┊                            ┊                            ┊
+                 ─────────────────────────────▶                            ┊                            ┊
+                 ┊                            ┊                            ┊                            ┊
+2                ┊COMMIT ↩                    ┊                            ┊                            ┊
+                 ◀╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌                            ┊                            ┊
+                 ┊                            ┊                            ┊                            ┊
+3                ┊                            ┊Fetch unpublished events    ┊                            ┊
+                 ┊                            ◀─────────────────────────────                            ┊
+                 ┊                            ┊                            ┊                            ┊
+4                ┊                            ┊                            ┊Publish ⇢                   ┊
+                 ┊                            ┊                            ─────────────────────────────▶
+                 ┊                            ┊                            ┊                            ┊
+5                ┊                            ┊                            ┊ACK ↩                       ┊
+                 ┊                            ┊                            ◀╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+                 ┊                            ┊                            ┊                            ┊
+6                ┊                            ┊                            ┊Process ACK                 ┊
+                 ┊                            ┊                            ╶────────────┐               ┊
+                 ┊                            ┊                            ◀────────────┘               ┊
+                 ┊                            ┊                            ┊                            ┊
+   i Relay, Kafka: A crash before marking sent can cause a repeat publication.
+                 ┊                            ┊                            ┊                            ┊
+7                ┊                            ┊Mark sent                   ┊                            ┊
+                 ┊                            ◀─────────────────────────────                            ┊
+                 ┊                            ┊                            ┊                            ┊

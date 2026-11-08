@@ -1,0 +1,18 @@
+Semantic palette · Pi theme
+
+╭─ success / green ──╮  ╭─ error / red ──────╮  ╭─ warning / yell… ──╮
+│ ✓ Healthy          │  │ ✗ Failed           │  │ ! Attention        │
+╰────────────────────╯  ╰────────────────────╯  ╰────────────────────╯
+
+╭─ info / blue ──────╮  ╭─ accent ───────────╮  ╭─ purple ───────────╮
+│ i Information      │  │ ◆ Primary          │  │ ● Series A         │
+╰────────────────────╯  ╰────────────────────╯  ╰────────────────────╯
+
+╭─ cyan ─────────────╮  ╭─ muted / gray ─────╮
+│ ● Series B         │  │ ○ Secondary        │
+╰────────────────────╯  ╰────────────────────╯
+
+▤ PostgreSQL: healthy. ! Retry: 3 attempts.
+
+Roles follow your Pi theme; color names are aliases, not fixed RGB
+values. Status symbols remain visible with NO_COLOR.

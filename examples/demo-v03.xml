@@ -1,0 +1,26 @@
+<UI>
+  <Box title="KAFKA / SAMPLE WORKLOAD">
+    <Row>
+      <Metric label="Throughput" value={600} unit="RPS" tone="info" hint="illustrative baseline"/>
+      <Metric label="Consumers" value={8} tone="success" hint="72 partitions"/>
+      <Metric label="Peak load" value={6000} unit="RPS" tone="warning" hint="illustrative peak"/>
+    </Row>
+    <Chart label="Latency · sample data" unit="ms" height={5}>
+      <Series label="p50" values="12,13,12,14,18,24,31,28,19,14,12,13" tone="cyan"/>
+      <Series label="p99" values="28,31,27,35,46,62,85,74,52,38,29,31" tone="purple"/>
+    </Chart>
+  </Box>
+  <Grid cols={2}>
+    <Card title="Delivery path" tone="info">
+      <Text><Icon name="database" tone="cyan"/> PostgreSQL <Span tone="success">healthy</Span></Text>
+      <Flow><Step>Orders</Step><Step tone="purple">Outbox</Step><Step tone="success">Kafka</Step></Flow>
+      <Caption>Illustration only; not a live cluster.</Caption>
+    </Card>
+    <Card title="Capacity" tone="success">
+      <Progress label="Sample CPU usage" value={65} tone="warning"/>
+      <Badge tone="success">8 consumers active</Badge>
+      <Badge tone="warning">Retry path needs review</Badge>
+    </Card>
+  </Grid>
+  <Caption>ANSI text only · no images · sample data</Caption>
+</UI>

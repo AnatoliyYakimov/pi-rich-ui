@@ -1,0 +1,18 @@
+<Tree label="orders-service · example">
+  <Tree.Item label="src/main/kotlin">
+    <Tree.Item label="domain" tone="success">
+      <Tree.Item label="Order.kt" detail="Aggregate, invariants"/>
+      <Tree.Item label="OrderRepository.kt"/>
+    </Tree.Item>
+    <Tree.Item label="application" tone="info">
+      <Tree.Item label="PlaceOrder.kt" detail="Transaction boundary"/>
+    </Tree.Item>
+    <Tree.Item label="infrastructure" tone="purple">
+      <Tree.Item label="PostgresOrderRepository.kt"/>
+      <Tree.Item label="OutboxRelay.kt" tone="warning" detail="Idempotent delivery required"/>
+    </Tree.Item>
+  </Tree.Item>
+  <Tree.Item label="tests" collapsed>
+    <Tree.Item label="OrderTest.kt"/><Tree.Item label="OutboxTest.kt"/>
+  </Tree.Item>
+</Tree>

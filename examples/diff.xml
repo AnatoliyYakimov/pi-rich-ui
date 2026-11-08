@@ -1,0 +1,21 @@
+<Col>
+  <Row>
+    <Diff label="p99 · demo" before={600} after={120} unit="ms" good="down"/>
+    <Diff label="Throughput · demo" before={450} after={900} unit="RPS" good="up"/>
+  </Row>
+  <Diff title="Configuration change · demo" beforeLabel="Previous" afterLabel="Proposed">
+    <Before>
+worker:
+  concurrency: 8
+  retries: 3
+  timeout: 600ms
+    </Before>
+    <After>
+worker:
+  concurrency: 12
+  retries: 3
+  timeout: 120ms
+  idempotency: required
+    </After>
+  </Diff>
+</Col>

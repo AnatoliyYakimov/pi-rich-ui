@@ -1,0 +1,13 @@
+p99 · demo                                                   Throughput · demo
+600 ms → 120 ms                                              450 RPS → 900 RPS
+Δ -480 ms · -80%                                             Δ +450 RPS · +100%
+✓ improved                                                   ✓ improved
+
+Configuration change · demo
++3 / −2 lines
+− Previous                                                   + Proposed
+   1 worker:                                               │    1 worker:
+−  2   concurrency: 8                                      │ +  2   concurrency: 12
+   3   retries: 3                                          │    3   retries: 3
+−  4   timeout: 600ms                                      │ +  4   timeout: 120ms
+                                                           │ +  5   idempotency: required

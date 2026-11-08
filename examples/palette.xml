@@ -1,0 +1,15 @@
+<UI>
+  <Title>Semantic palette · Pi theme</Title>
+  <Grid cols={4} minWidth={18}>
+    <Box title="success / green" tone="success"><Badge tone="success">Healthy</Badge></Box>
+    <Box title="error / red" tone="error"><Badge tone="error">Failed</Badge></Box>
+    <Box title="warning / yellow" tone="warning"><Badge tone="warning">Attention</Badge></Box>
+    <Box title="info / blue" tone="info"><Badge tone="info">Information</Badge></Box>
+    <Box title="accent" tone="accent"><Badge tone="accent">Primary</Badge></Box>
+    <Box title="purple" tone="purple"><Badge tone="purple">Series A</Badge></Box>
+    <Box title="cyan" tone="cyan"><Badge tone="cyan">Series B</Badge></Box>
+    <Box title="muted / gray" tone="muted"><Badge tone="muted">Secondary</Badge></Box>
+  </Grid>
+  <Text><Icon name="database" color="cyan"/> PostgreSQL: <Span color="green" bold>healthy</Span>. <Icon name="alert" tone="warning"/> Retry: <Span color="yellow">3 attempts</Span>.</Text>
+  <Caption>Roles follow your Pi theme; color names are aliases, not fixed RGB values. Status symbols remain visible with NO_COLOR.</Caption>
+</UI>

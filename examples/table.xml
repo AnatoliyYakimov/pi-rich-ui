@@ -1,0 +1,16 @@
+<Table title="Service health · illustrative data" separators>
+  <Table.Column label="Service" minWidth={14}/>
+  <Table.Column label="RPS" align="right"/>
+  <Table.Column label="p99" unit="ms" warnAbove={100} errorAbove={200}/>
+  <Table.Column label="Capacity" format="percent" bar max={1}/>
+  <Table.Row>
+    <Table.Cell><Text><Icon name="server"/> API</Text></Table.Cell>
+    <Table.Cell value={600}/><Table.Cell value={25}/><Table.Cell value={0.32} tone="success"/>
+  </Table.Row>
+  <Table.Row>
+    <Table.Cell>Orders</Table.Cell><Table.Cell value={450}/><Table.Cell value={180}/><Table.Cell value={0.74} tone="warning"/>
+  </Table.Row>
+  <Table.Row>
+    <Table.Cell>Payments</Table.Cell><Table.Cell value={120}/><Table.Cell value={240}/><Table.Cell value={0.9} tone="error"/>
+  </Table.Row>
+</Table>

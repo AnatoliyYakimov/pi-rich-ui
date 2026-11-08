@@ -1,0 +1,5 @@
+
+> pi-rich-ui-inline@0.4.0 check
+> node scripts/check.mjs
+
+JavaScript syntax checks passed.

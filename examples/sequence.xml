@@ -1,0 +1,10 @@
+<Sequence title="Transactional outbox · example" actors="API,Postgres,Relay,Kafka">
+  <Step from="API" to="Postgres" label="BEGIN; order + outbox" tone="cyan"/>
+  <Step from="Postgres" to="API" label="COMMIT" kind="return" tone="success"/>
+  <Step from="Relay" to="Postgres" label="Fetch unpublished events"/>
+  <Step from="Relay" to="Kafka" label="Publish" kind="async" tone="purple"/>
+  <Step from="Kafka" to="Relay" label="ACK" kind="return" tone="success"/>
+  <Step from="Relay" to="Relay" label="Process ACK"/>
+  <Note over="Relay,Kafka" tone="warning">A crash before marking sent can cause a repeat publication.</Note>
+  <Step from="Relay" to="Postgres" label="Mark sent"/>
+</Sequence>

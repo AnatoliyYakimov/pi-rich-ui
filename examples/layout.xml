@@ -1,0 +1,9 @@
+<UI>
+  <Grid cols={3} minWidth={18}>
+    <Card title="API"><Metric label="RPS · demo" value={600} tone="info"/></Card>
+    <Card title="Orders"><Metric label="p99 · demo" value={180} unit="ms" tone="warning"/></Card>
+    <Card title="Kafka"><Metric label="Partitions · demo" value={72} tone="purple"/></Card>
+    <GridItem span={2}><Card title="Decision"><Text>Keep the database write and outbox record in one transaction.</Text></Card></GridItem>
+    <Card title="Status"><Badge tone="success">Ready for review</Badge></Card>
+  </Grid>
+</UI>
