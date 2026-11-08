@@ -1,4 +1,4 @@
-# Integration contract — v0.4
+# Integration contract — v0.5
 
 ## Supported public surface
 
@@ -26,17 +26,23 @@ Errors fall back to ordinary code rendering. Without the ABI, the public transfo
 plain rendered text in a normal fence; without the public hook it notifies and disables itself.
 The sentinel language is reserved implementation detail; don't write it manually.
 
-Upstream source inspected 2026-11-08 still exposes the prototype method and accepts
-`Markdown(text, paddingX, paddingY, theme, defaultStyle?, {transform})`. This is source inspection,
-NOT an executed compatibility result for a published Pi build.
+Official `@earendil-works/pi-tui` **1.5.0** was installed in an isolated test directory
+and used for an executed compatibility check. It exposes the prototype method and accepts
+`Markdown(text, paddingX, paddingY, theme, defaultStyle?, {transform})`. No second copy is
+added to the extension dependencies.
 
 `index.ts` imports the host `@earendil-works/pi-tui`; no private second installation is bundled.
-`test:host` renders all eight v0.4 examples at widths 24,40,80,120 and checks ordinary prose and
-fenced XML. It requires the user's actual installed host. This environment has no Pi.
+`test:host` renders 13 examples, including the new general compositions, at widths
+24/40/80/120 and checks ordinary prose plus fenced XML. It requires an installed host.
+An actual Pi coding agent 1.5.0 offline PTY trial also loaded index.ts, exercised
+/rich-ui status, compare and titles, observed host SGR colors and NO_COLOR behavior,
+and exited cleanly. Regular and fullscreen modes were exercised. The bundled CLI was tested as well, including restoring an assistant-history fixture
+whose XML rendered between the original prose without a visible sentinel/code fence.
+No model request was made. See [TUI smoke record](TUI-SMOKE.txt).
 
 ## Not implemented
 
-PNG/SVG, browser/React execution, fullscreen, mouse/focus routing, interactive tree expansion,
+Runtime PNG/SVG, browser/React execution, fullscreen, mouse/focus routing, interactive tree expansion,
 sliders, arbitrary Markdown interpolation inside XML, graph free positioning, UML alt/loop/par,
 HTML export renderer, localization of built-in service labels. Child labels remain user's language.
 
@@ -50,3 +56,11 @@ for all of Pi: the host and its other extensions retain their normal privileges.
 Sources:
 https://pi.dev/docs/latest/extensions
 https://raw.githubusercontent.com/earendil-works/pi/main/packages/tui/src/components/markdown.ts
+
+## Documentation previews
+
+`scripts/preview-assets.mjs` exports the actual styled Surface cells as static SVG
+with sample dark/light palettes. Structural strokes and Braille dots follow their
+terminal-cell geometry; ordinary glyphs use a monospace font. This code is never
+imported by index.ts or any runtime module. SVG files are README/gallery previews,
+not a new output mode. Native runtime remains copyable ANSI/Unicode text.

@@ -1,10 +1,542 @@
-# Pi Rich UI 0.4 — rendered examples
+# Pi Rich UI — renderer gallery
 
-These examples are actual standalone-renderer output, not screenshots of a running Pi session.
-The text blocks do not display ANSI colors. All data is illustrative. To see the colored
-combined demo in your terminal, run `cat docs/preview-wide.ansi` from the repository root.
+These are actual standalone-renderer outputs with illustrative content. The colored
+previews use a sample palette; Pi uses the active host theme. They are not browser UI
+mockups. SVG exports are documentation assets only: the runtime stays ANSI-only.
 
-[Install and get started](../README.md) · [Component reference](REFERENCE.md)
+[Install](../README.md) · [Reference](REFERENCE.md)
+
+## compare
+
+![compare in a dark sample palette](previews/compare-80-dark.svg)
+
+```xml
+<UI>
+  <Title>Start with ANSI.</Title>
+  <Text>Keep pixel graphics as an optional future renderer.</Text>
+  <Grid cols={2} minWidth={28}>
+    <Card title="ANSI / Unicode" tone="cyan">
+      <Badge tone="success">Current direction</Badge>
+      <Text>Text, panels, diagrams and Braille charts.</Text>
+      <List><Item>Copyable terminal text</Item><Item>Colors from the Pi theme</Item></List>
+      <Caption>Geometry follows terminal cells.</Caption>
+    </Card>
+    <Card title="PNG" borderTone="muted" titleTone="text">
+      <Badge tone="muted">Deferred</Badge>
+      <Text>Pixel graphics, arbitrary lines and fonts.</Text>
+      <Caption>Image contents cannot be selected as terminal text. Requires image protocol support.</Caption>
+    </Card>
+  </Grid>
+  <Text>The model describes <Span bold>meaning</Span>. The renderer chooses <Span tone="cyan" bold>presentation</Span>.</Text>
+  <Callout tone="warning"><Text>Pair semantic colors with visible labels: <Span tone="success">success</Span>, <Span tone="warning">attention</Span>, <Span tone="error">failure</Span>.</Text></Callout>
+</UI>
+```
+
+### 80 columns
+
+```text
+Start with ANSI.
+
+Keep pixel graphics as an optional future renderer.
+
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ ANSI / Unicode                      │  │ PNG                                 │
+│                                     │  │                                     │
+│ ✓ Current direction                 │  │ ○ Deferred                          │
+│                                     │  │                                     │
+│ Text, panels, diagrams and Braille  │  │ Pixel graphics, arbitrary lines and │
+│ charts.                             │  │ fonts.                              │
+│                                     │  │                                     │
+│ • Copyable terminal text            │  │ Image contents cannot be selected   │
+│ • Colors from the Pi theme          │  │ as terminal text. Requires image    │
+│                                     │  │ protocol support.                   │
+│ Geometry follows terminal cells.    │  │                                     │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+
+The model describes meaning. The renderer chooses presentation.
+
+▎ Pair semantic colors with visible labels: success, attention, failure.
+```
+
+### 40 columns
+
+```text
+Start with ANSI.
+
+Keep pixel graphics as an optional
+future renderer.
+
+╭──────────────────────────────────────╮
+│ ANSI / Unicode                       │
+│                                      │
+│ ✓ Current direction                  │
+│                                      │
+│ Text, panels, diagrams and Braille   │
+│ charts.                              │
+│                                      │
+│ • Copyable terminal text             │
+│ • Colors from the Pi theme           │
+│                                      │
+│ Geometry follows terminal cells.     │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ PNG                                  │
+│                                      │
+│ ○ Deferred                           │
+│                                      │
+│ Pixel graphics, arbitrary lines and  │
+│ fonts.                               │
+│                                      │
+│ Image contents cannot be selected as │
+│ terminal text. Requires image        │
+│ protocol support.                    │
+╰──────────────────────────────────────╯
+
+The model describes meaning. The
+renderer chooses presentation.
+
+▎ Pair semantic colors with visible
+▎ labels: success, attention, failure.
+```
+
+## architecture
+
+![architecture in a dark sample palette](previews/architecture-80-dark.svg)
+
+```xml
+<UI>
+  <Title>Rendering inside a Pi reply</Title>
+  <Box title="Model response" borderTone="muted" titleTone="muted">
+    <Row>
+      <Col><Text bold>Ordinary Markdown</Text><Caption>Paragraphs and code</Caption></Col>
+      <Col><Text tone="purple" bold>XML composition</Text><Caption>Row · Box · Text</Caption></Col>
+    </Row>
+  </Box>
+  <Row>
+    <Col><Text tone="muted">↓</Text><Card title="Pi Markdown" borderTone="muted" titleTone="text"><Caption>Standard rendering</Caption></Card></Col>
+    <Col><Text tone="purple">↓</Text><Card title="Rich UI" tone="purple"><Text>Parser → AST</Text><Caption>Layout → ANSI</Caption></Card></Col>
+  </Row>
+  <Box title="Reply in session history" titlePosition="inside" tone="cyan"><Text>Prose → visual block → more prose</Text></Box>
+  <Callout tone="warning"><Text>Native insertion currently depends on Pi's internal Markdown API.</Text></Callout>
+</UI>
+```
+
+### 80 columns
+
+```text
+Rendering inside a Pi reply
+
+╭─ Model response ─────────────────────────────────────────────────────────────╮
+│ Ordinary Markdown                      XML composition                       │
+│                                                                              │
+│ Paragraphs and code                    Row · Box · Text                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+↓                                        ↓
+
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ Pi Markdown                         │  │ Rich UI                             │
+│                                     │  │                                     │
+│ Standard rendering                  │  │ Parser → AST                        │
+╰─────────────────────────────────────╯  │                                     │
+                                         │ Layout → ANSI                       │
+                                         ╰─────────────────────────────────────╯
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ Reply in session history                                                     │
+│                                                                              │
+│ Prose → visual block → more prose                                            │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+▎ Native insertion currently depends on Pi's internal Markdown API.
+```
+
+### 40 columns
+
+```text
+Rendering inside a Pi reply
+
+╭─ Model response ─────────────────────╮
+│ Ordinary Markdown   XML composition  │
+│                                      │
+│ Paragraphs and      Row · Box · Text │
+│ code                                 │
+╰──────────────────────────────────────╯
+
+↓
+
+╭──────────────────────────────────────╮
+│ Pi Markdown                          │
+│                                      │
+│ Standard rendering                   │
+╰──────────────────────────────────────╯
+
+↓
+
+╭──────────────────────────────────────╮
+│ Rich UI                              │
+│                                      │
+│ Parser → AST                         │
+│                                      │
+│ Layout → ANSI                        │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Reply in session history             │
+│                                      │
+│ Prose → visual block → more prose    │
+╰──────────────────────────────────────╯
+
+▎ Native insertion currently depends on
+▎ Pi's internal Markdown API.
+```
+
+## components
+
+![components in a dark sample palette](previews/components-80-dark.svg)
+
+```xml
+<UI>
+  <Title>A small set of composable primitives</Title>
+  <Text>Use layout to explain structure, relationships and decisions.</Text>
+  <Grid cols={2} minWidth={25}>
+    <Card title="Layout" tone="cyan"><Text>Row · Col · Grid</Text><Caption>Grouping and alignment</Caption></Card>
+    <Card title="Content" tone="cyan"><Text>Text · Span · Badge</Text><Caption>Meaning and emphasis</Caption></Card>
+    <Card title="Relationships" tone="purple"><Text>Graph · Sequence · Tree</Text><Caption>Structure and interactions</Caption></Card>
+    <Card title="Comparisons and data" tone="purple"><Text>Table · Diff · Chart</Text><Caption>Differences and patterns</Caption></Card>
+  </Grid>
+  <Divider tone="dim"/>
+  <Text bold>One thought — one emphasis.</Text>
+  <Col gap={0}><Text><Span tone="success">✓</Span> The model describes <Span bold>meaning</Span>.</Text><Text><Span tone="cyan">→</Span> The renderer chooses <Span bold>design</Span>.</Text></Col>
+  <Caption>Compact XML. Consistent spacing and palette.</Caption>
+</UI>
+```
+
+### 80 columns
+
+```text
+A small set of composable primitives
+
+Use layout to explain structure, relationships and decisions.
+
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ Layout                              │  │ Content                             │
+│                                     │  │                                     │
+│ Row · Col · Grid                    │  │ Text · Span · Badge                 │
+│                                     │  │                                     │
+│ Grouping and alignment              │  │ Meaning and emphasis                │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ Relationships                       │  │ Comparisons and data                │
+│                                     │  │                                     │
+│ Graph · Sequence · Tree             │  │ Table · Diff · Chart                │
+│                                     │  │                                     │
+│ Structure and interactions          │  │ Differences and patterns            │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+
+One thought — one emphasis.
+
+✓ The model describes meaning.
+→ The renderer chooses design.
+
+Compact XML. Consistent spacing and palette.
+```
+
+### 40 columns
+
+```text
+A small set of composable primitives
+
+Use layout to explain structure,
+relationships and decisions.
+
+╭──────────────────────────────────────╮
+│ Layout                               │
+│                                      │
+│ Row · Col · Grid                     │
+│                                      │
+│ Grouping and alignment               │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Content                              │
+│                                      │
+│ Text · Span · Badge                  │
+│                                      │
+│ Meaning and emphasis                 │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Relationships                        │
+│                                      │
+│ Graph · Sequence · Tree              │
+│                                      │
+│ Structure and interactions           │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Comparisons and data                 │
+│                                      │
+│ Table · Diff · Chart                 │
+│                                      │
+│ Differences and patterns             │
+╰──────────────────────────────────────╯
+
+────────────────────────────────────────
+
+One thought — one emphasis.
+
+✓ The model describes meaning.
+→ The renderer chooses design.
+
+Compact XML. Consistent spacing and
+palette.
+```
+
+## titles
+
+![titles in a dark sample palette](previews/titles-80-dark.svg)
+
+```xml
+<UI>
+  <Title>Frames and headings are independent</Title>
+  <Grid cols={2} minWidth={24}>
+    <Box title="Border heading" titlePosition="border" tone="cyan"><Text>A named group with a compact edge label.</Text></Box>
+    <Card title="Inside heading" titlePosition="inside" tone="purple"><Text>A comparison card with a content heading.</Text></Card>
+    <Card title="Heading above" titlePosition="above" borderTone="muted"><Text>The heading sits outside the boundary.</Text></Card>
+    <Box tone="success"><Text bold>Frame without a heading</Text><Text>A self-contained statement.</Text></Box>
+  </Grid>
+  <Box title="No frame" border={false} titlePosition="above" padding={0}><Text>Layout and typography group this explanation.</Text></Box>
+  <Callout title="A callout" tone="warning"><Text>A colored rail highlights a caveat without enclosing the reply.</Text></Callout>
+  <Box title="Square outline" border="single" tone="info"><Text>The border style is independent of title placement.</Text></Box>
+</UI>
+```
+
+### 80 columns
+
+```text
+Frames and headings are independent
+
+╭─ Border heading ────────────────────╮  ╭─────────────────────────────────────╮
+│ A named group with a compact edge   │  │ Inside heading                      │
+│ label.                              │  │                                     │
+│                                     │  │ A comparison card with a content    │
+│                                     │  │ heading.                            │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+
+Heading above                            ╭─────────────────────────────────────╮
+                                         │ Frame without a heading             │
+╭─────────────────────────────────────╮  │                                     │
+│ The heading sits outside the        │  │ A self-contained statement.         │
+│ boundary.                           │  │                                     │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+
+No frame
+
+Layout and typography group this explanation.
+
+▎ A callout
+▎
+▎ A colored rail highlights a caveat without enclosing the reply.
+
+┌─ Square outline ─────────────────────────────────────────────────────────────┐
+│ The border style is independent of title placement.                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 40 columns
+
+```text
+Frames and headings are independent
+
+╭─ Border heading ─────────────────────╮
+│ A named group with a compact edge    │
+│ label.                               │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Inside heading                       │
+│                                      │
+│ A comparison card with a content     │
+│ heading.                             │
+╰──────────────────────────────────────╯
+
+Heading above
+
+╭──────────────────────────────────────╮
+│ The heading sits outside the         │
+│ boundary.                            │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Frame without a heading              │
+│                                      │
+│ A self-contained statement.          │
+╰──────────────────────────────────────╯
+
+No frame
+
+Layout and typography group this
+explanation.
+
+▎ A callout
+▎
+▎ A colored rail highlights a caveat
+▎ without enclosing the reply.
+
+┌─ Square outline ─────────────────────┐
+│ The border style is independent of   │
+│ title placement.                     │
+└──────────────────────────────────────┘
+```
+
+## dashboard
+
+![dashboard in a dark sample palette](previews/dashboard-100-dark.svg)
+
+```xml
+<UI>
+  <Title>PI RICH UI 0.5 · illustrative data</Title>
+  <Grid cols={3} minWidth={18}>
+    <Card title="API"><Metric label="RPS" value={600} tone="cyan"/></Card>
+    <Card title="KAFKA"><Metric label="Partitions" value={72} tone="purple"/></Card>
+    <Card title="p99"><Diff before={600} after={120} unit="ms" good="down"/></Card>
+  </Grid>
+  <Table headers="Service,RPS,Status">
+    <Tr><Td>API</Td><Td value={600}/><Td><Badge tone="success">Healthy</Badge></Td></Tr>
+    <Tr><Td>Orders</Td><Td value={450}/><Td><Badge tone="warning">Check lag</Badge></Td></Tr>
+  </Table>
+  <Sequence actors="API,DB,Kafka">
+    <Step from="API" to="DB" label="Save + outbox"/>
+    <Step from="DB" to="API" label="Commit" kind="return" tone="success"/>
+    <Note over="DB">Relay reads committed outbox records.</Note>
+    <Step from="DB" to="Kafka" label="Relay publishes" tone="purple"/>
+  </Sequence>
+  <Chart label="Latency · ms" height={4} nice>
+    <Series label="p50" values="12,18,14,20,18,16" tone="cyan"/>
+    <Series label="p99" values="30,48,35,52,40,45" tone="purple"/>
+    <Rule label="SLO" value={50} tone="warning"/>
+  </Chart>
+  <Row>
+    <Tree label="Example modules"><Item label="domain"><Item label="Order.kt"/></Item><Item label="infra"><Item label="OutboxRelay.kt"/></Item></Tree>
+    <Timeline direction="TB"><Step label="Prepare" status="done"/><Step label="Shadow" status="active"/><Step label="Switch" status="pending"/></Timeline>
+  </Row>
+</UI>
+```
+
+### 80 columns
+
+```text
+PI RICH UI 0.5 · illustrative data
+
+╭────────────────────────╮  ╭───────────────────────╮  ╭───────────────────────╮
+│ API                    │  │ KAFKA                 │  │ p99                   │
+│                        │  │                       │  │                       │
+│ RPS                    │  │ Partitions            │  │ 600 ms → 120 ms       │
+│ 600                    │  │ 72                    │  │ Δ -480 ms · -80%      │
+│                        │  │                       │  │ ✓ improved            │
+╰────────────────────────╯  ╰───────────────────────╯  ╰───────────────────────╯
+
+Service                                 RPS   Status
+────────────────────────────────────────────────────────────────────────────────
+API                                     600   ✓ Healthy
+Orders                                  450   ! Check lag
+
+              API                      DB                      Kafka
+               ┊                        ┊                        ┊
+1              ┊Save + outbox           ┊                        ┊
+               ─────────────────────────▶                        ┊
+               ┊                        ┊                        ┊
+2              ┊Commit ↩                ┊                        ┊
+               ◀╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌                        ┊
+               ┊                        ┊                        ┊
+   i DB: Relay reads committed outbox records.
+               ┊                        ┊                        ┊
+3              ┊                        ┊Relay publishes         ┊
+               ┊                        ─────────────────────────▶
+               ┊                        ┊                        ┊
+
+Latency · ms
+60 │⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⢀⣀⣀⣀⡀⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⣀⣀⣀⣀⠤⠤⠤⠤⣀⣀⣀⣀⣀╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤
+   │ ⢀⣀⣀⡠⠤⠤⠔⠒⠒⠊⠉⠉⠁   ⠈⠉⠉⠉⠉⠑⠒⠒⠒⠒⠢⠤⠤⠤⠤⠒⠒⠒⠒⠉⠉⠉⠉             ⠉⠉⠉⠉⠉⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉
+30 │⠉⠁╌╌╌╌╌⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⡀╌╌╌╌╌╌╌╌╌╌╌⣀⣀⣀⣀⣀⣀⣀⣀⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀
+ 0 │⠉⠉⠉⠉⠉⠉⠉⠁⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+   └────────────────────────────────────────────────────────────────────────────
+    0                                                                          5
+1 p50  2 p99  SLO = 50
+
+Example modules                            ✓ 1. Prepare [done]
+├─ domain                                │
+│  └─ Order.kt                             ▶ 2. Shadow [active]
+└─ infra                                 │
+   └─ OutboxRelay.kt                       ○ 3. Switch [pending]
+```
+
+### 40 columns
+
+```text
+PI RICH UI 0.5 · illustrative data
+
+╭─────────────────╮  ╭─────────────────╮
+│ API             │  │ KAFKA           │
+│                 │  │                 │
+│ RPS             │  │ Partitions      │
+│ 600             │  │ 72              │
+╰─────────────────╯  ╰─────────────────╯
+
+╭─────────────────╮
+│ p99             │
+│                 │
+│ 600 ms → 120 ms │
+│ Δ -480 ms ·     │
+│ -80%            │
+│ ✓ improved      │
+╰─────────────────╯
+
+Service             RPS   Status
+────────────────────────────────────────
+API                 600   ✓ Healthy
+Orders              450   ! Check lag
+
+        API         DB         Kafka
+         ┊           ┊           ┊
+1        ┊Save +     ┊           ┊
+         ┊outbox     ┊           ┊
+         ────────────▶           ┊
+         ┊           ┊           ┊
+2        ┊Commit ↩   ┊           ┊
+         ◀╌╌╌╌╌╌╌╌╌╌╌╌           ┊
+         ┊           ┊           ┊
+   i DB: Relay reads committed outbox
+   records.
+         ┊           ┊           ┊
+3        ┊           ┊Relay      ┊
+         ┊           ┊publishes  ┊
+         ┊           ────────────▶
+         ┊           ┊           ┊
+
+Latency · ms
+60 │⠤⠤╌⠤⠤╌⢀⣀⡀⠤⠤╌⠤⠤╌⠤⠤╌⠤⣀⣀⠤⠤⣀⣀⠤╌⠤⠤╌⠤⠤╌⠤⠤╌
+   │ ⣀⡠⠔⠒⠉⠁ ⠈⠉⠑⠒⠒⠤⠤⠒⠒⠉⠉      ⠉⠉⠑⠒⠒⠒⠒⠉⠉⠉⠉
+30 │⠉╌╌⢀⣀⣀⣀⣀⣀⣀⡀╌╌╌╌╌⣀⣀⣀⣀⠤⠤⠤⠤⠤⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀
+ 0 │⠉⠉⠉⠁⡀⡀⡀⡀⡀⡀⠈⠉⠉⠉⠉⠉⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+   └────────────────────────────────────
+    0                                  5
+1 p50  2 p99  SLO = 50
+
+Example modules        ✓ 1. Prepare
+├─ domain            │ [done]
+│  └─ Order.kt       │
+└─ infra               ▶ 2. Shadow
+   └─ OutboxRelay.k  │ [active]
+      t              │
+                       ○ 3. Switch
+                       [pending]
+```
 
 ## table
 
@@ -31,16 +563,16 @@ combined demo in your terminal, run `cat docs/preview-wide.ansi` from the reposi
 
 ```text
 Service health · illustrative data
-Service                                          │     RPS │      p99 │ Capacity
+Service                                                RPS        p99   Capacity
 ────────────────────────────────────────────────────────────────────────────────
-▣ API                                            │     600 │    25 ms │      32%
-                                                 │         │          │ ███━━━━━
+▣ API                                                  600      25 ms        32%
+                                                                        ███━━━━━
 ────────────────────────────────────────────────────────────────────────────────
-Orders                                           │     450 │ ! 180 ms │      74%
-                                                 │         │          │ ██████━━
+Orders                                                 450   ! 180 ms        74%
+                                                                        ██████━━
 ────────────────────────────────────────────────────────────────────────────────
-Payments                                         │     120 │ ✗ 240 ms │      90%
-                                                 │         │          │ ███████━
+Payments                                               120   ✗ 240 ms        90%
+                                                                        ███████━
 ```
 
 ### 40 columns
@@ -395,12 +927,16 @@ min -5 · max 4 · last 1
 ### 80 columns
 
 ```text
-╭─ API ──────────────────╮  ╭─ Orders ──────────────╮  ╭─ Kafka ───────────────╮
+╭────────────────────────╮  ╭───────────────────────╮  ╭───────────────────────╮
+│ API                    │  │ Orders                │  │ Kafka                 │
+│                        │  │                       │  │                       │
 │ RPS · demo             │  │ p99 · demo            │  │ Partitions · demo     │
 │ 600                    │  │ 180 ms                │  │ 72                    │
 ╰────────────────────────╯  ╰───────────────────────╯  ╰───────────────────────╯
 
-╭─ Decision ────────────────────────────────────────╮  ╭─ Status ──────────────╮
+╭───────────────────────────────────────────────────╮  ╭───────────────────────╮
+│ Decision                                          │  │ Status                │
+│                                                   │  │                       │
 │ Keep the database write and outbox record in one  │  │ ✓ Ready for review    │
 │ transaction.                                      │  │                       │
 ╰───────────────────────────────────────────────────╯  ╰───────────────────────╯
@@ -409,23 +945,31 @@ min -5 · max 4 · last 1
 ### 40 columns
 
 ```text
-╭─ API ───────────╮  ╭─ Orders ────────╮
+╭─────────────────╮  ╭─────────────────╮
+│ API             │  │ Orders          │
+│                 │  │                 │
 │ RPS · demo      │  │ p99 · demo      │
 │ 600             │  │ 180 ms          │
 ╰─────────────────╯  ╰─────────────────╯
 
-╭─ Kafka ─────────╮
+╭─────────────────╮
+│ Kafka           │
+│                 │
 │ Partitions ·    │
 │ demo            │
 │ 72              │
 ╰─────────────────╯
 
-╭─ Decision ───────────────────────────╮
+╭──────────────────────────────────────╮
+│ Decision                             │
+│                                      │
 │ Keep the database write and outbox   │
 │ record in one transaction.           │
 ╰──────────────────────────────────────╯
 
-╭─ Status ────────╮
+╭─────────────────╮
+│ Status          │
+│                 │
 │ ✓ Ready for     │
 │ review          │
 ╰─────────────────╯

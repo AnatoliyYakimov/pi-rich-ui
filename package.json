@@ -1,9 +1,9 @@
 {
   "name": "pi-rich-ui-inline",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
-  "description": "Native inline XML rich tables, diffs, sequence diagrams, trees, timelines and Braille charts for Pi",
+  "description": "Theme-aware inline XML panels, comparisons, diagrams and Braille charts for Pi",
   "engines": {
     "node": ">=22.19.0"
   },
@@ -13,7 +13,8 @@
     "preview": "node scripts/preview.mjs",
     "check": "node scripts/check.mjs",
     "bench": "node scripts/bench.mjs",
-    "snapshots:update": "node scripts/snapshots.mjs --update"
+    "snapshots:update": "node scripts/snapshots.mjs --update",
+    "preview:assets": "node scripts/preview-assets.mjs"
   },
   "pi": {
     "extensions": [

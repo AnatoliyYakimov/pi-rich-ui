@@ -1,0 +1,19 @@
+<UI>
+  <Title>Start with ANSI.</Title>
+  <Text>Keep pixel graphics as an optional future renderer.</Text>
+  <Grid cols={2} minWidth={28}>
+    <Card title="ANSI / Unicode" tone="cyan">
+      <Badge tone="success">Current direction</Badge>
+      <Text>Text, panels, diagrams and Braille charts.</Text>
+      <List><Item>Copyable terminal text</Item><Item>Colors from the Pi theme</Item></List>
+      <Caption>Geometry follows terminal cells.</Caption>
+    </Card>
+    <Card title="PNG" borderTone="muted" titleTone="text">
+      <Badge tone="muted">Deferred</Badge>
+      <Text>Pixel graphics, arbitrary lines and fonts.</Text>
+      <Caption>Image contents cannot be selected as terminal text. Requires image protocol support.</Caption>
+    </Card>
+  </Grid>
+  <Text>The model describes <Span bold>meaning</Span>. The renderer chooses <Span tone="cyan" bold>presentation</Span>.</Text>
+  <Callout tone="warning"><Text>Pair semantic colors with visible labels: <Span tone="success">success</Span>, <Span tone="warning">attention</Span>, <Span tone="error">failure</Span>.</Text></Callout>
+</UI>

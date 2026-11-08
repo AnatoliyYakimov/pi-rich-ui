@@ -1,0 +1,12 @@
+<UI>
+  <Title>Frames and headings are independent</Title>
+  <Grid cols={2} minWidth={24}>
+    <Box title="Border heading" titlePosition="border" tone="cyan"><Text>A named group with a compact edge label.</Text></Box>
+    <Card title="Inside heading" titlePosition="inside" tone="purple"><Text>A comparison card with a content heading.</Text></Card>
+    <Card title="Heading above" titlePosition="above" borderTone="muted"><Text>The heading sits outside the boundary.</Text></Card>
+    <Box tone="success"><Text bold>Frame without a heading</Text><Text>A self-contained statement.</Text></Box>
+  </Grid>
+  <Box title="No frame" border={false} titlePosition="above" padding={0}><Text>Layout and typography group this explanation.</Text></Box>
+  <Callout title="A callout" tone="warning"><Text>A colored rail highlights a caveat without enclosing the reply.</Text></Callout>
+  <Box title="Square outline" border="single" tone="info"><Text>The border style is independent of title placement.</Text></Box>
+</UI>

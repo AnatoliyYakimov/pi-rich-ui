@@ -1,1646 +1,337 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> pi-rich-ui-inline@0.4.0 test
+> pi-rich-ui-inline@0.5.0 test
 > node --test tests/*.test.mjs
 
-TAP version 13
-# Subtest: semantic alias green -> success
-ok 1 - semantic alias green -> success
-  ---
-  duration_ms: 1.443465
-  type: 'test'
-  ...
-# Subtest: semantic alias positive -> success
-ok 2 - semantic alias positive -> success
-  ---
-  duration_ms: 0.1062
-  type: 'test'
-  ...
-# Subtest: semantic alias red -> error
-ok 3 - semantic alias red -> error
-  ---
-  duration_ms: 0.103165
-  type: 'test'
-  ...
-# Subtest: semantic alias danger -> error
-ok 4 - semantic alias danger -> error
-  ---
-  duration_ms: 0.068173
-  type: 'test'
-  ...
-# Subtest: semantic alias negative -> error
-ok 5 - semantic alias negative -> error
-  ---
-  duration_ms: 0.09971
-  type: 'test'
-  ...
-# Subtest: semantic alias yellow -> warning
-ok 6 - semantic alias yellow -> warning
-  ---
-  duration_ms: 0.066069
-  type: 'test'
-  ...
-# Subtest: semantic alias orange -> warning
-ok 7 - semantic alias orange -> warning
-  ---
-  duration_ms: 0.102975
-  type: 'test'
-  ...
-# Subtest: semantic alias blue -> info
-ok 8 - semantic alias blue -> info
-  ---
-  duration_ms: 0.164277
-  type: 'test'
-  ...
-# Subtest: semantic alias violet -> purple
-ok 9 - semantic alias violet -> purple
-  ---
-  duration_ms: 0.273701
-  type: 'test'
-  ...
-# Subtest: semantic alias magenta -> purple
-ok 10 - semantic alias magenta -> purple
-  ---
-  duration_ms: 0.597747
-  type: 'test'
-  ...
-# Subtest: semantic alias teal -> cyan
-ok 11 - semantic alias teal -> cyan
-  ---
-  duration_ms: 0.114061
-  type: 'test'
-  ...
-# Subtest: semantic alias gray -> muted
-ok 12 - semantic alias gray -> muted
-  ---
-  duration_ms: 0.076514
-  type: 'test'
-  ...
-# Subtest: semantic alias grey -> muted
-ok 13 - semantic alias grey -> muted
-  ---
-  duration_ms: 0.037677
-  type: 'test'
-  ...
-# Subtest: semantic alias neutral -> text
-ok 14 - semantic alias neutral -> text
-  ---
-  duration_ms: 0.031808
-  type: 'test'
-  ...
-# Subtest: semantic alias default -> text
-ok 15 - semantic alias default -> text
-  ---
-  duration_ms: 0.029614
-  type: 'test'
-  ...
-# Subtest: unknown roles cannot inject ANSI and fall back to known palette
-ok 16 - unknown roles cannot inject ANSI and fall back to known palette
-  ---
-  duration_ms: 0.063345
-  type: 'test'
-  ...
-# Subtest: tone overrides color and unknown roles never become host theme tokens
-ok 17 - tone overrides color and unknown roles never become host theme tokens
-  ---
-  duration_ms: 0.100661
-  type: 'test'
-  ...
-# Subtest: theme mapping text -> text
-ok 18 - theme mapping text -> text
-  ---
-  duration_ms: 0.941873
-  type: 'test'
-  ...
-# Subtest: theme mapping accent -> accent
-ok 19 - theme mapping accent -> accent
-  ---
-  duration_ms: 0.066539
-  type: 'test'
-  ...
-# Subtest: theme mapping success -> success
-ok 20 - theme mapping success -> success
-  ---
-  duration_ms: 0.049163
-  type: 'test'
-  ...
-# Subtest: theme mapping error -> error
-ok 21 - theme mapping error -> error
-  ---
-  duration_ms: 0.127361
-  type: 'test'
-  ...
-# Subtest: theme mapping warning -> warning
-ok 22 - theme mapping warning -> warning
-  ---
-  duration_ms: 0.065548
-  type: 'test'
-  ...
-# Subtest: theme mapping info -> mdLink
-ok 23 - theme mapping info -> mdLink
-  ---
-  duration_ms: 0.042103
-  type: 'test'
-  ...
-# Subtest: theme mapping purple -> syntaxKeyword
-ok 24 - theme mapping purple -> syntaxKeyword
-  ---
-  duration_ms: 0.037456
-  type: 'test'
-  ...
-# Subtest: theme mapping cyan -> mdCode
-ok 25 - theme mapping cyan -> mdCode
-  ---
-  duration_ms: 0.03955
-  type: 'test'
-  ...
-# Subtest: theme mapping muted -> muted
-ok 26 - theme mapping muted -> muted
-  ---
-  duration_ms: 0.114312
-  type: 'test'
-  ...
-# Subtest: theme mapping dim -> dim
-ok 27 - theme mapping dim -> dim
-  ---
-  duration_ms: 0.055784
-  type: 'test'
-  ...
-# Subtest: theme mapping border -> borderMuted
-ok 28 - theme mapping border -> borderMuted
-  ---
-  duration_ms: 0.041923
-  type: 'test'
-  ...
-# Subtest: native fallback never emits background or image placement commands
-ok 29 - native fallback never emits background or image placement commands
-  ---
-  duration_ms: 6.725541
-  type: 'test'
-  ...
-# Subtest: 16, 256 and truecolor fallback are explicit and color depth detection is conservative
-ok 30 - 16, 256 and truecolor fallback are explicit and color depth detection is conservative
-  ---
-  duration_ms: 0.541092
-  type: 'test'
-  ...
-# Subtest: older theme missing a token falls back safely
-ok 31 - older theme missing a token falls back safely
-  ---
-  duration_ms: 0.30622
-  type: 'test'
-  ...
-# Subtest: NO_COLOR suppresses colors and bold even if theme exists
-ok 32 - NO_COLOR suppresses colors and bold even if theme exists
-  ---
-  duration_ms: 0.114182
-  type: 'test'
-  ...
-# Subtest: box tone scopes accents without recoloring neutral body text
-ok 33 - box tone scopes accents without recoloring neutral body text
-  ---
-  duration_ms: 3.265229
-  type: 'test'
-  ...
-# Subtest: status badges distinguish meaning without color
-ok 34 - status badges distinguish meaning without color
-  ---
-  duration_ms: 0.704107
-  type: 'test'
-  ...
-# Subtest: Span style boundaries preserve natural word composition and inline icons
-ok 35 - Span style boundaries preserve natural word composition and inline icons
-  ---
-  duration_ms: 0.490065
-  type: 'test'
-  ...
-# Subtest: Span words and CJK/emoji wrap without corrupting cell widths
-ok 36 - Span words and CJK/emoji wrap without corrupting cell widths
-  ---
-  duration_ms: 1.788403
-  type: 'test'
-  ...
-# Subtest: standalone Span stays literal; it is an inline child, not a UI root
-ok 37 - standalone Span stays literal; it is an inline child, not a UI root
-  ---
-  duration_ms: 0.430947
-  type: 'test'
-  ...
-# Subtest: Title and Caption accept explicit semantic tones
-ok 38 - Title and Caption accept explicit semantic tones
-  ---
-  duration_ms: 0.275784
-  type: 'test'
-  ...
-# Subtest: table tones survive wide and narrow layouts; a headerless table keeps first row
-ok 39 - table tones survive wide and narrow layouts; a headerless table keeps first row
-  ---
-  duration_ms: 3.304267
-  type: 'test'
-  ...
-# Subtest: graph edges use their own tone
-ok 40 - graph edges use their own tone
-  ---
-  duration_ms: 1.390687
-  type: 'test'
-  ...
-# Subtest: grid minWidth applies to row sizing as well as column count
-ok 41 - grid minWidth applies to row sizing as well as column count
-  ---
-  duration_ms: 1.782354
-  type: 'test'
-  ...
-# Subtest: icon check stays one text cell
-ok 42 - icon check stays one text cell
-  ---
-  duration_ms: 0.088443
-  type: 'test'
-  ...
-# Subtest: icon success stays one text cell
-ok 43 - icon success stays one text cell
-  ---
-  duration_ms: 0.048462
-  type: 'test'
-  ...
-# Subtest: icon close stays one text cell
-ok 44 - icon close stays one text cell
-  ---
-  duration_ms: 0.044747
-  type: 'test'
-  ...
-# Subtest: icon error stays one text cell
-ok 45 - icon error stays one text cell
-  ---
-  duration_ms: 0.037206
-  type: 'test'
-  ...
-# Subtest: icon alert stays one text cell
-ok 46 - icon alert stays one text cell
-  ---
-  duration_ms: 0.036494
-  type: 'test'
-  ...
-# Subtest: icon warning stays one text cell
-ok 47 - icon warning stays one text cell
-  ---
-  duration_ms: 0.04029
-  type: 'test'
-  ...
-# Subtest: icon info stays one text cell
-ok 48 - icon info stays one text cell
-  ---
-  duration_ms: 0.060972
-  type: 'test'
-  ...
-# Subtest: icon help stays one text cell
-ok 49 - icon help stays one text cell
-  ---
-  duration_ms: 0.037546
-  type: 'test'
-  ...
-# Subtest: icon database stays one text cell
-ok 50 - icon database stays one text cell
-  ---
-  duration_ms: 0.036145
-  type: 'test'
-  ...
-# Subtest: icon server stays one text cell
-ok 51 - icon server stays one text cell
-  ---
-  duration_ms: 0.055103
-  type: 'test'
-  ...
-# Subtest: icon network stays one text cell
-ok 52 - icon network stays one text cell
-  ---
-  duration_ms: 0.039649
-  type: 'test'
-  ...
-# Subtest: icon queue stays one text cell
-ok 53 - icon queue stays one text cell
-  ---
-  duration_ms: 0.03376
-  type: 'test'
-  ...
-# Subtest: icon cloud stays one text cell
-ok 54 - icon cloud stays one text cell
-  ---
-  duration_ms: 0.034552
-  type: 'test'
-  ...
-# Subtest: icon code stays one text cell
-ok 55 - icon code stays one text cell
-  ---
-  duration_ms: 0.032749
-  type: 'test'
-  ...
-# Subtest: icon branch stays one text cell
-ok 56 - icon branch stays one text cell
-  ---
-  duration_ms: 0.032899
-  type: 'test'
-  ...
-# Subtest: icon clock stays one text cell
-ok 57 - icon clock stays one text cell
-  ---
-  duration_ms: 0.031347
-  type: 'test'
-  ...
-# Subtest: icon timer stays one text cell
-ok 58 - icon timer stays one text cell
-  ---
-  duration_ms: 0.031437
-  type: 'test'
-  ...
-# Subtest: icon chart stays one text cell
-ok 59 - icon chart stays one text cell
-  ---
-  duration_ms: 0.030947
-  type: 'test'
-  ...
-# Subtest: icon bolt stays one text cell
-ok 60 - icon bolt stays one text cell
-  ---
-  duration_ms: 0.031066
-  type: 'test'
-  ...
-# Subtest: icon lock stays one text cell
-ok 61 - icon lock stays one text cell
-  ---
-  duration_ms: 0.031678
-  type: 'test'
-  ...
-# Subtest: icon key stays one text cell
-ok 62 - icon key stays one text cell
-  ---
-  duration_ms: 0.031007
-  type: 'test'
-  ...
-# Subtest: icon search stays one text cell
-ok 63 - icon search stays one text cell
-  ---
-  duration_ms: 0.032088
-  type: 'test'
-  ...
-# Subtest: icon star stays one text cell
-ok 64 - icon star stays one text cell
-  ---
-  duration_ms: 0.031417
-  type: 'test'
-  ...
-# Subtest: icon heart stays one text cell
-ok 65 - icon heart stays one text cell
-  ---
-  duration_ms: 0.031707
-  type: 'test'
-  ...
-# Subtest: icon settings stays one text cell
-ok 66 - icon settings stays one text cell
-  ---
-  duration_ms: 0.031988
-  type: 'test'
-  ...
-# Subtest: icon folder stays one text cell
-ok 67 - icon folder stays one text cell
-  ---
-  duration_ms: 0.029995
-  type: 'test'
-  ...
-# Subtest: icon file stays one text cell
-ok 68 - icon file stays one text cell
-  ---
-  duration_ms: 0.031187
-  type: 'test'
-  ...
-# Subtest: icon link stays one text cell
-ok 69 - icon link stays one text cell
-  ---
-  duration_ms: 0.031166
-  type: 'test'
-  ...
-# Subtest: icon refresh stays one text cell
-ok 70 - icon refresh stays one text cell
-  ---
-  duration_ms: 0.034091
-  type: 'test'
-  ...
-# Subtest: icon play stays one text cell
-ok 71 - icon play stays one text cell
-  ---
-  duration_ms: 0.031888
-  type: 'test'
-  ...
-# Subtest: icon pause stays one text cell
-ok 72 - icon pause stays one text cell
-  ---
-  duration_ms: 0.031277
-  type: 'test'
-  ...
-# Subtest: icon stop stays one text cell
-ok 73 - icon stop stays one text cell
-  ---
-  duration_ms: 0.035423
-  type: 'test'
-  ...
-# Subtest: icon dot stays one text cell
-ok 74 - icon dot stays one text cell
-  ---
-  duration_ms: 0.056865
-  type: 'test'
-  ...
-# Subtest: icon arrow-right stays one text cell
-ok 75 - icon arrow-right stays one text cell
-  ---
-  duration_ms: 0.039279
-  type: 'test'
-  ...
-# Subtest: icon arrow-left stays one text cell
-ok 76 - icon arrow-left stays one text cell
-  ---
-  duration_ms: 0.03306
-  type: 'test'
-  ...
-# Subtest: icon arrow-down stays one text cell
-ok 77 - icon arrow-down stays one text cell
-  ---
-  duration_ms: 0.031357
-  type: 'test'
-  ...
-# Subtest: icon arrow-up stays one text cell
-ok 78 - icon arrow-up stays one text cell
-  ---
-  duration_ms: 0.032539
-  type: 'test'
-  ...
-# Subtest: Braille bit 0,0
-ok 79 - Braille bit 0,0
-  ---
-  duration_ms: 0.367732
-  type: 'test'
-  ...
-# Subtest: Braille bit 1,0
-ok 80 - Braille bit 1,0
-  ---
-  duration_ms: 0.104427
-  type: 'test'
-  ...
-# Subtest: Braille bit 0,1
-ok 81 - Braille bit 0,1
-  ---
-  duration_ms: 0.058187
-  type: 'test'
-  ...
-# Subtest: Braille bit 1,1
-ok 82 - Braille bit 1,1
-  ---
-  duration_ms: 0.05291
-  type: 'test'
-  ...
-# Subtest: Braille bit 0,2
-ok 83 - Braille bit 0,2
-  ---
-  duration_ms: 0.095804
-  type: 'test'
-  ...
-# Subtest: Braille bit 1,2
-ok 84 - Braille bit 1,2
-  ---
-  duration_ms: 0.110686
-  type: 'test'
-  ...
-# Subtest: Braille bit 0,3
-ok 85 - Braille bit 0,3
-  ---
-  duration_ms: 0.058318
-  type: 'test'
-  ...
-# Subtest: Braille bit 1,3
-ok 86 - Braille bit 1,3
-  ---
-  duration_ms: 0.049604
-  type: 'test'
-  ...
-# Subtest: all eight Braille dots produce U+28FF and line work is bounded
-ok 87 - all eight Braille dots produce U+28FF and line work is bounded
-  ---
-  duration_ms: 0.338958
-  type: 'test'
-  ...
-# Subtest: overlaid cell has neutral union instead of last-series color
-ok 88 - overlaid cell has neutral union instead of last-series color
-  ---
-  duration_ms: 0.150366
-  type: 'test'
-  ...
-# Subtest: chart legend explicitly identifies overlap
-ok 89 - chart legend explicitly identifies overlap
-  ---
-  duration_ms: 4.676697
-  type: 'test'
-  ...
-# Subtest: sample parser preserves explicit missing data and rejects empty entries
-ok 90 - sample parser preserves explicit missing data and rejects empty entries
-  ---
-  duration_ms: 0.35354
-  type: 'test'
-  ...
-# Subtest: missing samples break lines rather than interpolating across gaps
-ok 91 - missing samples break lines rather than interpolating across gaps
-  ---
-  duration_ms: 0.424647
-  type: 'test'
-  ...
-# Subtest: series share sample index scale and shorter series do not stretch
-ok 92 - series share sample index scale and shorter series do not stretch
-  ---
-  duration_ms: 1.504498
-  type: 'test'
-  ...
-# Subtest: single, constant, negative and tiny sample series render truthfully
-ok 93 - single, constant, negative and tiny sample series render truthfully
-  ---
-  duration_ms: 6.879722
-  type: 'test'
-  ...
-# Subtest: explicit invalid or degenerate ranges are rejected instead of silently changed
-ok 94 - explicit invalid or degenerate ranges are rejected instead of silently changed
-  ---
-  duration_ms: 0.444207
-  type: 'test'
-  ...
-# Subtest: explicit clipped range has visible warning and safe runtime
-ok 95 - explicit clipped range has visible warning and safe runtime
-  ---
-  duration_ms: 1.222364
-  type: 'test'
-  ...
-# Subtest: narrow charts preserve all four labeled series
-ok 96 - narrow charts preserve all four labeled series
-  ---
-  duration_ms: 1.149264
-  type: 'test'
-  ...
-# Subtest: long legends wrap rather than dropping later series
-ok 97 - long legends wrap rather than dropping later series
-  ---
-  duration_ms: 4.197687
-  type: 'test'
-  ...
-# Subtest: both Chart and Sparkline use Braille, not block-character sparklines
-ok 98 - both Chart and Sparkline use Braille, not block-character sparklines
-  ---
-  duration_ms: 1.442354
-  type: 'test'
-  ...
-# Subtest: multiseries monochrome view retains shared scales with independent plots
-ok 99 - multiseries monochrome view retains shared scales with independent plots
-  ---
-  duration_ms: 2.928424
-  type: 'test'
-  ...
-# Subtest: demo: all widths 1..160, ANSI/plain geometry parity
-ok 100 - demo: all widths 1..160, ANSI/plain geometry parity
-  ---
-  duration_ms: 2355.641355
-  type: 'test'
-  ...
-# Subtest: palette: all widths 1..160, ANSI/plain geometry parity
-ok 101 - palette: all widths 1..160, ANSI/plain geometry parity
-  ---
-  duration_ms: 629.997632
-  type: 'test'
-  ...
-# Subtest: charts: all widths 1..160, ANSI/plain geometry parity
-ok 102 - charts: all widths 1..160, ANSI/plain geometry parity
-  ---
-  duration_ms: 1126.639947
-  type: 'test'
-  ...
-# Subtest: graph: all widths 1..160, ANSI/plain geometry parity
-ok 103 - graph: all widths 1..160, ANSI/plain geometry parity
-  ---
-  duration_ms: 533.682442
-  type: 'test'
-  ...
-# Subtest: sibling cards stretch to the same bottom edge, without stale interior bottom borders
-ok 104 - sibling cards stretch to the same bottom edge, without stale interior bottom borders
-  ---
-  duration_ms: 1.012579
-  type: 'test'
-  ...
-# Subtest: nice limits include the complete data range
-ok 105 - nice limits include the complete data range
-  ---
-  duration_ms: 2.154552
-  type: 'test'
-  ...
-# Subtest: nice scaling never changes explicit min and max
-ok 106 - nice scaling never changes explicit min and max
-  ---
-  duration_ms: 0.494152
-  type: 'test'
-  ...
-# Subtest: explicit irregular X coordinates change geometric spacing
-ok 107 - explicit irregular X coordinates change geometric spacing
-  ---
-  duration_ms: 3.392069
-  type: 'test'
-  ...
-# Subtest: X validates count, monotonicity, missing and invalid values
-ok 108 - X validates count, monotonicity, missing and invalid values
-  ---
-  duration_ms: 1.105438
-  type: 'test'
-  ...
-# Subtest: step interpolation differs from linear without creating data
-ok 109 - step interpolation differs from linear without creating data
-  ---
-  duration_ms: 5.247523
-  type: 'test'
-  ...
-# Subtest: rules are labeled and outside-range values are disclosed
-ok 110 - rules are labeled and outside-range values are disclosed
-  ---
-  duration_ms: 5.148144
-  type: 'test'
-  ...
-# Subtest: rules have numerical limits and do not silently change scale
-ok 111 - rules have numerical limits and do not silently change scale
-  ---
-  duration_ms: 0.422464
-  type: 'test'
-  ...
-# Subtest: zero line can be disabled independently of range inclusion
-ok 112 - zero line can be disabled independently of range inclusion
-  ---
-  duration_ms: 3.001043
-  type: 'test'
-  ...
-# Subtest: statistics use observed data, exclude gaps and preserve out-of-range values
-ok 113 - statistics use observed data, exclude gaps and preserve out-of-range values
-  ---
-  duration_ms: 3.763587
-  type: 'test'
-  ...
-# Subtest: monochrome stacked views keep identical X/domain and Rule legends
-ok 114 - monochrome stacked views keep identical X/domain and Rule legends
-  ---
-  duration_ms: 5.375034
-  type: 'test'
-  ...
-# Subtest: subnormal finite values do not lead to unbounded raster loops
-ok 115 - subnormal finite values do not lead to unbounded raster loops
-  ---
-  duration_ms: 2.616867
-  type: 'test'
-  ...
-# Subtest: namespaced Table.Row maps to tr
-ok 116 - namespaced Table.Row maps to tr
-  ---
-  duration_ms: 2.498308
-  type: 'test'
-  ...
-# Subtest: namespaced Table.Cell maps to td
-ok 117 - namespaced Table.Cell maps to td
-  ---
-  duration_ms: 0.172339
-  type: 'test'
-  ...
-# Subtest: namespaced Table.Head maps to th
-ok 118 - namespaced Table.Head maps to th
-  ---
-  duration_ms: 0.207121
-  type: 'test'
-  ...
-# Subtest: namespaced Table.Column maps to column
-ok 119 - namespaced Table.Column maps to column
-  ---
-  duration_ms: 0.102865
-  type: 'test'
-  ...
-# Subtest: namespaced Diff.Before maps to before
-ok 120 - namespaced Diff.Before maps to before
-  ---
-  duration_ms: 0.149925
-  type: 'test'
-  ...
-# Subtest: namespaced Diff.After maps to after
-ok 121 - namespaced Diff.After maps to after
-  ---
-  duration_ms: 0.063496
-  type: 'test'
-  ...
-# Subtest: namespaced Sequence.Actor maps to actor
-ok 122 - namespaced Sequence.Actor maps to actor
-  ---
-  duration_ms: 0.122224
-  type: 'test'
-  ...
-# Subtest: namespaced Sequence.Step maps to step
-ok 123 - namespaced Sequence.Step maps to step
-  ---
-  duration_ms: 0.065919
-  type: 'test'
-  ...
-# Subtest: namespaced Tree.Item maps to item
-ok 124 - namespaced Tree.Item maps to item
-  ---
-  duration_ms: 0.297016
-  type: 'test'
-  ...
-# Subtest: namespaced Timeline.Step maps to step
-ok 125 - namespaced Timeline.Step maps to step
-  ---
-  duration_ms: 0.291367
-  type: 'test'
-  ...
-# Subtest: namespaced Chart.Rule maps to rule
-ok 126 - namespaced Chart.Rule maps to rule
-  ---
-  duration_ms: 0.121782
-  type: 'test'
-  ...
-# Subtest: namespaced closing tags must still match exactly
-ok 127 - namespaced closing tags must still match exactly
-  ---
-  duration_ms: 0.336845
-  type: 'test'
-  ...
-# Subtest: nested component tags are not standalone Markdown roots
-ok 128 - nested component tags are not standalone Markdown roots
-  ---
-  duration_ms: 0.274562
-  type: 'test'
-  ...
-# Subtest: compact headers and values agree with explicit cells
-ok 129 - compact headers and values agree with explicit cells
-  ---
-  duration_ms: 6.31149
-  type: 'test'
-  ...
-# Subtest: table scalar cells format grouping, percent, decimals and unit
-ok 130 - table scalar cells format grouping, percent, decimals and unit
-  ---
-  duration_ms: 8.869077
-  type: 'test'
-  ...
-# Subtest: numeric columns align by right edge, with cell override
-ok 131 - numeric columns align by right edge, with cell override
-  ---
-  duration_ms: 2.997778
-  type: 'test'
-  ...
-# Subtest: table preserves headerless first row and fills short rows with em dash
-ok 132 - table preserves headerless first row and fills short rows with em dash
-  ---
-  duration_ms: 1.157136
-  type: 'test'
-  ...
-# Subtest: table refuses to drop cells beyond an explicitly declared schema
-ok 133 - table refuses to drop cells beyond an explicitly declared schema
-  ---
-  duration_ms: 0.488763
-  type: 'test'
-  ...
-# Subtest: table accepts inline Span, Badge, Sparkline and bar cells
-ok 134 - table accepts inline Span, Badge, Sparkline and bar cells
-  ---
-  duration_ms: 5.875556
-  type: 'test'
-  ...
-# Subtest: threshold styling is strict, prioritized and not color-only
-ok 135 - threshold styling is strict, prioritized and not color-only
-  ---
-  duration_ms: 3.047452
-  type: 'test'
-  ...
-# Subtest: table errors on invalid threshold and bar range
-ok 136 - table errors on invalid threshold and bar range
-  ---
-  duration_ms: 0.456305
-  type: 'test'
-  ...
-# Subtest: table bar clipping is stated and explicit row/cell tone wins thresholds
-ok 137 - table bar clipping is stated and explicit row/cell tone wins thresholds
-  ---
-  duration_ms: 1.570296
-  type: 'test'
-  ...
-# Subtest: table stacked view preserves every label and field
-ok 138 - table stacked view preserves every label and field
-  ---
-  duration_ms: 1.357036
-  type: 'test'
-  ...
-# Subtest: table can show definitions without data and validates column bounds
-ok 139 - table can show definitions without data and validates column bounds
-  ---
-  duration_ms: 0.668272
-  type: 'test'
-  ...
-# Subtest: numeric diff computes sign and relative percentage
-ok 140 - numeric diff computes sign and relative percentage
-  ---
-  duration_ms: 1.240301
-  type: 'test'
-  ...
-# Subtest: diff never assumes a larger number is better by default
-ok 141 - diff never assumes a larger number is better by default
-  ---
-  duration_ms: 0.462965
-  type: 'test'
-  ...
-# Subtest: zero baseline, negative baseline, unchanged and percentage overflow
-ok 142 - zero baseline, negative baseline, unchanged and percentage overflow
-  ---
-  duration_ms: 1.262014
-  type: 'test'
-  ...
-# Subtest: diff semantic wording does not follow an overridden color
-ok 143 - diff semantic wording does not follow an overridden color
-  ---
-  duration_ms: 0.415653
-  type: 'test'
-  ...
-# Subtest: diff rejects missing numeric side, invalid value and invalid good
-ok 144 - diff rejects missing numeric side, invalid value and invalid good
-  ---
-  duration_ms: 0.227842
-  type: 'test'
-  ...
-# Subtest: line diff reconstructs both originals exactly
-ok 145 - line diff reconstructs both originals exactly
-  ---
-  duration_ms: 0.608113
-  type: 'test'
-  ...
-# Subtest: unified and side-by-side diffs retain changes and indentation
-ok 146 - unified and side-by-side diffs retain changes and indentation
-  ---
-  duration_ms: 2.367042
-  type: 'test'
-  ...
-# Subtest: diff collapses distant unchanged lines with explicit count
-ok 147 - diff collapses distant unchanged lines with explicit count
-  ---
-  duration_ms: 1.031728
-  type: 'test'
-  ...
-# Subtest: diff LCS has a strict line limit
-ok 148 - diff LCS has a strict line limit
-  ---
-  duration_ms: 0.175183
-  type: 'test'
-  ...
-# Subtest: diff code entities remain literal rather than executable tags
-ok 149 - diff code entities remain literal rather than executable tags
-  ---
-  duration_ms: 0.829144
-  type: 'test'
-  ...
-# Subtest: sequence supports forward, reverse, return, self call and notes
-ok 150 - sequence supports forward, reverse, return, self call and notes
-  ---
-  duration_ms: 4.54534
-  type: 'test'
-  ...
-# Subtest: sequence narrow view is chronological and preserves endpoints
-ok 151 - sequence narrow view is chronological and preserves endpoints
-  ---
-  duration_ms: 0.384998
-  type: 'test'
-  ...
-# Subtest: sequence Actor labels differ from stable IDs
-ok 152 - sequence Actor labels differ from stable IDs
-  ---
-  duration_ms: 1.284387
-  type: 'test'
-  ...
-# Subtest: sequence rejects unknown or duplicate endpoints and actor definitions
-ok 153 - sequence rejects unknown or duplicate endpoints and actor definitions
-  ---
-  duration_ms: 0.509364
-  type: 'test'
-  ...
-# Subtest: sequence can infer actor order only when no actor definitions supplied
-ok 154 - sequence can infer actor order only when no actor definitions supplied
-  ---
-  duration_ms: 0.635523
-  type: 'test'
-  ...
-# Subtest: sequence wide labels wrap instead of truncating
-ok 155 - sequence wide labels wrap instead of truncating
-  ---
-  duration_ms: 1.103946
-  type: 'test'
-  ...
-# Subtest: tree maintains siblings, continuation branches and detail
-ok 156 - tree maintains siblings, continuation branches and detail
-  ---
-  duration_ms: 0.85362
-  type: 'test'
-  ...
-# Subtest: tree collapsed subtrees disclose hidden count, not child content
-ok 157 - tree collapsed subtrees disclose hidden count, not child content
-  ---
-  duration_ms: 0.268593
-  type: 'test'
-  ...
-# Subtest: long tree labels preserve final token at narrow widths
-ok 158 - long tree labels preserve final token at narrow widths
-  ---
-  duration_ms: 0.2328
-  type: 'test'
-  ...
-# Subtest: tree rejects unrelated child tags instead of silently hiding them
-ok 159 - tree rejects unrelated child tags instead of silently hiding them
-  ---
-  duration_ms: 0.198188
-  type: 'test'
-  ...
-# Subtest: timeline displays explicit status names and symbols in monochrome
-ok 160 - timeline displays explicit status names and symbols in monochrome
-  ---
-  duration_ms: 1.201132
-  type: 'test'
-  ...
-# Subtest: timeline does not silently assume completion status
-ok 161 - timeline does not silently assume completion status
-  ---
-  duration_ms: 0.86609
-  type: 'test'
-  ...
-# Subtest: timeline wraps to vertical and retains dates and details
-ok 162 - timeline wraps to vertical and retains dates and details
-  ---
-  duration_ms: 2.134352
-  type: 'test'
-  ...
-# Subtest: timeline rejects unsupported status rather than rendering fabricated semantics
-ok 163 - timeline rejects unsupported status rather than rendering fabricated semantics
-  ---
-  duration_ms: 0.134983
-  type: 'test'
-  ...
-# Subtest: demo v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 164 - demo v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 1810.029494
-  type: 'test'
-  ...
-# Subtest: table v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 165 - table v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 536.665513
-  type: 'test'
-  ...
-# Subtest: diff v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 166 - diff v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 398.039414
-  type: 'test'
-  ...
-# Subtest: sequence v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 167 - sequence v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 555.402478
-  type: 'test'
-  ...
-# Subtest: tree v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 168 - tree v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 262.78589
-  type: 'test'
-  ...
-# Subtest: timeline v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 169 - timeline v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 207.555936
-  type: 'test'
-  ...
-# Subtest: layout v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 170 - layout v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 421.487298
-  type: 'test'
-  ...
-# Subtest: charts-v04 v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-ok 171 - charts-v04 v0.4 widths 1..160: no overflow, no broken ANSI, bounded height
-  ---
-  duration_ms: 877.171351
-  type: 'test'
-  ...
-# Subtest: every streaming prefix is safe and completed blocks transform once
-ok 172 - every streaming prefix is safe and completed blocks transform once
-  ---
-  duration_ms: 12.98272
-  type: 'test'
-  ...
-# Subtest: malformed new component is left literal by native bridge fallback, not executed
-ok 173 - malformed new component is left literal by native bridge fallback, not executed
-  ---
-  duration_ms: 0.510816
-  type: 'test'
-  ...
-# Subtest: table preserves literal numeric identifiers and full precision
-ok 174 - table preserves literal numeric identifiers and full precision
-  ---
-  duration_ms: 0.620802
-  type: 'test'
-  ...
-# Subtest: table rejects ambiguous double row data and conflicting column definitions
-ok 175 - table rejects ambiguous double row data and conflicting column definitions
-  ---
-  duration_ms: 0.159139
-  type: 'test'
-  ...
-# Subtest: Diff Before/After reject nested UI rather than losing its syntax
-ok 176 - Diff Before/After reject nested UI rather than losing its syntax
-  ---
-  duration_ms: 0.105298
-  type: 'test'
-  ...
-# Subtest: deep containers disclose truncation after card framing
-ok 177 - deep containers disclose truncation after card framing
-  ---
-  duration_ms: 36.289103
-  type: 'test'
-  ...
-# Subtest: system guidance is injected exactly once into structured options
-ok 178 - system guidance is injected exactly once into structured options
-  ---
-  duration_ms: 1.590746
-  type: 'test'
-  ...
-# Subtest: legacy prompt injection preserves existing text and deduplicates
-ok 179 - legacy prompt injection preserves existing text and deduplicates
-  ---
-  duration_ms: 0.182614
-  type: 'test'
-  ...
-# Subtest: disabled prompt injection is a no-op
-ok 180 - disabled prompt injection is a no-op
-  ---
-  duration_ms: 0.124827
-  type: 'test'
-  ...
-# Subtest: bridge delegates every normal token unchanged
-ok 181 - bridge delegates every normal token unchanged
-  ---
-  duration_ms: 0.346219
-  type: 'test'
-  ...
-# Subtest: bridge owner lifecycle does not double-wrap or clobber another owner
-ok 182 - bridge owner lifecycle does not double-wrap or clobber another owner
-  ---
-  duration_ms: 0.595203
-  type: 'test'
-  ...
-# Subtest: bridge errors safely delegate, rather than breaking transcript
-ok 183 - bridge errors safely delegate, rather than breaking transcript
-  ---
-  duration_ms: 0.168863
-  type: 'test'
-  ...
-# Subtest: missing internal ABI is a supported fallback
-ok 184 - missing internal ABI is a supported fallback
-  ---
-  duration_ms: 0.148032
-  type: 'test'
-  ...
-# Subtest: extension transforms only assistant text and leaves input unchanged
-ok 185 - extension transforms only assistant text and leaves input unchanged
-  ---
-  duration_ms: 1.822364
-  type: 'test'
-  ...
-# Subtest: extension skips prompt injection in RPC / print / JSON modes
-ok 186 - extension skips prompt injection in RPC / print / JSON modes
-  ---
-  duration_ms: 0.444507
-  type: 'test'
-  ...
-# Subtest: extension demo creates display-only session entry, no user/model message
-ok 187 - extension demo creates display-only session entry, no user/model message
-  ---
-  duration_ms: 0.902535
-  type: 'test'
-  ...
-# Subtest: text mode uses public transformer fallback
-ok 188 - text mode uses public transformer fallback
-  ---
-  duration_ms: 1.782474
-  type: 'test'
-  ...
-# Subtest: legacy image/auto variables use ANSI and never construct images
-ok 189 - legacy image/auto variables use ANSI and never construct images
-  ---
-  duration_ms: 9.841045
-  type: 'test'
-  ...
-# Subtest: palette/charts commands create display-only entries
-ok 190 - palette/charts commands create display-only entries
-  ---
-  duration_ms: 0.476805
-  type: 'test'
-  ...
-# Subtest: NO_COLOR causes stacked chart layout rather than indistinguishable color-only series
-ok 191 - NO_COLOR causes stacked chart layout rather than indistinguishable color-only series
-  ---
-  duration_ms: 5.138559
-  type: 'test'
-  ...
-# Subtest: native renderer uses current theme at every call without stale rendered cache
-ok 192 - native renderer uses current theme at every call without stale rendered cache
-  ---
-  duration_ms: 0.634272
-  type: 'test'
-  ...
-# Subtest: compact guide documents color roles and Braille series without excessive instruction length
-ok 193 - compact guide documents color roles and Braille series without excessive instruction length
-  ---
-  duration_ms: 0.090717
-  type: 'test'
-  ...
-# Subtest: v0.4 commands create all new display-only examples with no model request
-ok 194 - v0.4 commands create all new display-only examples with no model request
-  ---
-  duration_ms: 35.00452
-  type: 'test'
-  ...
-# Subtest: v0.4 guide mentions every new component and contains valid XML examples
-ok 195 - v0.4 guide mentions every new component and contains valid XML examples
-  ---
-  duration_ms: 4.444749
-  type: 'test'
-  ...
-# Subtest: session shutdown/start reinstalls the bridge without duplicate wrappers
-ok 196 - session shutdown/start reinstalls the bridge without duplicate wrappers
-  ---
-  duration_ms: 0.428463
-  type: 'test'
-  ...
-# Subtest: intrinsic content sizing gives longer text priority over small badge
-ok 197 - intrinsic content sizing gives longer text priority over small badge
-  ---
-  duration_ms: 2.13244
-  type: 'test'
-  ...
-# Subtest: row wraps in groups, not always a single column
-ok 198 - row wraps in groups, not always a single column
-  ---
-  duration_ms: 1.630206
-  type: 'test'
-  ...
-# Subtest: row minimum and maximum widths remain bounded over all budgets
-ok 199 - row minimum and maximum widths remain bounded over all budgets
-  ---
-  duration_ms: 1.135394
-  type: 'test'
-  ...
-# Subtest: allocation rejects impossible budgets
-ok 200 - allocation rejects impossible budgets
-  ---
-  duration_ms: 0.299019
-  type: 'test'
-  ...
-# Subtest: explicit child maximum prevents a badge stretching across a row
-ok 201 - explicit child maximum prevents a badge stretching across a row
-  ---
-  duration_ms: 0.302123
-  type: 'test'
-  ...
-# Subtest: Grid final partial row retains column width
-ok 202 - Grid final partial row retains column width
-  ---
-  duration_ms: 4.007664
-  type: 'test'
-  ...
-# Subtest: GridItem spans complete tracks and caps span after resize
-ok 203 - GridItem spans complete tracks and caps span after resize
-  ---
-  duration_ms: 5.49078
-  type: 'test'
-  ...
-# Subtest: density compact reduces height without dropping content
-ok 204 - density compact reduces height without dropping content
-  ---
-  duration_ms: 2.136035
-  type: 'test'
-  ...
-# Subtest: right/center placement and bottom vertical alignment stay within budget
-ok 205 - right/center placement and bottom vertical alignment stay within budget
-  ---
-  duration_ms: 1.343435
-  type: 'test'
-  ...
-# Subtest: long Unicode content is measured with host cell width callback
-ok 206 - long Unicode content is measured with host cell width callback
-  ---
-  duration_ms: 1.803536
-  type: 'test'
-  ...
-# Subtest: card stretching keeps a single bottom border
-ok 207 - card stretching keeps a single bottom border
-  ---
-  duration_ms: 2.946291
-  type: 'test'
-  ...
-# Subtest: writing on a wide continuation erases the whole old glyph
-ok 208 - writing on a wide continuation erases the whole old glyph
-  ---
-  duration_ms: 0.211807
-  type: 'test'
-  ...
-# Subtest: blit never leaves half a wide glyph at the clipping boundary
-ok 209 - blit never leaves half a wide glyph at the clipping boundary
-  ---
-  duration_ms: 0.14633
-  type: 'test'
-  ...
-# Subtest: blit erases wide destination glyphs when overwriting their continuation
-ok 210 - blit erases wide destination glyphs when overwriting their continuation
-  ---
-  duration_ms: 0.143145
-  type: 'test'
-  ...
-# Subtest: PascalCase and legacy lowercase both parse
-ok 211 - PascalCase and legacy lowercase both parse
-  ---
-  duration_ms: 1.551708
-  type: 'test'
-  ...
-# Subtest: quoted values and scalar attributes
-ok 212 - quoted values and scalar attributes
-  ---
-  duration_ms: 0.957717
-  type: 'test'
-  ...
-# Subtest: angle brackets inside attributes do not terminate tags
-ok 213 - angle brackets inside attributes do not terminate tags
-  ---
-  duration_ms: 0.335314
-  type: 'test'
-  ...
-# Subtest: mismatched close rejected
-ok 214 - mismatched close rejected
-  ---
-  duration_ms: 0.234162
-  type: 'test'
-  ...
-# Subtest: case-mismatched close rejected
-ok 215 - case-mismatched close rejected
-  ---
-  duration_ms: 0.189975
-  type: 'test'
-  ...
-# Subtest: unknown tags rejected
-ok 216 - unknown tags rejected
-  ---
-  duration_ms: 0.125508
-  type: 'test'
-  ...
-# Subtest: functions and property reads never evaluated
-ok 217 - functions and property reads never evaluated
-  ---
-  duration_ms: 0.311288
-  type: 'test'
-  ...
-# Subtest: duplicate attributes rejected
-ok 218 - duplicate attributes rejected
-  ---
-  duration_ms: 0.129334
-  type: 'test'
-  ...
-# Subtest: events and resource URLs rejected
-ok 219 - events and resource URLs rejected
-  ---
-  duration_ms: 0.302083
-  type: 'test'
-  ...
-# Subtest: depth and source limits enforced
-ok 220 - depth and source limits enforced
-  ---
-  duration_ms: 0.415644
-  type: 'test'
-  ...
-# Subtest: terminal control sequences removed after entity decode
-ok 221 - terminal control sequences removed after entity decode
-  ---
-  duration_ms: 0.233481
-  type: 'test'
-  ...
-# Subtest: normal markdown is byte-for-byte unchanged
-ok 222 - normal markdown is byte-for-byte unchanged
-  ---
-  duration_ms: 0.389254
-  type: 'test'
-  ...
-# Subtest: fenced XML examples stay literal
-ok 223 - fenced XML examples stay literal
-  ---
-  duration_ms: 0.261092
-  type: 'test'
-  ...
-# Subtest: indented code stays literal
-ok 224 - indented code stays literal
-  ---
-  duration_ms: 0.083695
-  type: 'test'
-  ...
-# Subtest: inline code stays literal
-ok 225 - inline code stays literal
-  ---
-  duration_ms: 0.099149
-  type: 'test'
-  ...
-# Subtest: completed standalone block becomes a display-only token
-ok 226 - completed standalone block becomes a display-only token
-  ---
-  duration_ms: 0.219169
-  type: 'test'
-  ...
-# Subtest: multiline malformed subtree not independently rendered
-ok 227 - multiline malformed subtree not independently rendered
-  ---
-  duration_ms: 0.123606
-  type: 'test'
-  ...
-# Subtest: incomplete final block remains source
-ok 228 - incomplete final block remains source
-  ---
-  duration_ms: 0.081492
-  type: 'test'
-  ...
-# Subtest: stream renders complete blocks and placeholder for incomplete tail
-ok 229 - stream renders complete blocks and placeholder for incomplete tail
-  ---
-  duration_ms: 0.219359
-  type: 'test'
-  ...
-# Subtest: no partial transformation when closing tag shares prose
-ok 230 - no partial transformation when closing tag shares prose
-  ---
-  duration_ms: 0.087561
-  type: 'test'
-  ...
-# Subtest: fences containing backticks inside markup are safely lengthened
-ok 231 - fences containing backticks inside markup are safely lengthened
-  ---
-  duration_ms: 0.095363
-  type: 'test'
-  ...
-# Subtest: all v0.1 tag names remain accepted
-ok 232 - all v0.1 tag names remain accepted
-  ---
-  duration_ms: 0.134452
-  type: 'test'
-  ...
-# Subtest: demo width budget 1
-ok 233 - demo width budget 1
-  ---
-  duration_ms: 27.879494
-  type: 'test'
-  ...
-# Subtest: demo width budget 2
-ok 234 - demo width budget 2
-  ---
-  duration_ms: 15.649533
-  type: 'test'
-  ...
-# Subtest: demo width budget 3
-ok 235 - demo width budget 3
-  ---
-  duration_ms: 10.778934
-  type: 'test'
-  ...
-# Subtest: demo width budget 5
-ok 236 - demo width budget 5
-  ---
-  duration_ms: 9.851322
-  type: 'test'
-  ...
-# Subtest: demo width budget 8
-ok 237 - demo width budget 8
-  ---
-  duration_ms: 7.559143
-  type: 'test'
-  ...
-# Subtest: demo width budget 12
-ok 238 - demo width budget 12
-  ---
-  duration_ms: 8.396089
-  type: 'test'
-  ...
-# Subtest: demo width budget 24
-ok 239 - demo width budget 24
-  ---
-  duration_ms: 8.732974
-  type: 'test'
-  ...
-# Subtest: demo width budget 40
-ok 240 - demo width budget 40
-  ---
-  duration_ms: 14.324785
-  type: 'test'
-  ...
-# Subtest: demo width budget 60
-ok 241 - demo width budget 60
-  ---
-  duration_ms: 13.194499
-  type: 'test'
-  ...
-# Subtest: demo width budget 80
-ok 242 - demo width budget 80
-  ---
-  duration_ms: 14.835421
-  type: 'test'
-  ...
-# Subtest: demo width budget 120
-ok 243 - demo width budget 120
-  ---
-  duration_ms: 17.866113
-  type: 'test'
-  ...
-# Subtest: demo width budget 160
-ok 244 - demo width budget 160
-  ---
-  duration_ms: 20.907012
-  type: 'test'
-  ...
-# Subtest: demo width budget 240
-ok 245 - demo width budget 240
-  ---
-  duration_ms: 27.500266
-  type: 'test'
-  ...
-# Subtest: narrow layout stacks; wide layout composes horizontally
-ok 246 - narrow layout stacks; wide layout composes horizontally
-  ---
-  duration_ms: 0.764467
-  type: 'test'
-  ...
-# Subtest: native output has colors but no code-fence shell
-ok 247 - native output has colors but no code-fence shell
-  ---
-  duration_ms: 8.54408
-  type: 'test'
-  ...
-# Subtest: NO_COLOR option removes all ANSI
-ok 248 - NO_COLOR option removes all ANSI
-  ---
-  duration_ms: 6.002336
-  type: 'test'
-  ...
-# Subtest: Unicode emoji and CJK columns remain bounded
-ok 249 - Unicode emoji and CJK columns remain bounded
-  ---
-  duration_ms: 4.762055
-  type: 'test'
-  ...
-# Subtest: graph renders every diamond node and arrows
-ok 250 - graph renders every diamond node and arrows
-  ---
-  duration_ms: 1.965089
-  type: 'test'
-  ...
-# Subtest: graph falls back vertically at medium widths
-ok 251 - graph falls back vertically at medium widths
-  ---
-  duration_ms: 0.954582
-  type: 'test'
-  ...
-# Subtest: cyclic graph uses an explicit adjacency fallback
-ok 252 - cyclic graph uses an explicit adjacency fallback
-  ---
-  duration_ms: 0.505769
-  type: 'test'
-  ...
-# Subtest: missing graph node is an error, not a silently invented node
-ok 253 - missing graph node is an error, not a silently invented node
-  ---
-  duration_ms: 0.304006
-  type: 'test'
-  ...
-# Subtest: duplicate graph node is rejected
-ok 254 - duplicate graph node is rejected
-  ---
-  duration_ms: 0.137175
-  type: 'test'
-  ...
-# Subtest: long graph edges retain exact endpoints in legend
-ok 255 - long graph edges retain exact endpoints in legend
-  ---
-  duration_ms: 0.898728
-  type: 'test'
-  ...
-# Subtest: chart accepts negative, constant and single-point series
-ok 256 - chart accepts negative, constant and single-point series
-  ---
-  duration_ms: 4.075841
-  type: 'test'
-  ...
-# Subtest: chart rejects NaN, Infinity and oversized series
-ok 257 - chart rejects NaN, Infinity and oversized series
-  ---
-  duration_ms: 0.417978
-  type: 'test'
-  ...
-# Subtest: multi-series chart keeps legend
-ok 258 - multi-series chart keeps legend
-  ---
-  duration_ms: 2.893663
-  type: 'test'
-  ...
-# Subtest: signed bars are supported
-ok 259 - signed bars are supported
-  ---
-  duration_ms: 0.777106
-  type: 'test'
-  ...
-# Subtest: table wraps values and keeps narrow fallback labels
-ok 260 - table wraps values and keeps narrow fallback labels
-  ---
-  duration_ms: 1.378879
-  type: 'test'
-  ...
-# Subtest: height cap is explicit rather than silently dropping tail
-ok 261 - height cap is explicit rather than silently dropping tail
-  ---
-  duration_ms: 62.205547
-  type: 'test'
-  ...
-# Subtest: extreme chart numbers fail quickly rather than entering a raster loop
-ok 262 - extreme chart numbers fail quickly rather than entering a raster loop
-  ---
-  duration_ms: 0.614032
-  type: 'test'
-  ...
-# Subtest: multiline attributes cannot inject raw newlines into a TUI line
-ok 263 - multiline attributes cannot inject raw newlines into a TUI line
-  ---
-  duration_ms: 0.361152
-  type: 'test'
-  ...
-# Subtest: text-presentation arrows are single-cell; emoji sequences are wide
-ok 264 - text-presentation arrows are single-cell; emoji sequences are wide
-  ---
-  duration_ms: 0.140501
-  type: 'test'
-  ...
-# Subtest: demo: reviewed renderer snapshots at 40/80/120 columns
-ok 265 - demo: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 53.875943
-  type: 'test'
-  ...
-# Subtest: table: reviewed renderer snapshots at 40/80/120 columns
-ok 266 - table: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 13.241379
-  type: 'test'
-  ...
-# Subtest: diff: reviewed renderer snapshots at 40/80/120 columns
-ok 267 - diff: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 8.72367
-  type: 'test'
-  ...
-# Subtest: sequence: reviewed renderer snapshots at 40/80/120 columns
-ok 268 - sequence: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 9.873976
-  type: 'test'
-  ...
-# Subtest: tree: reviewed renderer snapshots at 40/80/120 columns
-ok 269 - tree: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 8.699303
-  type: 'test'
-  ...
-# Subtest: timeline: reviewed renderer snapshots at 40/80/120 columns
-ok 270 - timeline: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 3.848254
-  type: 'test'
-  ...
-# Subtest: layout: reviewed renderer snapshots at 40/80/120 columns
-ok 271 - layout: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 8.879699
-  type: 'test'
-  ...
-# Subtest: charts-v04: reviewed renderer snapshots at 40/80/120 columns
-ok 272 - charts-v04: reviewed renderer snapshots at 40/80/120 columns
-  ---
-  duration_ms: 19.734908
-  type: 'test'
-  ...
-1..272
-# tests 272
-# suites 0
-# pass 272
-# fail 0
-# cancelled 0
-# skipped 0
-# todo 0
-# duration_ms 5316.607516
+✔ semantic alias green -> success (8.458968ms)
+✔ semantic alias positive -> success (0.302991ms)
+✔ semantic alias red -> error (0.220939ms)
+✔ semantic alias danger -> error (0.211086ms)
+✔ semantic alias negative -> error (0.268355ms)
+✔ semantic alias yellow -> warning (0.210094ms)
+✔ semantic alias orange -> warning (0.225708ms)
+✔ semantic alias blue -> info (0.240267ms)
+✔ semantic alias violet -> purple (0.252434ms)
+✔ semantic alias magenta -> purple (4.110057ms)
+✔ semantic alias teal -> cyan (0.152522ms)
+✔ semantic alias gray -> muted (0.120459ms)
+✔ semantic alias grey -> muted (0.091914ms)
+✔ semantic alias neutral -> text (0.057603ms)
+✔ semantic alias default -> text (0.04248ms)
+✔ unknown roles cannot inject ANSI and fall back to known palette (0.088526ms)
+✔ tone overrides color and unknown roles never become host theme tokens (0.179596ms)
+✔ theme mapping text -> text (1.391422ms)
+✔ theme mapping accent -> accent (0.202338ms)
+✔ theme mapping success -> success (0.072791ms)
+✔ theme mapping error -> error (0.057692ms)
+✔ theme mapping warning -> warning (0.101541ms)
+✔ theme mapping info -> mdLink (0.090383ms)
+✔ theme mapping purple -> syntaxKeyword (0.070631ms)
+✔ theme mapping cyan -> mdCode (0.088541ms)
+✔ theme mapping muted -> muted (0.131468ms)
+✔ theme mapping dim -> dim (0.157615ms)
+✔ theme mapping border -> borderMuted (0.071658ms)
+✔ native fallback never emits background or image placement commands (6.724946ms)
+✔ 16, 256 and truecolor fallback are explicit and color depth detection is conservative (0.513119ms)
+✔ older theme missing a token falls back safely (0.228119ms)
+✔ NO_COLOR suppresses colors and bold even if theme exists (0.148451ms)
+✔ box tone scopes accents without recoloring neutral body text (7.204932ms)
+✔ status badges distinguish meaning without color (2.231537ms)
+✔ Span style boundaries preserve natural word composition and inline icons (1.012775ms)
+✔ Span words and CJK/emoji wrap without corrupting cell widths (8.193312ms)
+✔ standalone Span stays literal; it is an inline child, not a UI root (0.852335ms)
+✔ Title and Caption accept explicit semantic tones (0.52179ms)
+✔ table tones survive wide and narrow layouts; a headerless table keeps first row (5.753022ms)
+✔ graph edges use their own tone (3.579877ms)
+✔ grid minWidth applies to row sizing as well as column count (3.02243ms)
+✔ icon check stays one text cell (0.284749ms)
+✔ icon success stays one text cell (0.184914ms)
+✔ icon close stays one text cell (0.179633ms)
+✔ icon error stays one text cell (0.126106ms)
+✔ icon alert stays one text cell (0.12542ms)
+✔ icon warning stays one text cell (0.164245ms)
+✔ icon info stays one text cell (0.144513ms)
+✔ icon help stays one text cell (0.195302ms)
+✔ icon database stays one text cell (0.076694ms)
+✔ icon server stays one text cell (0.047001ms)
+✔ icon network stays one text cell (0.040785ms)
+✔ icon queue stays one text cell (0.037125ms)
+✔ icon cloud stays one text cell (0.037472ms)
+✔ icon code stays one text cell (0.062646ms)
+✔ icon branch stays one text cell (0.050916ms)
+✔ icon clock stays one text cell (0.041752ms)
+✔ icon timer stays one text cell (0.036721ms)
+✔ icon chart stays one text cell (0.035298ms)
+✔ icon bolt stays one text cell (0.034604ms)
+✔ icon lock stays one text cell (0.034702ms)
+✔ icon key stays one text cell (0.03298ms)
+✔ icon search stays one text cell (0.063652ms)
+✔ icon star stays one text cell (0.24928ms)
+✔ icon heart stays one text cell (0.063631ms)
+✔ icon settings stays one text cell (0.037789ms)
+✔ icon folder stays one text cell (0.038756ms)
+✔ icon file stays one text cell (0.047155ms)
+✔ icon link stays one text cell (0.066233ms)
+✔ icon refresh stays one text cell (0.040034ms)
+✔ icon play stays one text cell (0.033824ms)
+✔ icon pause stays one text cell (0.034098ms)
+✔ icon stop stays one text cell (0.03354ms)
+✔ icon dot stays one text cell (0.040293ms)
+✔ icon arrow-right stays one text cell (0.034413ms)
+✔ icon arrow-left stays one text cell (0.030735ms)
+✔ icon arrow-down stays one text cell (0.032177ms)
+✔ icon arrow-up stays one text cell (0.034669ms)
+✔ Braille bit 0,0 (0.457286ms)
+✔ Braille bit 1,0 (0.089462ms)
+✔ Braille bit 0,1 (0.062365ms)
+✔ Braille bit 1,1 (0.089386ms)
+✔ Braille bit 0,2 (0.05812ms)
+✔ Braille bit 1,2 (0.062817ms)
+✔ Braille bit 0,3 (0.047404ms)
+✔ Braille bit 1,3 (0.052192ms)
+✔ all eight Braille dots produce U+28FF and line work is bounded (0.580976ms)
+✔ overlaid cell has neutral union instead of last-series color (0.189685ms)
+✔ chart legend explicitly identifies overlap (7.125139ms)
+✔ sample parser preserves explicit missing data and rejects empty entries (0.650771ms)
+✔ missing samples break lines rather than interpolating across gaps (0.517078ms)
+✔ series share sample index scale and shorter series do not stretch (8.274102ms)
+✔ single, constant, negative and tiny sample series render truthfully (16.842208ms)
+✔ explicit invalid or degenerate ranges are rejected instead of silently changed (0.405079ms)
+✔ explicit clipped range has visible warning and safe runtime (3.440993ms)
+✔ narrow charts preserve all four labeled series (2.851606ms)
+✔ long legends wrap rather than dropping later series (6.457817ms)
+✔ both Chart and Sparkline use Braille, not block-character sparklines (2.155567ms)
+✔ multiseries monochrome view retains shared scales with independent plots (2.10736ms)
+✔ demo: all widths 1..160, ANSI/plain geometry parity (971.906046ms)
+✔ palette: all widths 1..160, ANSI/plain geometry parity (547.967614ms)
+✔ charts: all widths 1..160, ANSI/plain geometry parity (847.011606ms)
+✔ graph: all widths 1..160, ANSI/plain geometry parity (409.707542ms)
+✔ sibling cards stretch to the same bottom edge, without stale interior bottom borders (2.55451ms)
+✔ nice limits include the complete data range (3.664958ms)
+✔ nice scaling never changes explicit min and max (0.771227ms)
+✔ explicit irregular X coordinates change geometric spacing (7.368519ms)
+✔ X validates count, monotonicity, missing and invalid values (1.197091ms)
+✔ step interpolation differs from linear without creating data (17.713742ms)
+✔ rules are labeled and outside-range values are disclosed (12.552607ms)
+✔ rules have numerical limits and do not silently change scale (0.818845ms)
+✔ zero line can be disabled independently of range inclusion (12.722055ms)
+✔ statistics use observed data, exclude gaps and preserve out-of-range values (4.802891ms)
+✔ monochrome stacked views keep identical X/domain and Rule legends (17.692845ms)
+✔ subnormal finite values do not lead to unbounded raster loops (8.249444ms)
+✔ namespaced Table.Row maps to tr (3.916999ms)
+✔ namespaced Table.Cell maps to td (0.367238ms)
+✔ namespaced Table.Head maps to th (0.295586ms)
+✔ namespaced Table.Column maps to column (0.279141ms)
+✔ namespaced Diff.Before maps to before (0.351219ms)
+✔ namespaced Diff.After maps to after (0.281726ms)
+✔ namespaced Sequence.Actor maps to actor (0.306629ms)
+✔ namespaced Sequence.Step maps to step (0.232946ms)
+✔ namespaced Tree.Item maps to item (0.27841ms)
+✔ namespaced Timeline.Step maps to step (0.449539ms)
+✔ namespaced Chart.Rule maps to rule (0.210331ms)
+✔ namespaced closing tags must still match exactly (0.532038ms)
+✔ nested component tags are not standalone Markdown roots (0.510688ms)
+✔ compact headers and values agree with explicit cells (11.603421ms)
+✔ table scalar cells format grouping, percent, decimals and unit (7.521192ms)
+✔ numeric columns align by right edge, with cell override (4.07424ms)
+✔ table preserves headerless first row and fills short rows with em dash (2.725131ms)
+✔ table refuses to drop cells beyond an explicitly declared schema (1.017007ms)
+✔ table accepts inline Span, Badge, Sparkline and bar cells (14.346097ms)
+✔ threshold styling is strict, prioritized and not color-only (8.669686ms)
+✔ table errors on invalid threshold and bar range (0.942168ms)
+✔ table bar clipping is stated and explicit row/cell tone wins thresholds (1.897191ms)
+✔ table stacked view preserves every label and field (0.652177ms)
+✔ table can show definitions without data and validates column bounds (1.044324ms)
+✔ numeric diff computes sign and relative percentage (1.875432ms)
+✔ diff never assumes a larger number is better by default (0.814859ms)
+✔ zero baseline, negative baseline, unchanged and percentage overflow (5.086016ms)
+✔ diff semantic wording does not follow an overridden color (1.856679ms)
+✔ diff rejects missing numeric side, invalid value and invalid good (0.577012ms)
+✔ line diff reconstructs both originals exactly (1.082257ms)
+✔ unified and side-by-side diffs retain changes and indentation (7.673211ms)
+✔ diff collapses distant unchanged lines with explicit count (4.957279ms)
+✔ diff LCS has a strict line limit (0.397537ms)
+✔ diff code entities remain literal rather than executable tags (0.892397ms)
+✔ sequence supports forward, reverse, return, self call and notes (9.054043ms)
+✔ sequence narrow view is chronological and preserves endpoints (0.531196ms)
+✔ sequence Actor labels differ from stable IDs (1.194124ms)
+✔ sequence rejects unknown or duplicate endpoints and actor definitions (0.597693ms)
+✔ sequence can infer actor order only when no actor definitions supplied (1.73168ms)
+✔ sequence wide labels wrap instead of truncating (0.891992ms)
+✔ tree maintains siblings, continuation branches and detail (1.216165ms)
+✔ tree collapsed subtrees disclose hidden count, not child content (2.982981ms)
+✔ long tree labels preserve final token at narrow widths (0.333379ms)
+✔ tree rejects unrelated child tags instead of silently hiding them (0.216265ms)
+✔ timeline displays explicit status names and symbols in monochrome (1.100433ms)
+✔ timeline does not silently assume completion status (0.594398ms)
+✔ timeline wraps to vertical and retains dates and details (2.432574ms)
+✔ timeline rejects unsupported status rather than rendering fabricated semantics (0.208328ms)
+✔ demo v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (1293.641628ms)
+✔ table v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (619.581611ms)
+✔ diff v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (563.436419ms)
+✔ sequence v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (641.844194ms)
+✔ tree v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (281.084733ms)
+✔ timeline v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (245.673475ms)
+✔ layout v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (642.034258ms)
+✔ charts-v04 v0.4 widths 1..160: no overflow, no broken ANSI, bounded height (1021.184433ms)
+✔ every streaming prefix is safe and completed blocks transform once (18.020863ms)
+✔ malformed new component is left literal by native bridge fallback, not executed (1.224097ms)
+✔ table preserves literal numeric identifiers and full precision (0.920752ms)
+✔ table rejects ambiguous double row data and conflicting column definitions (0.312213ms)
+✔ Diff Before/After reject nested UI rather than losing its syntax (0.146397ms)
+✔ deep containers disclose truncation after card framing (45.421606ms)
+✔ heading inside has independent placement (10.006199ms)
+✔ heading above has independent placement (2.167483ms)
+✔ heading border has independent placement (3.670581ms)
+✔ heading none has independent placement (8.25046ms)
+✔ border rounded changes geometry without losing title (1.221855ms)
+✔ border single changes geometry without losing title (1.276972ms)
+✔ border left changes geometry without losing title (1.241941ms)
+✔ border none changes geometry without losing title (0.814814ms)
+✔ Card content heading and Box edge heading are deliberate defaults (4.316283ms)
+✔ title-less Box has no invented heading or label (3.98764ms)
+✔ boolean border=false and explicit none are identical (2.926127ms)
+✔ long edge titles move above frame and preserve the full wording (1.942066ms)
+✔ multiline titles and Unicode are not cut by frame decoration (3.103936ms)
+✔ left and none edge titles become content headings, not lost labels (3.128552ms)
+✔ explicit title suppression retains the body (5.895298ms)
+✔ invalid design enums fail safely instead of doing unintended layouts (1.48509ms)
+✔ borderTone/titleTone do not recolor body prose (2.246282ms)
+✔ semantic status can inherit while ordinary prose stays neutral (6.56904ms)
+✔ btop default accents inherit actual Pi theme, not hard-coded RGB (1.676513ms)
+✔ content headings wrap and preserve inline icon labels (0.905095ms)
+✔ Callout has a rail, optional title and no enclosing frame (0.674961ms)
+✔ Callout is a recognized standalone streaming Markdown root (0.982243ms)
+✔ stretch preserves rounded with heading inside (7.816961ms)
+✔ stretch preserves rounded with heading above (7.728814ms)
+✔ stretch preserves rounded with heading border (3.278041ms)
+✔ stretch preserves single with heading inside (2.056605ms)
+✔ stretch preserves single with heading above (2.35308ms)
+✔ stretch preserves single with heading border (4.827707ms)
+✔ stretch preserves left with heading inside (1.263867ms)
+✔ stretch preserves left with heading above (1.19268ms)
+✔ stretch preserves left with heading border (2.680481ms)
+✔ stretch preserves none with heading inside (1.487909ms)
+✔ stretch preserves none with heading above (1.600903ms)
+✔ stretch preserves none with heading border (1.422607ms)
+✔ narrow container degrades decoration and preserves heading and body (0.788861ms)
+✔ table headers use accent while vertical rules are optional (4.999744ms)
+✔ numeric metrics have bright bold values and optional semantic delta (0.359322ms)
+✔ each supported density affects frame-free content too (0.579919ms)
+✔ narrow intrinsic sizing accounts for border-less and rail insets (0.235217ms)
+✔ square frame primitive remains width-correct (0.534799ms)
+✔ compare: actual new compositions at widths 1..160 (1178.651835ms)
+✔ architecture: actual new compositions at widths 1..160 (1010.455704ms)
+✔ components: actual new compositions at widths 1..160 (1142.145885ms)
+✔ titles: actual new compositions at widths 1..160 (1009.535335ms)
+✔ dashboard: actual new compositions at widths 1..160 (1624.272804ms)
+✔ real discussion examples preserve their decision and architecture wording (8.918398ms)
+✔ a zero delta remains visible instead of being dropped as falsy (0.389134ms)
+✔ system guidance is injected exactly once into structured options (2.354124ms)
+✔ legacy prompt injection preserves existing text and deduplicates (0.393576ms)
+✔ disabled prompt injection is a no-op (0.257531ms)
+✔ bridge delegates every normal token unchanged (0.520994ms)
+✔ bridge owner lifecycle does not double-wrap or clobber another owner (0.441746ms)
+✔ bridge errors safely delegate, rather than breaking transcript (0.469945ms)
+✔ missing internal ABI is a supported fallback (0.308636ms)
+✔ extension transforms only assistant text and leaves input unchanged (3.305504ms)
+✔ extension skips prompt injection in RPC / print / JSON modes (0.62375ms)
+✔ extension demo creates display-only session entry, no user/model message (1.215321ms)
+✔ text mode uses public transformer fallback (3.703553ms)
+✔ legacy image/auto variables use ANSI and never construct images (14.582886ms)
+✔ palette/charts commands create display-only entries (0.684425ms)
+✔ NO_COLOR causes stacked chart layout rather than indistinguishable color-only series (16.334021ms)
+✔ native renderer uses current theme at every call without stale rendered cache (1.258334ms)
+✔ compact guide documents color roles and Braille series without excessive instruction length (0.219657ms)
+✔ v0.4 commands create all new display-only examples with no model request (73.380937ms)
+✔ v0.4 guide mentions every new component and contains valid XML examples (10.251598ms)
+✔ session shutdown/start reinstalls the bridge without duplicate wrappers (0.714456ms)
+✔ intrinsic content sizing gives longer text priority over small badge (4.739541ms)
+✔ row wraps in groups, not always a single column (3.419384ms)
+✔ row minimum and maximum widths remain bounded over all budgets (3.111625ms)
+✔ allocation rejects impossible budgets (0.570086ms)
+✔ explicit child maximum prevents a badge stretching across a row (0.747691ms)
+✔ Grid final partial row retains column width (21.745574ms)
+✔ GridItem spans complete tracks and caps span after resize (10.23233ms)
+✔ density compact reduces height without dropping content (3.815341ms)
+✔ right/center placement and bottom vertical alignment stay within budget (5.297071ms)
+✔ long Unicode content is measured with host cell width callback (9.380156ms)
+✔ card stretching keeps a single bottom border (9.566993ms)
+✔ writing on a wide continuation erases the whole old glyph (0.312783ms)
+✔ blit never leaves half a wide glyph at the clipping boundary (0.374037ms)
+✔ blit erases wide destination glyphs when overwriting their continuation (0.281152ms)
+✔ PascalCase and legacy lowercase both parse (2.321715ms)
+✔ quoted values and scalar attributes (0.872931ms)
+✔ angle brackets inside attributes do not terminate tags (0.502686ms)
+✔ mismatched close rejected (0.391945ms)
+✔ case-mismatched close rejected (0.407982ms)
+✔ unknown tags rejected (0.282969ms)
+✔ functions and property reads never evaluated (0.351769ms)
+✔ duplicate attributes rejected (0.258362ms)
+✔ events and resource URLs rejected (0.447869ms)
+✔ depth and source limits enforced (0.600084ms)
+✔ terminal control sequences removed after entity decode (0.473134ms)
+✔ normal markdown is byte-for-byte unchanged (0.942974ms)
+✔ fenced XML examples stay literal (0.296545ms)
+✔ indented code stays literal (0.271084ms)
+✔ inline code stays literal (0.075998ms)
+✔ completed standalone block becomes a display-only token (0.506711ms)
+✔ multiline malformed subtree not independently rendered (0.33791ms)
+✔ incomplete final block remains source (0.12614ms)
+✔ stream renders complete blocks and placeholder for incomplete tail (0.62438ms)
+✔ no partial transformation when closing tag shares prose (0.324912ms)
+✔ fences containing backticks inside markup are safely lengthened (0.10984ms)
+✔ all v0.1 tag names remain accepted (0.572669ms)
+✔ demo width budget 1 (48.985786ms)
+✔ demo width budget 2 (32.023816ms)
+✔ demo width budget 3 (26.534661ms)
+✔ demo width budget 5 (5.312006ms)
+✔ demo width budget 8 (11.537005ms)
+✔ demo width budget 12 (9.641654ms)
+✔ demo width budget 24 (4.8945ms)
+✔ demo width budget 40 (6.848436ms)
+✔ demo width budget 60 (7.899157ms)
+✔ demo width budget 80 (8.806803ms)
+✔ demo width budget 120 (8.304655ms)
+✔ demo width budget 160 (10.749189ms)
+✔ demo width budget 240 (11.414886ms)
+✔ narrow layout stacks; wide layout composes horizontally (1.46459ms)
+✔ native output has colors but no code-fence shell (10.774033ms)
+✔ NO_COLOR option removes all ANSI (13.265689ms)
+✔ Unicode emoji and CJK columns remain bounded (2.418534ms)
+✔ graph renders every diamond node and arrows (2.123386ms)
+✔ graph falls back vertically at medium widths (1.418312ms)
+✔ cyclic graph uses an explicit adjacency fallback (1.736621ms)
+✔ missing graph node is an error, not a silently invented node (0.602131ms)
+✔ duplicate graph node is rejected (0.289068ms)
+✔ long graph edges retain exact endpoints in legend (2.501937ms)
+✔ chart accepts negative, constant and single-point series (7.79191ms)
+✔ chart rejects NaN, Infinity and oversized series (0.426107ms)
+✔ multi-series chart keeps legend (2.929079ms)
+✔ signed bars are supported (0.517683ms)
+✔ table wraps values and keeps narrow fallback labels (2.154152ms)
+✔ height cap is explicit rather than silently dropping tail (39.946403ms)
+✔ extreme chart numbers fail quickly rather than entering a raster loop (0.533658ms)
+✔ multiline attributes cannot inject raw newlines into a TUI line (0.460068ms)
+✔ text-presentation arrows are single-cell; emoji sequences are wide (0.398881ms)
+✔ demo: reviewed renderer snapshots at 40/80/120 columns (37.952236ms)
+✔ table: reviewed renderer snapshots at 40/80/120 columns (18.628021ms)
+✔ diff: reviewed renderer snapshots at 40/80/120 columns (9.04158ms)
+✔ sequence: reviewed renderer snapshots at 40/80/120 columns (8.150917ms)
+✔ tree: reviewed renderer snapshots at 40/80/120 columns (5.009874ms)
+✔ timeline: reviewed renderer snapshots at 40/80/120 columns (4.372796ms)
+✔ layout: reviewed renderer snapshots at 40/80/120 columns (7.847618ms)
+✔ charts-v04: reviewed renderer snapshots at 40/80/120 columns (15.558299ms)
+✔ compare: reviewed renderer snapshots at 40/80/120 columns (25.870259ms)
+✔ architecture: reviewed renderer snapshots at 40/80/120 columns (14.964604ms)
+✔ components: reviewed renderer snapshots at 40/80/120 columns (14.195362ms)
+✔ titles: reviewed renderer snapshots at 40/80/120 columns (26.138955ms)
+✔ dashboard: reviewed renderer snapshots at 40/80/120 columns (26.509296ms)
+ℹ tests 324
+ℹ suites 0
+ℹ pass 324
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6397.77456

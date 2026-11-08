@@ -1,25 +1,25 @@
 {
-  "node": "v22.16.0",
+  "node": "v24.22.1",
   "platform": "linux",
   "benchmark": "cached parse + layout + ANSI; synthetic, not live Pi",
   "results": [
     {
       "width": 40,
       "runs": 100,
-      "medianMs": 5.575,
-      "p95Ms": 7.344
+      "medianMs": 3.357,
+      "p95Ms": 7.483
     },
     {
       "width": 80,
       "runs": 100,
-      "medianMs": 6.439,
-      "p95Ms": 13.445
+      "medianMs": 3.668,
+      "p95Ms": 7.511
     },
     {
       "width": 120,
       "runs": 100,
-      "medianMs": 10.873,
-      "p95Ms": 14.369
+      "medianMs": 3.185,
+      "p95Ms": 6.305
     }
   ]
 }

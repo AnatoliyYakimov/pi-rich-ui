@@ -1,3 +1,23 @@
+# 0.5.0 — General-purpose rich terminal design
+
+- btop-inspired semantic outlines, content headings, bold values and muted captions.
+- Independent `titlePosition=inside|above|border|none` and `border=rounded|single|left|none`.
+- Card defaults to a content heading; Box retains its border-heading default.
+- `borderTone` and `titleTone` allow accents without recoloring body prose.
+- New Callout rail; frame-free containers and title-less panels.
+- Full long headings wrap above a frame rather than being truncated.
+- Equal-height container stretch preserves corners, rails and heading position.
+- Open-column rich tables, accented headings and optional columnSeparators.
+- Optional Metric delta line; dimmer Braille grids, unchanged data semantics.
+- General examples: ANSI comparison, renderer architecture, component catalog, heading modes.
+- Existing numeric demo retained as /rich-ui dashboard; default demo is now the comparison.
+- Actual color-renderer previews in English README and gallery, with dark/light/narrow variants.
+- Compact model guide updated (2296 characters); no extra tool schema or model calls.
+- 324 automated tests and 39 reviewed snapshots pass; official pi-tui 1.5.0 smoke-tested.
+- PNG remains disabled; no additional runtime dependency.
+
+---
+
 # 0.4.0 — 2026-11-08
 
 - Rich Table: intrinsic column sizing, numeric alignment/formatting, semantic thresholds with

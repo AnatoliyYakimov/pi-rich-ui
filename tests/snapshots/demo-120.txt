@@ -1,41 +1,20 @@
-PI RICH UI 0.4 · illustrative data
+Start with ANSI.
 
-╭─ API ───────────────────────────────╮  ╭─ KAFKA ─────────────────────────────╮  ╭─ p99 ──────────────────────────────╮
-│ RPS                                 │  │ Partitions                          │  │ 600 ms → 120 ms                    │
-│ 600                                 │  │ 72                                  │  │ Δ -480 ms · -80%                   │
-│                                     │  │                                     │  │ ✓ improved                         │
-╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯  ╰────────────────────────────────────╯
+Keep pixel graphics as an optional future renderer.
 
-Service                                               │     RPS │ Status
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-API                                                   │     600 │ ✓ Healthy
-Orders                                                │     450 │ ! Check lag
+╭─────────────────────────────────────────────────────────╮  ╭─────────────────────────────────────────────────────────╮
+│ ANSI / Unicode                                          │  │ PNG                                                     │
+│                                                         │  │                                                         │
+│ ✓ Current direction                                     │  │ ○ Deferred                                              │
+│                                                         │  │                                                         │
+│ Text, panels, diagrams and Braille charts.              │  │ Pixel graphics, arbitrary lines and fonts.              │
+│                                                         │  │                                                         │
+│ • Copyable terminal text                                │  │ Image contents cannot be selected as terminal text.     │
+│ • Colors from the Pi theme                              │  │ Requires image protocol support.                        │
+│                                                         │  │                                                         │
+│ Geometry follows terminal cells.                        │  │                                                         │
+╰─────────────────────────────────────────────────────────╯  ╰─────────────────────────────────────────────────────────╯
 
-                     API                                   DB                                   Kafka
-                      ┊                                     ┊                                     ┊
-1                     ┊Save + outbox                        ┊                                     ┊
-                      ──────────────────────────────────────▶                                     ┊
-                      ┊                                     ┊                                     ┊
-2                     ┊Commit ↩                             ┊                                     ┊
-                      ◀╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌                                     ┊
-                      ┊                                     ┊                                     ┊
-   i DB: Relay reads committed outbox records.
-                      ┊                                     ┊                                     ┊
-3                     ┊                                     ┊Relay publishes                      ┊
-                      ┊                                     ──────────────────────────────────────▶
-                      ┊                                     ┊                                     ┊
+The model describes meaning. The renderer chooses presentation.
 
-Latency · ms
-60 │⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⣀⣀⣀⣀⣀⣀⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⣀⣀⣀⣀⣀⣀⠤⠤⠤⠤⠤⠤⢄⣀⣀⣀⣀⣀⣀⣀⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤╌⠤⠤
-   │  ⢀⣀⣀⣀⣀⠤⠤⠤⠤⠔⠒⠒⠒⠒⠊⠉⠉⠉⠉      ⠉⠉⠉⠉⠉⠉⠉⠑⠒⠒⠒⠒⠒⠒⠒⠢⠤⠤⠤⠤⠤⠤⠒⠒⠒⠒⠒⠒⠉⠉⠉⠉⠉⠉                    ⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉
-30 │⠉⠉⠁╌╌╌╌╌╌╌╌⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⡀╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀
- 0 │⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠁⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
-   └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    0                                                                                                                  5
-1 p50  2 p99  SLO = 50
-
-Example modules                                                ✓ 1. Prepare [done]
-├─ domain                                                    │
-│  └─ Order.kt                                                 ▶ 2. Shadow [active]
-└─ infra                                                     │
-   └─ OutboxRelay.kt                                           ○ 3. Switch [pending]
+▎ Pair semantic colors with visible labels: success, attention, failure.

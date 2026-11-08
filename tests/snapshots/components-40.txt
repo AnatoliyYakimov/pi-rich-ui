@@ -1,0 +1,46 @@
+A small set of composable primitives
+
+Use layout to explain structure,
+relationships and decisions.
+
+╭──────────────────────────────────────╮
+│ Layout                               │
+│                                      │
+│ Row · Col · Grid                     │
+│                                      │
+│ Grouping and alignment               │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Content                              │
+│                                      │
+│ Text · Span · Badge                  │
+│                                      │
+│ Meaning and emphasis                 │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Relationships                        │
+│                                      │
+│ Graph · Sequence · Tree              │
+│                                      │
+│ Structure and interactions           │
+╰──────────────────────────────────────╯
+
+╭──────────────────────────────────────╮
+│ Comparisons and data                 │
+│                                      │
+│ Table · Diff · Chart                 │
+│                                      │
+│ Differences and patterns             │
+╰──────────────────────────────────────╯
+
+────────────────────────────────────────
+
+One thought — one emphasis.
+
+✓ The model describes meaning.
+→ The renderer chooses design.
+
+Compact XML. Consistent spacing and
+palette.

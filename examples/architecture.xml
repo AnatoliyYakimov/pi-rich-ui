@@ -1,0 +1,15 @@
+<UI>
+  <Title>Rendering inside a Pi reply</Title>
+  <Box title="Model response" borderTone="muted" titleTone="muted">
+    <Row>
+      <Col><Text bold>Ordinary Markdown</Text><Caption>Paragraphs and code</Caption></Col>
+      <Col><Text tone="purple" bold>XML composition</Text><Caption>Row · Box · Text</Caption></Col>
+    </Row>
+  </Box>
+  <Row>
+    <Col><Text tone="muted">↓</Text><Card title="Pi Markdown" borderTone="muted" titleTone="text"><Caption>Standard rendering</Caption></Card></Col>
+    <Col><Text tone="purple">↓</Text><Card title="Rich UI" tone="purple"><Text>Parser → AST</Text><Caption>Layout → ANSI</Caption></Card></Col>
+  </Row>
+  <Box title="Reply in session history" titlePosition="inside" tone="cyan"><Text>Prose → visual block → more prose</Text></Box>
+  <Callout tone="warning"><Text>Native insertion currently depends on Pi's internal Markdown API.</Text></Callout>
+</UI>

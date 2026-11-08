@@ -30,7 +30,7 @@ test('Grid final partial row retains column width',()=>{
 });
 test('GridItem spans complete tracks and caps span after resize',()=>{
  const xml='<Grid cols={3} minWidth={12}><GridItem span={2}><Card title="span"><Text>X</Text></Card></GridItem><Card title="one"><Text>Y</Text></Card></Grid>';
- const s=plain(xml,60);const top=s.find(l=>l.includes('span'));assert.ok(top.indexOf('╮')>30);for(const w of [10,20,40,60])for(const l of plain(xml,w))assert.ok(widthOf(l)<=w);
+ const s=plain(xml,60);const top=s.find(l=>l.includes('╭')); assert.ok(top.indexOf('╮')>30);for(const w of [10,20,40,60])for(const l of plain(xml,w))assert.ok(widthOf(l)<=w);
 });
 test('density compact reduces height without dropping content',()=>{
  const content='<Text>First</Text><Text>Second</Text><Text>Third</Text>';

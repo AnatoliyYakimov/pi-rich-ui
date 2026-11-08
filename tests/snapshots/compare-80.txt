@@ -1,0 +1,21 @@
+Start with ANSI.
+
+Keep pixel graphics as an optional future renderer.
+
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ ANSI / Unicode                      │  │ PNG                                 │
+│                                     │  │                                     │
+│ ✓ Current direction                 │  │ ○ Deferred                          │
+│                                     │  │                                     │
+│ Text, panels, diagrams and Braille  │  │ Pixel graphics, arbitrary lines and │
+│ charts.                             │  │ fonts.                              │
+│                                     │  │                                     │
+│ • Copyable terminal text            │  │ Image contents cannot be selected   │
+│ • Colors from the Pi theme          │  │ as terminal text. Requires image    │
+│                                     │  │ protocol support.                   │
+│ Geometry follows terminal cells.    │  │                                     │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+
+The model describes meaning. The renderer chooses presentation.
+
+▎ Pair semantic colors with visible labels: success, attention, failure.

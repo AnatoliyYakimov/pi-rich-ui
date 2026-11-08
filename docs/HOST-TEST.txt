@@ -1,8 +1,1 @@
-
-> pi-rich-ui-inline@0.4.0 test:host
-> node scripts/test-host.mjs
-
-Cannot find the host pi-tui. Run where Pi is installed, or pass its dist/index.js path.
-Cannot find module '@earendil-works/pi-tui'
-Require stack:
-- /opt/nvm/versions/node/v22.16.0/lib/node_modules/@earendil-works/pi-coding-agent/package.json
+PASS: actual host Markdown, 13 examples including v0.5 general compositions, width/resize and fenced-code isolation.

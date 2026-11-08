@@ -1,0 +1,50 @@
++Pi Rich UI 0.5 / official Pi coding agent 1.5.0
+Date: 2026-11-08
+Runtime: Node 24.22.1; isolated test profile, offline, no session persistence.
+
+Interactive PTY checks (regular TUI mode):
+- Extension loaded through index.ts with -e; no extension load error.
+- The published bundled CLI entry (dist/bundle/cli.js) was also exercised.
+- /rich-ui status: native ANSI adapter active, Pi theme active, PNG disabled.
+- /rich-ui compare: both cards, formatted text and rail displayed in session history.
+- /rich-ui titles: independent heading/frame variants displayed.
+- Actual host theme foreground colors and bold SGR sequences observed in output.
+- NO_COLOR trial: content displayed with no extension-generated color or bold.
+- Fullscreen TUI trial: comparison panels rendered with host colors and no render error.
+- Ctrl+D shutdown exited successfully in both modes.
+- Restored assistant-history fixture: native panels appeared between original prose,
+  with no raw XML or sentinel fence visible. This checks actual transcript Markdown,
+  not only the custom display-entry renderer.
+- No provider login, LLM prompt or model request was made.
+
+Observed status:
+Rich UI 0.5 · native ANSI · colors=Pi theme · charts=Braille · PNG=off ·
+ prompt=on
+ guarded internal Markdown.renderToken adapter
+
+Captured comparison, ANSI stripped for readability:
+Start with ANSI.
+
+Keep pixel graphics as an optional future renderer.
+
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ ANSI / Unicode                      │  │ PNG                                 │
+│                                     │  │                                     │
+│ ✓ Current direction                 │  │ ○ Deferred                          │
+│                                     │  │                                     │
+│ Text, panels, diagrams and Braille  │  │ Pixel graphics, arbitrary lines and │
+│ charts.                             │  │ fonts.                              │
+│                                     │  │                                     │
+│ • Copyable terminal text            │  │ Image contents cannot be selected   │
+│ • Colors from the Pi theme          │  │ as terminal text. Requires image    │
+│                                     │  │ protocol support.                   │
+│ Geometry follows terminal cells.    │  │                                     │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+
+The model describes meaning. The renderer chooses presentation.
+
+▎ Pair semantic colors with visible labels: success, attention, failure.
+
+
+This is a process/output smoke check, not a physical terminal screenshot or visual
+validation of all fonts/platforms. Documentation SVGs use the standalone sample palette.

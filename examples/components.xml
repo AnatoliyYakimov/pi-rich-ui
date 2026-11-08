@@ -1,0 +1,14 @@
+<UI>
+  <Title>A small set of composable primitives</Title>
+  <Text>Use layout to explain structure, relationships and decisions.</Text>
+  <Grid cols={2} minWidth={25}>
+    <Card title="Layout" tone="cyan"><Text>Row · Col · Grid</Text><Caption>Grouping and alignment</Caption></Card>
+    <Card title="Content" tone="cyan"><Text>Text · Span · Badge</Text><Caption>Meaning and emphasis</Caption></Card>
+    <Card title="Relationships" tone="purple"><Text>Graph · Sequence · Tree</Text><Caption>Structure and interactions</Caption></Card>
+    <Card title="Comparisons and data" tone="purple"><Text>Table · Diff · Chart</Text><Caption>Differences and patterns</Caption></Card>
+  </Grid>
+  <Divider tone="dim"/>
+  <Text bold>One thought — one emphasis.</Text>
+  <Col gap={0}><Text><Span tone="success">✓</Span> The model describes <Span bold>meaning</Span>.</Text><Text><Span tone="cyan">→</Span> The renderer chooses <Span bold>design</Span>.</Text></Col>
+  <Caption>Compact XML. Consistent spacing and palette.</Caption>
+</UI>

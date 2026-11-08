@@ -1,0 +1,27 @@
+<UI>
+  <Title>PI RICH UI 0.5 · illustrative data</Title>
+  <Grid cols={3} minWidth={18}>
+    <Card title="API"><Metric label="RPS" value={600} tone="cyan"/></Card>
+    <Card title="KAFKA"><Metric label="Partitions" value={72} tone="purple"/></Card>
+    <Card title="p99"><Diff before={600} after={120} unit="ms" good="down"/></Card>
+  </Grid>
+  <Table headers="Service,RPS,Status">
+    <Tr><Td>API</Td><Td value={600}/><Td><Badge tone="success">Healthy</Badge></Td></Tr>
+    <Tr><Td>Orders</Td><Td value={450}/><Td><Badge tone="warning">Check lag</Badge></Td></Tr>
+  </Table>
+  <Sequence actors="API,DB,Kafka">
+    <Step from="API" to="DB" label="Save + outbox"/>
+    <Step from="DB" to="API" label="Commit" kind="return" tone="success"/>
+    <Note over="DB">Relay reads committed outbox records.</Note>
+    <Step from="DB" to="Kafka" label="Relay publishes" tone="purple"/>
+  </Sequence>
+  <Chart label="Latency · ms" height={4} nice>
+    <Series label="p50" values="12,18,14,20,18,16" tone="cyan"/>
+    <Series label="p99" values="30,48,35,52,40,45" tone="purple"/>
+    <Rule label="SLO" value={50} tone="warning"/>
+  </Chart>
+  <Row>
+    <Tree label="Example modules"><Item label="domain"><Item label="Order.kt"/></Item><Item label="infra"><Item label="OutboxRelay.kt"/></Item></Tree>
+    <Timeline direction="TB"><Step label="Prepare" status="done"/><Step label="Shadow" status="active"/><Step label="Switch" status="pending"/></Timeline>
+  </Row>
+</UI>

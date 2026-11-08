@@ -19,6 +19,46 @@ Namespaced aliases include `Table.Row`, `Table.Cell`, `Table.Head`, `Table.Colum
 `Sequence.Note`, `Tree.Item`, `Tree.Node`, `Timeline.Step`, `Chart.Series` and `Chart.Rule`.
 A layout `Row` is distinct from `Table.Row`.
 
+## Panels, frames and headings
+
+Box, Card and Callout share a container renderer. A frame, a title and a semantic
+accent are separate choices:
+
+| Property | Values / default |
+| --- | --- |
+| `title` | Optional text; no title is invented when omitted |
+| `titlePosition` | `border`, `inside`, `above`, `none` |
+| `border` | `rounded`, `single`, `left`, `none`; boolean false/true are aliases for none/rounded |
+| `borderTone` | Semantic role for the outline, independent of body color |
+| `titleTone` | Semantic role for the heading, independent of the outline |
+| `padding`, `gap`, `density` | Existing spacing options, applied consistently |
+
+Card defaults to `titlePosition="inside"`; Box defaults to `border`. Both default
+to a rounded outline. Callout defaults to a left rail with an inside heading.
+The default accent is inherited from the explicit container/parent tone or Pi's
+accent role. Plain prose remains neutral; captions remain muted.
+
+Long border headings move above the frame and wrap without ellipsis. A border heading
+with no full outline becomes a content heading. `titlePosition="none"` explicitly
+suppresses the title. Very narrow terminals prioritize readable content over decoration.
+Equal-height rows/grids retain the exact title placement, square/rounded corners and rails.
+
+```xml
+<UI>
+<Grid cols={2}>
+  <Card title="Current option" tone="cyan"><Badge tone="success">Selected</Badge></Card>
+  <Card title="Alternative" borderTone="muted" titleTone="text"><Text>Keep as a future option.</Text></Card>
+</Grid>
+<Callout tone="warning"><Text>Describe limitations alongside the decision.</Text></Callout>
+<Box border={false} padding={0}><Text>An explanation that needs no frame.</Text></Box>
+</UI>
+```
+
+Use one panel per semantic group. Ordinary Markdown can carry the surrounding prose.
+The library is for general visual explanations, not only numerical dashboards.
+Metric supports optional `delta` and `hint` lines: the renderer does not calculate
+or invent either. Values are bold and neutral unless an explicit or inherited tone applies.
+
 ## Rich Table
 
 ```xml
@@ -53,7 +93,8 @@ or row tone overrides both threshold styling and its marker.
 
 Cells may contain Badge, Span/Icon, Sparkline and other blocks. `bar` with `min/max`
 adds a mini-bar; out-of-range values receive a visible clipping note. `separators`
-adds rules between rows. Narrow tables become labeled records; `layout="stacked"`
+adds rules between rows. `columnSeparators` restores optional vertical column rules;
+the default table uses open columns with an accented header and a subdued horizontal rule. Narrow tables become labeled records; `layout="stacked"`
 forces this view. `headers`/`values` use commas or `|`: this is **not a CSV parser**.
 Use explicit cells for values containing delimiters.
 
@@ -209,7 +250,7 @@ Aliases include green/red/yellow/blue/gray and positive/negative/orange/violet/t
 guaranteed RGB values. The terminal background is untouched. Unicode icons are built
 in; Nerd Fonts are not required.
 
-Available components: UI, Box/Card, Row/Col/Grid/GridItem, Text/Title/Caption, Span,
+Available components: UI, Box/Card/Callout, Row/Col/Grid/GridItem, Text/Title/Caption, Span,
 Icon, Badge, Divider, Spacer, Metric, Progress, Flow/Step, Graph/Node/Edge, Bars/Bar,
 Chart/Series/Rule, Sparkline, Table/Tr/Th/Td/Column, Diff/Before/After,
 Sequence/Actor/Message/Note, Tree, Timeline, List/Item and Code.
@@ -230,7 +271,7 @@ PNG is disabled; image/auto settings select ANSI with a notice.
 
 ## Prompt, history and security
 
-`lib/prompt.mjs` contains a **1851-character** guide, tag catalog and six short examples.
+`lib/prompt.mjs` contains a **2296-character** guide, tag catalog and eight short examples.
 This is a character count, not a token estimate. `before_agent_start` contributes it
 once to promptGuidelines or appends it to systemPrompt on the older API. It does not
 create a history message. Injection is disabled outside TUI mode.
@@ -262,7 +303,7 @@ npm run test:host
 npm run snapshots:update
 ```
 
-The repository includes per-component examples, unit/integration doubles, 24 golden
+The repository includes per-component examples, unit/integration doubles, 39 golden
 snapshots (40/80/120 columns), width sweeps 1–160, and Unicode/ANSI, streaming, validation,
 theme inheritance, prompt and adapter-lifecycle checks.
 
@@ -270,9 +311,12 @@ theme inheritance, prompt and adapter-lifecycle checks.
 checks. `docs/BENCHMARK.json` is a synthetic benchmark, **not** real Pi latency.
 `docs/preview-*.txt` contains monochrome output; view `docs/preview-*.ansi` with `cat`.
 
-The original build ran unit tests on Node 22.16.0. Current package/host requirements
-specify Node >=22.19.0. A real Pi was not available in that environment; terminal/session
-behavior still needs validation on your installed host. Local tests do not replace it.
+The current suite ran on Node 24.22.1. The package requires Node >=22.19.0.
+The real Markdown integration was exercised against official `@earendil-works/pi-tui`
+1.5.0, covering 13 examples at 24/40/80/120 columns. The unit suite contains 324 tests.
+An offline interactive Pi 1.5.0 PTY smoke test loaded the extension and its local
+demos in regular/fullscreen modes. No model request was made; physical terminal/font
+behavior remains a separate check. See [TUI smoke record](TUI-SMOKE.txt).
 
 Integration references checked 2026-11-08:
 

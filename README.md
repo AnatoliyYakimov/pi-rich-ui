@@ -1,44 +1,39 @@
 # Pi Rich UI
 
-**Rich explanations, right inside your Pi terminal.**
+**Colorful inline explanations for your Pi terminal.**
 
-Turn assistant responses into adaptive cards, tables, architecture diagrams, trees,
-timelines, diffs and Braille charts using compact, React-inspired XML. Everything
-stays inline with the conversation: no browser window, PNG renderer or fullscreen app.
+Compose panels, comparisons, diagrams, trees, timelines and Braille charts using
+compact, React-inspired XML. Everything stays inside the conversation, with semantic
+colors from your Pi theme and layouts that adapt to terminal width.
 
-```text
-╭─ API ───────────────╮  ╭─ Orders ────────────╮  ╭─ Kafka ────────────╮
-│ Requests            │  │ p99                 │  │ Partitions         │
-│ 600 RPS             │  │ 180 ms              │  │ 72                 │
-╰─────────────────────╯  ╰─────────────────────╯  ╰────────────────────╯
-```
+![ANSI comparison rendered in the dark sample palette](docs/previews/compare-80-dark.svg)
 
-*Actual renderer output with illustrative data. GitHub code blocks cannot show ANSI
-colors; inside Pi, semantic colors follow your active theme.*
+*Actual output of the cell renderer, exported for documentation with a sample palette.
+These are not browser UI mockups or screenshots of a running Pi. Your theme and font
+choose the final shades and glyphs. The extension itself renders ANSI text, not images.*
 
-[Installation](#installation) · [Visual examples](#visual-examples) · [Component reference](docs/REFERENCE.md) · [Full gallery](docs/GALLERY.md)
+[Install](#installation) · [Examples](#visual-examples) · [Reference](docs/REFERENCE.md) · [Gallery](docs/GALLERY.md)
 
-## Why use it?
+## What it adds
 
-- **Explain architecture:** sequence diagrams, flows, dependency graphs and module trees.
-- **Compare decisions:** rich tables, before/after metrics and configuration diffs.
-- **Inspect data:** multi-series Braille charts, thresholds, sparklines and mini-bars.
-- **Stay in the conversation:** layouts adapt to terminal width and remain copyable text.
-- **Keep prompts compact:** model guidance is injected automatically; no extra tool calls
-  or application code are needed to generate a visual.
+- **General visual explanations:** compare options, group ideas and highlight caveats.
+- **Architecture:** flows, sequence diagrams, dependency graphs and module trees.
+- **Data:** rich tables, numeric/text diffs, Braille plots, thresholds and mini-bars.
+- **A coherent terminal design:** colorful outlines, bold headings, muted captions,
+  inline emphasis and rails for callouts. The terminal background stays untouched.
+- **Independent headings and borders:** put a heading inside a card, above it, on its
+  border, or omit it. A frame is optional, not a requirement for visual content.
 
-The model chooses semantic roles such as success, warning, error and info. The renderer
-chooses layout and shades from Pi's theme. Icons use Unicode; Nerd Fonts are not required.
+Model guidance is injected automatically. No extra tool call is needed to draw a block.
+This is static rich text, not a React runtime or an interactive dashboard application.
 
 ## Installation
 
 ### Requirements
 
-- Pi coding agent exposing `registerMarkdownTransformer()`.
-- Node.js **22.19.0 or newer**, matching the package's declared minimum.
-- Git and a Unicode-capable terminal. Braille charts need a font with Braille glyphs.
-
-Clone directly into Pi's extensions directory:
+- Pi coding agent with `registerMarkdownTransformer()`.
+- Node.js **22.19.0 or newer**.
+- Git and a Unicode terminal. Braille charts require a font with Braille glyphs.
 
 ```bash
 mkdir -p ~/.pi/agent/extensions
@@ -46,18 +41,18 @@ git clone https://github.com/AnatoliyYakimov/pi-rich-ui.git \
   ~/.pi/agent/extensions/pi-rich-ui
 ```
 
-No `npm install` or build step is required: Pi supplies its own host modules.
-Start Pi, or run `/reload` in an existing session. Then try:
+No `npm install` or build step is required; Pi supplies its host modules.
+Start Pi or run `/reload`, then:
 
 ```text
 /rich-ui status
 /rich-ui demo
 ```
 
-The demo renders locally without calling an LLM. Do not also load the same extension
-through `pi -e`: use one installation path at a time.
+The local demo uses no LLM request. Do not load the same extension twice through both
+the extensions directory and `pi -e`.
 
-For a temporary trial instead of installing globally:
+For a temporary trial:
 
 ```bash
 git clone https://github.com/AnatoliyYakimov/pi-rich-ui.git
@@ -65,137 +60,97 @@ cd pi-rich-ui
 pi -e ./index.ts
 ```
 
-**Compatibility note:** native inline output currently uses a guarded adapter around
-Pi's internal `Markdown.renderToken`. It is not a stable public component API.
-An incompatible host falls back to plain fenced text. This release has automated
-local coverage but has not been validated in a real interactive Pi session.
-See [integration details](docs/INTEGRATION.md) and run `npm run test:host` on your installation.
+To update a Git installation, run `git pull --ff-only` in its directory and `/reload` in Pi.
+
+**Compatibility:** native inline output uses a guarded runtime adapter around Pi's
+internal `Markdown.renderToken`, not a stable public component hook. An incompatible
+host falls back to plain fenced text. The real Markdown integration is smoke-tested
+against **official `pi-tui` 1.5.0**; see [validation](#development-and-validation) and
+[integration details](docs/INTEGRATION.md).
 
 ## First conversation
 
 Ask Pi:
 
-> Explain a transactional outbox using an inline sequence diagram, then compare the
-> trade-offs in a table. Use illustrative values only if needed and label them.
+> Explain why we chose ANSI over PNG using two comparison cards and a caveat.
+> Then show how XML becomes a visual block inside an ordinary assistant response.
 
-The extension automatically adds a short syntax guide to the model's system prompt.
-The model emits XML directly in its response; you do not need to request a tool call.
-
-For authors, the format looks like this:
+The extension adds a concise tag guide to the model's system prompt. Visual blocks
+appear on their own lines **outside code fences** in assistant replies. Fenced XML,
+including this documentation example, remains literal code:
 
 ```xml
-<Box title="Service health">
-  <Row>
-    <Metric label="Requests" value={600} unit="RPS" tone="info"/>
-    <Badge tone="success">Healthy</Badge>
-  </Row>
-</Box>
+<Grid cols={2}>
+  <Card title="ANSI" tone="cyan">
+    <Badge tone="success">Current choice</Badge>
+    <Text>Copyable text, diagrams and Braille charts.</Text>
+  </Card>
+  <Card title="PNG" borderTone="muted" titleTone="text">
+    <Caption>Deferred until pixel graphics are needed.</Caption>
+  </Card>
+</Grid>
 ```
-
-Visual XML must appear **outside code fences** in assistant responses. The fence above
-is intentional documentation: fenced examples stay literal.
 
 ## Visual examples
 
-These previews are generated by the renderer, not hand-drawn mockups or Pi screenshots.
-All values are illustrative. See the [full gallery](docs/GALLERY.md) for XML and output
-at multiple terminal widths.
+### Explain architecture
 
-### Sequence diagrams
+![Model text and XML follow separate rendering paths into the same Pi reply](docs/previews/architecture-80-dark.svg)
 
-```text
-             API                   DB                   Kafka
-              ┊                     ┊                     ┊
-1             ┊Save + outbox        ┊                     ┊
-              ──────────────────────▶                     ┊
-              ┊                     ┊                     ┊
-2             ┊Commit ↩             ┊                     ┊
-              ◀╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌                     ┊
-              ┊                     ┊                     ┊
-3             ┊                     ┊Relay publishes ⇢    ┊
-              ┊                     ──────────────────────▶
-              ┊                     ┊                     ┊
+Nodes, prose, captions and caveats can share one composition. Ordinary response text
+continues around the block. Try `/rich-ui architecture`.
+
+### Group concepts
+
+![Component categories in a colored two-column grid](docs/previews/components-80-dark.svg)
+
+Headings are part of the card content here; they do not cut into the outline.
+The concluding emphasis has no frame. Try `/rich-ui components`.
+
+### Choose heading placement
+
+![Border headings, content headings, external headings and callouts](docs/previews/titles-80-dark.svg)
+
+```xml
+<UI>
+<Box title="Compact group" titlePosition="border">...</Box>
+<Card title="Comparison" titlePosition="inside">...</Card>
+<Card title="Independent heading" titlePosition="above">...</Card>
+<Box><Text>A statement that needs no heading.</Text></Box>
+<Box border={false} padding={0}><Text>Unframed explanation.</Text></Box>
+<Callout tone="warning"><Text>A caveat without a full outline.</Text></Callout>
+</UI>
 ```
 
-Returns, async messages, self-calls and notes are supported. Narrow terminals show an
-ordered list with the same endpoints and messages.
+`Card` defaults to an inside heading; `Box` defaults to a border heading.
+`titlePosition="none"` deliberately suppresses a supplied title. Long border titles
+wrap above the frame instead of being cut off. Use `borderTone` and `titleTone` to
+style those parts independently of the body. Try `/rich-ui titles`.
 
-### Trees
+### Charts and engineering data
 
-```text
-orders-service
-├─ domain
-│  ├─ Order.kt
-│  └─ OrderRepository.kt
-└─ infrastructure
-   └─ OutboxRelay.kt
-```
+![Illustrative metrics, sequence, Braille plot, tree and migration stages](docs/previews/dashboard-100-dark.svg)
 
-Nested nodes support details, semantic colors and static collapsed-subtree counts.
+Tables, metrics, status labels and multiple Braille series retain their existing data
+semantics. The dashboard is one possible composition; the same primitives also work
+for explanations without numbers. Try `/rich-ui dashboard`.
 
-### Before and after
-
-```text
-Example p99
-600 ms → 120 ms
-Δ -480 ms · -80%
-✓ improved
-```
-
-Set `good="down"` or `good="up"` only when that direction is desirable. Text Diff also
-compares configuration or code with line numbers and adaptive unified/split views.
-
-### Braille charts
-
-```text
-Example latency · ms
-52 │      ⣀⣀⡠⠤⠤⠒⠒⠢⠤⠤⢄⣀⣀⡀       ⢀⣀⣀⠤⠤⠔⠒⠊⠉⠉⠑⠒⠒⠒⠢⠤⠤⠤⢄⣀⣀⣀⣀⣀⣀⣀⡠⠤⠤⠤⠤⠤⠤
-   │⠤⠔⠒⠒⠉⠉             ⠈⠉⠉⠑⠒⠒⠊⠉⠁
-26 │   ⣀⣀⣀⣀⣀⣀⠤⠤⠤⠤⠤⠤⠤⠤⠤⣀⣀⣀⣀⣀⣀⣀⣀⣀⠤⠤⠤⠤⠤⠤⠒⠒⠒⠒⠒⠒⠒⠒⠢⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤
- 0 │⠉⠉⠉⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
-   └────────────────────────────────────────────────────────────
-    0                                                          5
-1 p50  2 p99
-```
-
-Multiple series, missing samples, shared scales, threshold rules and irregular numeric
-X coordinates are supported. In monochrome mode, series use separate labeled plots.
-
-### Tables and timelines
-
-```text
-Service                   │     RPS │ State
-────────────────────────────────────────────────────────────────
-API                       │     600 │ healthy
-Orders                    │     450 │ check lag
-```
-
-```text
-  ✓ 1. Prepare [done]
-│
-  ▶ 2. Verify [active]
-│
-  ○ 3. Switch [pending]
-```
-
-Tables support nested badges/sparklines, numeric formatting, thresholds and mini-bars.
-Timelines adapt between horizontal and vertical views, retaining explicit status labels.
+[Full XML and narrow-width gallery](docs/GALLERY.md) · [Light theme preview](docs/previews/compare-80-light.svg) · [40-column preview](docs/previews/compare-40-dark.svg)
 
 ## Explore locally
 
 | Command | Shows |
 | --- | --- |
-| `/rich-ui demo` | Combined component overview |
-| `/rich-ui table` | Rich cells, thresholds and responsive records |
-| `/rich-ui diff` | Numeric and configuration comparisons |
-| `/rich-ui sequence` | Transactional outbox sequence |
-| `/rich-ui tree` | Module hierarchy |
-| `/rich-ui timeline` | Migration stages |
-| `/rich-ui layout` | Responsive grids and spanning cells |
-| `/rich-ui charts` | Braille series, gaps, rules and scales |
-| `/rich-ui palette` | Semantic theme colors |
-| `/rich-ui status` | Renderer mode and compatibility status |
-| `/rich-ui prompt` | Exact model instruction |
+| `/rich-ui demo` or `/rich-ui compare` | ANSI vs PNG comparison |
+| `/rich-ui architecture` | Rendering inside a Pi response |
+| `/rich-ui components` | Layout, content, relationships and data primitives |
+| `/rich-ui titles` | Independent heading/border combinations |
+| `/rich-ui dashboard` | Illustrative engineering dashboard |
+| `/rich-ui table`, `/rich-ui diff` | Rich cells, thresholds and before/after views |
+| `/rich-ui sequence`, `/rich-ui tree` | Interaction sequences and hierarchies |
+| `/rich-ui timeline`, `/rich-ui layout` | Stages, responsive grids and spanning cells |
+| `/rich-ui charts`, `/rich-ui palette` | Braille plots and semantic colors |
+| `/rich-ui status`, `/rich-ui prompt` | Active renderer mode and exact model instruction |
 
 Demo commands create display-only session entries, not model requests.
 
@@ -207,35 +162,41 @@ PI_RICH_UI_RENDER=text pi     # Public-hook text fallback; no native adapter
 PI_RICH_UI_PROMPT=0 pi        # Disable automatic model guidance
 ```
 
-Colors follow **Pi's active theme**, not a separate background-detection system.
-Semantic aliases include green → success, red → error, yellow → warning and blue → info.
-The terminal background remains untouched. See [configuration and colors](docs/REFERENCE.md#configuration)
-for the full behavior and fallback palette settings.
+Colors follow **Pi's active theme**. Aliases include green → success, red → error,
+yellow → warning and blue → info. Color is paired with status symbols or labels.
+No external icon font is required. [Full configuration](docs/REFERENCE.md#configuration).
 
 ## Scope and limitations
 
-- Static inline visuals: no mouse handling, clickable controls or React execution.
-- ANSI/Unicode only; PNG and browser rendering are not included.
-- History stores the original XML. Another client without the extension sees that XML.
-- Source, node, depth and output-size limits bound rendering; oversized output is marked.
-- Model-authored data is not independently verified. A chart is an explanation, not telemetry.
+- Static inline visuals; no mouse/focus handling, sliders, or clickable tree expansion.
+- ANSI/Unicode runtime; no PNG, SVG, browser rendering or generated code execution.
+- Original XML stays in history. A client without the extension sees that XML.
+- Bounded size/depth/layout, with explicit truncation notices for oversized content.
+- Explanations are not live telemetry unless the model has actually retrieved that data.
 
-The parser does not evaluate JavaScript or fetch resources. XML cannot access your shell,
-network or files. Like other Pi extensions, the extension itself runs with Pi's permissions.
-See the [reference](docs/REFERENCE.md#prompt-history-and-security) for detailed limits.
+The parser does not evaluate JavaScript or fetch resources. XML cannot access your
+shell, network or files. The extension itself runs with Pi's normal permissions.
+[Detailed limits and security](docs/REFERENCE.md#prompt-history-and-security).
 
-## Development
+## Development and validation
 
 ```bash
 npm test
 npm run check
-npm run preview -- --width 96
-npm run preview -- --file examples/sequence.xml --width 80
-npm run test:host
+npm run preview -- --file examples/compare.xml --width 80 --colors truecolor
+npm run preview:assets
+npm run test:host -- /path/to/pi-tui/dist/index.js
 ```
 
-The local suite contains **272 tests**, including width sweeps and 24 golden snapshots.
-Local tests use host doubles where needed; they do not replace the real-Pi host check.
-There are no bundled fonts or runtime dependencies beyond Pi.
+The local suite has **324 tests**, including width sweeps from 1–160 columns and
+**39 golden snapshots**. The actual `pi-tui` 1.5.0 smoke test renders 13 compositions,
+checks resizing at 24/40/80/120 columns and preserves literal fenced XML. Local host
+mocks remain useful for lifecycle tests. An offline interactive Pi 1.5.0 PTY trial also loaded the extension and displayed
+its local commands in regular and fullscreen modes, including theme colors and
+NO_COLOR. No LLM request was made. Physical terminal/font combinations remain separate checks.
+See the [TUI smoke record](docs/TUI-SMOKE.txt).
+
+`preview:assets` exports actual terminal cells into static SVG documentation previews;
+it is not an image renderer loaded by the extension and needs no image library.
 
 [Component reference](docs/REFERENCE.md) · [Gallery](docs/GALLERY.md) · [Integration](docs/INTEGRATION.md) · [Changelog](CHANGELOG.md)
