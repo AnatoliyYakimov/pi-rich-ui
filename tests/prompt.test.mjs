@@ -14,7 +14,7 @@ test('English guide prioritizes comprehension over long lists, without demanding
 });
 
 test('core guide stays within a compact budget without embedding the full reference',()=>{
-  assert.ok(GUIDE_CORE.length<=2100);
+  assert.ok(Buffer.byteLength(GUIDE_CORE,'utf8')<=3500);
   assert.ok(!SYSTEM_GUIDE.includes(readFileSync(REFERENCE_PATH,'utf8')));
   assert.match(GUIDE_CORE,/never invent data; label illustrative data/);
   assert.match(GUIDE_CORE,/OUTSIDE fences/);
@@ -28,19 +28,21 @@ test('advanced reference resolves to the installed module, not the user project 
   for(const attr of ['titlePosition','borderTone','Table.Column','zeroLine'])assert.ok(reference.includes(attr));
 });
 
-test('four purpose-labeled compositions include a delimiter-safe table',()=>{
+test('explanatory recipes retain nested boundaries and a delimiter-safe explicit-cell table',()=>{
   const examples=GUIDE_CORE.split('\n').filter(s=>s.startsWith('<'));
   assert.equal(examples.length,4);
   const tags=examples.map(s=>parseDocument(s).tag);
-  assert.deepEqual(tags,['grid','sequence','callout','table']);
+  assert.deepEqual(tags,['ui','ui','grid','table']);
   for(const xml of examples){
     assert.match(transformMarkdown(xml),new RegExp(LANGUAGE));
-    for(const width of [24,40,80])assert.ok(renderDocument(xml,width).plain().length>0);
+    for(const width of [24,40,80,112])assert.ok(renderDocument(xml,width).plain().length>0);
   }
-  const cards=parseDocument(examples[0]).children.filter(n=>typeof n!=='string');
-  assert.equal(cards.length,2);
-  const steps=parseDocument(examples[1]).children.filter(n=>typeof n!=='string');
-  assert.equal(steps.length,2); // Demonstrates an interaction, not just one isolated node.
+  const layers=parseDocument(examples[0]).children.filter(n=>typeof n!=='string');
+  assert.ok(layers.some(n=>n.tag==='connector'));
+  const boundary=parseDocument(examples[1]).children.find(n=>n.tag==='box');
+  assert.ok(boundary.children.some(n=>n.tag==='card'));
+  assert.ok(boundary.children.some(n=>n.tag==='grid'));
+  assert.ok(!examples.some(xml=>xml.includes('<Chart')));
   const table=parseDocument(examples[3]);
   assert.equal(table.attrs.headers,'Service|Status');
   assert.equal(table.children[0].children[1].children[0],'Healthy, no errors');

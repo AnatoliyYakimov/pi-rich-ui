@@ -21,7 +21,7 @@ test('step interpolation differs from linear without creating data',()=>{
  const d=chartData(parseDocument('<Chart><Series values="1,3,2" interpolate="step"/><Series values="3,2,1"/></Chart>'));assert.deepEqual(d.interpolate,['step','linear']);
 });
 test('rules are labeled and outside-range values are disclosed',()=>{
- for(const w of [15,70]){const s=plain('<Chart values="1,4,2"><Rule value={3} label="SLO"/><Rule value={99} label="Outside"/></Chart>',w);assert.match(s,/SLO = 3/);assert.match(s,/Outside = 99/);assert.match(s,/outside/);}
+ for(const w of [15,70]){const s=plain('<Chart values="1,4,2"><Rule value={3} label="SLO"/><Rule value={99} label="Outside"/></Chart>',w,{presentation:false});assert.match(s,/SLO = 3/);assert.match(s,/Outside = 99/);assert.match(s,/outside/);}
 });
 test('rules have numerical limits and do not silently change scale',()=>{
  const d=chartData(parseDocument('<Chart values="1,2,3"><Rule value={99}/></Chart>'));assert.equal(d.max,3);

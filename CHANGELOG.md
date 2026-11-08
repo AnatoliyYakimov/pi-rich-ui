@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.6.0] - 2026-11-08
+
+- Default to a readable 112-cell root budget with root full/numeric width opt-ins,
+  effective maxWidth, structural section panels and content-sized short components.
+- Independent semantic card surfaces and borders, two-axis fields, compact status
+  pills and wrapped text alignment. Surfaces inherit through nested containers and
+  rich table cells; shaded blanks are preserved and every ANSI line is reset.
+- Connector arrows with centered wrapped labels, layered/nested-boundary/workflow/
+  decision recipes and discoverable local demo commands. Default demo is now layers;
+  existing comparison, chart and dashboard commands remain available.
+- Natural-width table columns and short split diffs, preserving explicit flex and
+  narrow fallback semantics. Short automatic panels retain their structural borders.
+- Compact explanatory model guidance includes a genuinely nested boundary and
+  retains explicit-cell table guidance and automatic validation feedback from 0.5.4.
+  No new dependency/tool schema/runtime; prompt deduplication remains intact.
+- Background-correct static SVG cell previews, 51 snapshots and real Pi theme/host
+  checks. Excessively long headings truncate with disclosure rather than crashing.
+
 ## [0.5.4] - 2026-11-08
 
 - Add a valid explicit-cell table example to the compact model guide; explicitly reject

@@ -1,0 +1,25 @@
+<UI gap={1}>
+  <Card border={false}>
+    <Row><Title flex={1}>L1 — Permissions</Title><Badge tone="warning" flex={0}>Слабая граница</Badge></Row>
+    <Col gap={0}>
+      <Text>Проверка tool calls, подтверждение опасных операций, allow/deny rules.</Text>
+      <Caption>Решает, разрешать ли действие; не изолирует процесс.</Caption>
+    </Col>
+  </Card>
+  <Connector/>
+  <Card border={false}>
+    <Row><Title flex={1}>L2 — OS sandbox</Title><Badge tone="info" flex={0}>Системная граница</Badge></Row>
+    <Col gap={0}>
+      <Text>macOS Seatbelt, Linux bubblewrap/seccomp: ограничения файлов и сети.</Text>
+      <Caption>ОС принудительно запрещает недопустимые операции.</Caption>
+    </Col>
+  </Card>
+  <Connector/>
+  <Card border={false}>
+    <Row><Title flex={1}>L3 — Container / Micro-VM</Title><Badge tone="success" flex={0}>Сильнее изоляция</Badge></Row>
+    <Col gap={0}>
+      <Text>Docker, специализированные sandboxes и Linux micro-VM.</Text>
+      <Caption>Ограничивает доступ к хосту; сеть и секреты требуют отдельной политики.</Caption>
+    </Col>
+  </Card>
+</UI>

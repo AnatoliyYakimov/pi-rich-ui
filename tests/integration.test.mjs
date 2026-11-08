@@ -49,7 +49,7 @@ test('rendering and streaming never send feedback or UI notices',async()=>{
 });
 test('extension transforms only assistant text and leaves input unchanged',async()=>{const h=host(),api=await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});const xml='<Metric label="RPS" value={600}/>';assert.equal(h.pi.transform(xml,{messageType:'user'}),xml);assert.match(h.pi.transform(xml,{messageType:'assistant',availableWidth:80}),new RegExp(LANGUAGE));h.hooks.get('session_shutdown')();assert.equal(api.bridge.ok,false);});
 test('extension skips prompt injection in RPC / print / JSON modes',async()=>{const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});for(const mode of ['rpc','print','json']){const e={systemPromptOptions:{promptGuidelines:[]}};h.hooks.get('before_agent_start')(e,{...context,mode});assert.equal(e.systemPromptOptions.promptGuidelines.length,0);}h.hooks.get('session_shutdown')();});
-test('extension demo creates display-only session entry, no user/model message',async()=>{const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});await h.commands.get('rich-ui').handler('demo',context);assert.equal(h.entries.length,1);assert.equal(h.entries[0].t,'pi-rich-ui-demo');assert.match(h.entries[0].d.xml,/<UI>/);h.hooks.get('session_shutdown')();});
+test('extension demo creates display-only session entry, no user/model message',async()=>{const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});await h.commands.get('rich-ui').handler('demo',context);assert.equal(h.entries.length,1);assert.equal(h.entries[0].t,'pi-rich-ui-demo');assert.match(h.entries[0].d.xml,/<Connector\/>/);assert.match(h.entries[0].d.xml,/Permissions/);h.hooks.get('session_shutdown')();});
 test('text mode uses public transformer fallback',async()=>{const h=host();await setup(h.pi,{}, {probe:false,env:{PI_RICH_UI_RENDER:'text'}});const r=h.pi.transform('<Metric label="RPS" value={600}/>',{messageType:'assistant',availableWidth:40});assert.match(r,/```text/);assert.ok(!r.includes(LANGUAGE));h.hooks.get('session_shutdown')();});
 test('legacy image/auto variables use ANSI and never construct images',async()=>{
   for(const mode of ['image','auto']){
@@ -77,7 +77,14 @@ test('native renderer uses current theme at every call without stale rendered ca
   assert.match(native.render('<Text>ok</Text>',20).join(''),/old/);token='new';assert.match(native.render('<Text>ok</Text>',20).join(''),/new/);
 });
 test('compact guide documents color roles and Braille series without excessive instruction length',()=>{
-  assert.ok(SYSTEM_GUIDE.length<2300);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/Chart\/Series\(label,values\)/);
+  assert.ok(Buffer.byteLength(SYSTEM_GUIDE,'utf8')<3900);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/Chart\/Series\(label,values\)/);
+});
+test('explanatory commands render canonical compositions without a model request',async()=>{
+ const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});
+ for(const cmd of ['layers','boundaries','workflow','decisions'])await h.commands.get('rich-ui').handler(cmd,context);
+ assert.equal(h.entries.length,4);
+ for(const e of h.entries)assert.ok(h.renderers.get(e.t)({data:e.d},{},context.ui.theme).render(80).length>0);
+ h.hooks.get('session_shutdown')();
 });
 test('v0.4 commands create all new display-only examples with no model request',async()=>{
  const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});

@@ -1,27 +1,43 @@
-Frames and headings are independent
-
-╭─ Border heading ────────────────────╮  ╭─────────────────────────────────────╮
-│ A named group with a compact edge   │  │ Inside heading                      │
-│ label.                              │  │                                     │
-│                                     │  │ A comparison card with a content    │
-│                                     │  │ heading.                            │
-╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
-
-Heading above                            ╭─────────────────────────────────────╮
-                                         │ Frame without a heading             │
-╭─────────────────────────────────────╮  │                                     │
-│ The heading sits outside the        │  │ A self-contained statement.         │
-│ boundary.                           │  │                                     │
-╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
-
-No frame
-
-Layout and typography group this explanation.
-
-▎ A callout
-▎
-▎ A colored rail highlights a caveat without enclosing the reply.
-
-┌─ Square outline ─────────────────────────────────────────────────────────────┐
-│ The border style is independent of title placement.                          │
-└──────────────────────────────────────────────────────────────────────────────┘
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│ Frames and headings are independent                                          │
+│                                                                              │
+│                                                                              │
+│ ╭─ Border heading ──────────────────╮  ╭───────────────────────────────────╮ │
+│ │                                   │  │                                   │ │
+│ │ A named group with a compact edge │  │ Inside heading                    │ │
+│ │ label.                            │  │                                   │ │
+│ │                                   │  │ A comparison card with a content  │ │
+│ │                                   │  │ heading.                          │ │
+│ │                                   │  │                                   │ │
+│ ╰───────────────────────────────────╯  ╰───────────────────────────────────╯ │
+│                                                                              │
+│ Heading above                          ╭───────────────────────────────────╮ │
+│                                        │                                   │ │
+│ ╭───────────────────────────────────╮  │ Frame without a heading           │ │
+│ │                                   │  │                                   │ │
+│ │ The heading sits outside the      │  │ A self-contained statement.       │ │
+│ │ boundary.                         │  │                                   │ │
+│ │                                   │  │                                   │ │
+│ ╰───────────────────────────────────╯  ╰───────────────────────────────────╯ │
+│                                                                              │
+│                                                                              │
+│ No frame                                                                     │
+│                                                                              │
+│ Layout and typography group this explanation.                                │
+│                                                                              │
+│                                                                              │
+│ ▎                                                                            │
+│ ▎ A callout                                                                  │
+│ ▎                                                                            │
+│ ▎ A colored rail highlights a caveat without enclosing the reply.            │
+│ ▎                                                                            │
+│                                                                              │
+│                                                                              │
+│ ┌─ Square outline ─────────────────────────────────────────────────────────┐ │
+│ │                                                                          │ │
+│ │ The border style is independent of title placement.                      │ │
+│ │                                                                          │ │
+│ └──────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯

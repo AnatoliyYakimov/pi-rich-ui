@@ -2,7 +2,7 @@
  * No image path is loaded by the extension; previews use the standalone palette. */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { renderDocument } from '../lib/render.mjs';
-import { PALETTES } from '../lib/theme.mjs';
+import { PALETTES, SURFACE_PALETTES } from '../lib/theme.mjs';
 const output = new URL('../docs/previews/', import.meta.url);
 mkdirSync(output, { recursive: true });
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&apos;' })[c]);
@@ -29,14 +29,23 @@ function structure(g,x,y,color) {
     return positions.filter(([mask])=>bits&mask).map(([,dx,dy])=>`<circle cx="${x+2.5+dx*4}" cy="${y+4+dy*4.5}" r="0.9" fill="${color}"/>`).join('');
   }
 }
-const renders = [['compare',80,'dark'],['compare',80,'light'],['compare',40,'dark'],['architecture',80,'dark'],['components',80,'dark'],['titles',80,'dark'],['dashboard',100,'dark']];
+const renders = [['layers',112,'dark'],['layers',112,'light'],['boundaries',112,'dark'],['boundaries',112,'light'],['boundaries',40,'dark'],['workflow',112,'dark'],['decisions',112,'dark'],['compare',80,'dark'],['compare',80,'light'],['compare',40,'dark'],['architecture',80,'dark'],['components',80,'dark'],['titles',80,'dark'],['dashboard',100,'dark']];
 for (const [name, columns, appearance] of renders) {
   const source = readFileSync(new URL(`../examples/${name}.xml`, import.meta.url), 'utf8');
   const surface = renderDocument(source, columns); surface.markTruncated();
   const palette = PALETTES[appearance], cw = 9, ch = 22, padding = 24, heading = 42;
   const width = surface.width * cw + padding * 2, height = surface.height * ch + heading + padding;
   const background = appearance === 'dark' ? '#10171e' : '#f6f8fb';
-  const cells = [];
+  const cells = [], backgrounds=[];
+  surface.rows.forEach((row,y)=>{
+    let start=0,previous;
+    for(let x=0;x<=row.length;x++){
+      const current=row[x]?.background;
+      if(current===previous)continue;
+      if(previous && SURFACE_PALETTES[appearance][previous])backgrounds.push(`<rect x="${padding+start*cw}" y="${heading+y*ch}" width="${(x-start)*cw}" height="${ch}" fill="${SURFACE_PALETTES[appearance][previous]}"/>`);
+      previous=current;start=x;
+    }
+  });
   surface.rows.forEach((row, y) => row.forEach((cell, x) => {
     if (!cell.g.trim() || cell.cont) return;
     const structural=structure(cell.g,padding+x*cw,heading+y*ch,palette[cell.role]??palette.text);
@@ -44,7 +53,7 @@ for (const [name, columns, appearance] of renders) {
     cells.push(`<text x="${padding+x*cw}" y="${heading+y*ch+16}" fill="${palette[cell.role]??palette.text}" textLength="${surface.measure(cell.g)*cw}" lengthAdjust="spacingAndGlyphs"${cell.bold?' font-weight="700"':''}>${escape(cell.g)}</text>`);
   }));
   const label = `Pi Rich UI · ${name} · ${columns} columns · ${appearance} sample palette`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title"><title id="title">${escape(label)}</title><rect width="100%" height="100%" fill="${background}"/><g font-family="DejaVu Sans Mono, monospace" font-size="14"><text x="${padding}" y="25" fill="${palette.muted}" font-size="11">${escape(label)}</text>${cells.join('')}</g></svg>\n`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title"><title id="title">${escape(label)}</title><rect width="100%" height="100%" fill="${background}"/><g font-family="DejaVu Sans Mono, monospace" font-size="14"><text x="${padding}" y="25" fill="${palette.muted}" font-size="11">${escape(label)}</text>${backgrounds.join('')}${cells.join('')}</g></svg>\n`;
   writeFileSync(new URL(`${name}-${columns}-${appearance}.svg`,output),svg);
 }
 console.log(`Generated ${renders.length} static documentation previews from the actual cell renderer.`);

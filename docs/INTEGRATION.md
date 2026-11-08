@@ -1,4 +1,4 @@
-# Integration contract — v0.5
+# Integration contract
 
 ## Supported public surface
 
@@ -69,9 +69,9 @@ and used for an executed compatibility check. It exposes the prototype method an
 added to the extension dependencies.
 
 `index.ts` imports the host `@earendil-works/pi-tui`; no private second installation is bundled.
-`test:host` renders 13 examples, including the new general compositions, at widths
+`test:host` renders 17 examples, including layers and nested boundaries, at widths
 24/40/80/120 and checks ordinary prose plus fenced XML. It requires an installed host.
-An actual Pi coding agent 1.5.0 offline PTY trial also loaded index.ts, exercised
+An earlier baseline Pi coding agent 1.5.0 offline PTY trial loaded index.ts, exercised
 /rich-ui status, compare and titles, observed host SGR colors and NO_COLOR behavior,
 and exited cleanly. Regular and fullscreen modes were exercised. The bundled CLI was tested as well, including restoring an assistant-history fixture
 whose XML rendered between the original prose without a visible sentinel/code fence.
@@ -98,6 +98,7 @@ https://raw.githubusercontent.com/earendil-works/pi/main/packages/tui/src/compon
 
 `scripts/preview-assets.mjs` exports the actual styled Surface cells as static SVG
 with sample dark/light palettes. Structural strokes and Braille dots follow their
-terminal-cell geometry; ordinary glyphs use a monospace font. This code is never
+terminal-cell geometry; ordinary glyphs use a monospace font. Semantic backgrounds
+are emitted as cell rectangles, including blank card fields and inline pill padding. This code is never
 imported by index.ts or any runtime module. SVG files are README/gallery previews,
 not a new output mode. Native runtime remains copyable ANSI/Unicode text.

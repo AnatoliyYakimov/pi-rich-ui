@@ -1,25 +1,41 @@
-Rendering inside a Pi reply
-
-╭─ Model response ─────────────────────────────────────────────────────────────╮
-│ Ordinary Markdown                      XML composition                       │
-│                                                                              │
-│ Paragraphs and code                    Row · Box · Text                      │
-╰──────────────────────────────────────────────────────────────────────────────╯
-
-↓                                        ↓
-
-╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
-│ Pi Markdown                         │  │ Rich UI                             │
-│                                     │  │                                     │
-│ Standard rendering                  │  │ Parser → AST                        │
-╰─────────────────────────────────────╯  │                                     │
-                                         │ Layout → ANSI                       │
-                                         ╰─────────────────────────────────────╯
-
 ╭──────────────────────────────────────────────────────────────────────────────╮
-│ Reply in session history                                                     │
 │                                                                              │
-│ Prose → visual block → more prose                                            │
+│ Rendering inside a Pi reply                                                  │
+│                                                                              │
+│                                                                              │
+│ ╭─ Model response ─────────────────────────────────────────────────────────╮ │
+│ │                                                                          │ │
+│ │ Ordinary Markdown                    XML composition                     │ │
+│ │                                                                          │ │
+│ │ Paragraphs and code                  Row · Box · Text                    │ │
+│ │                                                                          │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│                                                                              │
+│ ↓                                      ↓                                     │
+│                                                                              │
+│ ╭───────────────────────────────────╮  ╭───────────────────────────────────╮ │
+│ │                                   │  │                                   │ │
+│ │ Pi Markdown                       │  │ Rich UI                           │ │
+│ │                                   │  │                                   │ │
+│ │ Standard rendering                │  │ Parser → AST                      │ │
+│ │                                   │  │                                   │ │
+│ ╰───────────────────────────────────╯  │ Layout → ANSI                     │ │
+│                                        │                                   │ │
+│                                        ╰───────────────────────────────────╯ │
+│                                                                              │
+│                                                                              │
+│ ╭──────────────────────────────────────────────────────────────────────────╮ │
+│ │                                                                          │ │
+│ │ Reply in session history                                                 │ │
+│ │                                                                          │ │
+│ │ Prose → visual block → more prose                                        │ │
+│ │                                                                          │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│                                                                              │
+│ ▎                                                                            │
+│ ▎ Native insertion currently depends on Pi's internal Markdown API.          │
+│ ▎                                                                            │
+│                                                                              │
 ╰──────────────────────────────────────────────────────────────────────────────╯
-
-▎ Native insertion currently depends on Pi's internal Markdown API.

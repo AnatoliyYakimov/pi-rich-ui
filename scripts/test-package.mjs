@@ -49,7 +49,7 @@ try {
   const tui = process.env.PI_TUI_MODULE ? await import(pathToFileURL(resolve(process.env.PI_TUI_MODULE))) : {};
   await setup(pi, tui, { env: {} });
   const context = { mode: 'tui', hasUI: true, ui: { theme: {}, notify() {} } };
-  for (const name of ['demo', 'compare', 'architecture', 'components', 'titles', 'dashboard',
+  for (const name of ['demo', 'layers', 'boundaries', 'workflow', 'decisions', 'compare', 'architecture', 'components', 'titles', 'dashboard',
     'table', 'diff', 'sequence', 'tree', 'timeline', 'layout', 'charts', 'palette']) {
     await commands.get('rich-ui').handler(name, context);
     const entry = entries.at(-1);
@@ -100,7 +100,7 @@ try {
     const { testFeedbackHost } = await import('./test-feedback-host.mjs');
     await testFeedbackHost({ installed, agentModule });
   }
-  console.log(`PASS: npm archive (${paths.size} files), Apache license, reference and all 14 demos.`);
+  console.log(`PASS: npm archive (${paths.size} files), Apache license, reference and all 18 demos.`);
 } finally {
   rmSync(temp, { recursive: true, force: true });
 }

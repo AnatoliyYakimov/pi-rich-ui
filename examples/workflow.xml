@@ -1,0 +1,21 @@
+<UI gap={1}>
+  <Card border={false}>
+    <Row><Title flex={1}>1 · Запрос пользователя</Title><Badge tone="info" flex={0}>Намерение</Badge></Row>
+    <Text>Описывает желаемое действие и его контекст.</Text>
+    <Caption>Сам запрос ещё не означает, что любой способ исполнения разрешён.</Caption>
+  </Card>
+  <Connector label="Команда + область доступа"/>
+  <Card border={false}>
+    <Title>2 · Проверка политик</Title>
+    <Grid cols={2}>
+      <Col gap={0}><Text bold>Permissions</Text><Caption>Разрешить, запретить или запросить подтверждение.</Caption></Col>
+      <Col gap={0}><Text bold>Sandbox</Text><Caption>Ограничить доступ процесса к файлам и сети.</Caption></Col>
+    </Grid>
+  </Card>
+  <Connector label="Только допустимые операции"/>
+  <Card border={false}>
+    <Title>3 · Исполнение</Title>
+    <Text>Выполнение в выбранной ограниченной среде.</Text>
+    <Caption>Логи и результат доступны для проверки; изоляция не доказывает корректность кода.</Caption>
+  </Card>
+</UI>

@@ -1,0 +1,17 @@
+<UI gap={1}>
+  <Card border={false}>
+    <Title>macOS — доверенная среда</Title>
+    <Caption>Личные файлы, SSH-ключи, реальные OAuth-токены и GitHub credentials.</Caption>
+  </Card>
+  <Connector direction="both" label="Контролируемый доступ: Git + credential proxy"/>
+  <Box title="Изолированная micro-VM" titlePosition="inside" borderTone="success" titleTone="text" surface="none">
+    <Card border={false}>
+      <Title align="center">Pi + extensions + npm dependencies</Title>
+      <Caption align="center">Потенциально недоверенный код</Caption>
+    </Card>
+    <Grid cols={2} minWidth={22}>
+      <Card border={false}><Text align="center">Изолированный Git clone</Text></Card>
+      <Card border={false}><Text align="center">Network allowlist</Text></Card>
+    </Grid>
+  </Box>
+</UI>

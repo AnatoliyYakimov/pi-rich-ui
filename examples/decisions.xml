@@ -1,0 +1,23 @@
+<UI>
+  <Grid cols={2} minWidth={24}>
+    <Card title="OS sandbox">
+      <Badge tone="info">Меньше накладных расходов</Badge>
+      <Col gap={0}>
+        <Text bold>Что даёт</Text><Text>Ограничивает ресурсы процесса средствами ОС.</Text>
+      </Col>
+      <Col gap={0}>
+        <Text bold>Чего не решает</Text><Caption>Не создаёт отдельную гостевую ОС.</Caption>
+      </Col>
+    </Card>
+    <Card title="Micro-VM">
+      <Badge tone="success">Отдельная среда</Badge>
+      <Col gap={0}>
+        <Text bold>Что даёт</Text><Text>Отделяет недоверенный код границей виртуализации.</Text>
+      </Col>
+      <Col gap={0}>
+        <Text bold>Цена</Text><Caption>Дополнительные ресурсы и настройка файлов, сети и секретов.</Caption>
+      </Col>
+    </Card>
+  </Grid>
+  <Callout tone="warning"><Text>Выбор зависит от модели угроз. Сеть и секреты требуют явной политики в обоих случаях.</Text></Callout>
+</UI>

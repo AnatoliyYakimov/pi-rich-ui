@@ -1,19 +1,25 @@
-Transactional outbox · example
-
-1. API → Postgres: BEGIN; order + outbox
-
-2. Postgres ⇢ API (return): COMMIT
-
-3. Relay → Postgres: Fetch unpublished
-events
-
-4. Relay → Kafka (async): Publish
-
-5. Kafka ⇢ Relay (return): ACK
-
-6. Relay → Relay: Process ACK
-
-i Relay, Kafka: A crash before marking
-sent can cause a repeat publication.
-
-7. Relay → Postgres: Mark sent
+╭──────────────────────────────────────╮
+│                                      │
+│ Transactional outbox · example       │
+│                                      │
+│ 1. API → Postgres: BEGIN; order +    │
+│ outbox                               │
+│                                      │
+│ 2. Postgres ⇢ API (return): COMMIT   │
+│                                      │
+│ 3. Relay → Postgres: Fetch           │
+│ unpublished events                   │
+│                                      │
+│ 4. Relay → Kafka (async): Publish    │
+│                                      │
+│ 5. Kafka ⇢ Relay (return): ACK       │
+│                                      │
+│ 6. Relay → Relay: Process ACK        │
+│                                      │
+│ i Relay, Kafka: A crash before       │
+│ marking sent can cause a repeat      │
+│ publication.                         │
+│                                      │
+│ 7. Relay → Postgres: Mark sent       │
+│                                      │
+╰──────────────────────────────────────╯

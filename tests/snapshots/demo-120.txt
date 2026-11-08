@@ -1,20 +1,32 @@
-Start with ANSI.
-
-Keep pixel graphics as an optional future renderer.
-
-╭─────────────────────────────────────────────────────────╮  ╭─────────────────────────────────────────────────────────╮
-│ ANSI / Unicode                                          │  │ PNG                                                     │
-│                                                         │  │                                                         │
-│ ✓ Current direction                                     │  │ ○ Deferred                                              │
-│                                                         │  │                                                         │
-│ Text, panels, diagrams and Braille charts.              │  │ Pixel graphics, arbitrary lines and fonts.              │
-│                                                         │  │                                                         │
-│ • Copyable terminal text                                │  │ Image contents cannot be selected as terminal text.     │
-│ • Colors from the Pi theme                              │  │ Requires image protocol support.                        │
-│                                                         │  │                                                         │
-│ Geometry follows terminal cells.                        │  │                                                         │
-╰─────────────────────────────────────────────────────────╯  ╰─────────────────────────────────────────────────────────╯
-
-The model describes meaning. The renderer chooses presentation.
-
-▎ Pair semantic colors with visible labels: success, attention, failure.
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                              │
+│ Start with ANSI.                                                                                             │
+│                                                                                                              │
+│                                                                                                              │
+│ Keep pixel graphics as an optional future renderer.                                                          │
+│                                                                                                              │
+│                                                                                                              │
+│ ╭───────────────────────────────────────────────────╮  ╭───────────────────────────────────────────────────╮ │
+│ │                                                   │  │                                                   │ │
+│ │ ANSI / Unicode                                    │  │ PNG                                               │ │
+│ │                                                   │  │                                                   │ │
+│ │  ✓ Current direction                              │  │  ○ Deferred                                       │ │
+│ │                                                   │  │                                                   │ │
+│ │ Text, panels, diagrams and Braille charts.        │  │ Pixel graphics, arbitrary lines and fonts.        │ │
+│ │                                                   │  │                                                   │ │
+│ │ • Copyable terminal text                          │  │ Image contents cannot be selected as terminal     │ │
+│ │ • Colors from the Pi theme                        │  │ text. Requires image protocol support.            │ │
+│ │                                                   │  │                                                   │ │
+│ │ Geometry follows terminal cells.                  │  │                                                   │ │
+│ │                                                   │  │                                                   │ │
+│ ╰───────────────────────────────────────────────────╯  ╰───────────────────────────────────────────────────╯ │
+│                                                                                                              │
+│                                                                                                              │
+│ The model describes meaning. The renderer chooses presentation.                                              │
+│                                                                                                              │
+│                                                                                                              │
+│ ▎                                                                                                            │
+│ ▎ Pair semantic colors with visible labels: success, attention, failure.                                     │
+│ ▎                                                                                                            │
+│                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯

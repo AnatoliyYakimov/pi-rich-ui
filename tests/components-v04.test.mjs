@@ -28,9 +28,9 @@ test('table scalar cells format grouping, percent, decimals and unit',()=>{
  for(const expected of ['12,345','12.5%','25 ms'])assert.ok(s.includes(expected),s);
 });
 test('numeric columns align by right edge, with cell override',()=>{
- const s=draw('<Table headers="Name,N"><Tr values="A,1"/><Tr values="B,123"/></Table>').plain();
+ const s=draw('<Table headers="Name,N"><Tr values="A,1"/><Tr values="B,123"/></Table>',80,{presentation:false}).plain();
  const a=s.find(l=>/^A\s/.test(l)),b=s.find(l=>/^B\s/.test(l));assert.equal(a.indexOf('1'),b.indexOf('123')+2);
- const t=plain('<Table><Column label="N" align="right"/><Tr><Td value={2} align="left"/></Tr></Table>',20);assert.match(t,/\n2(?:\n|$)/);
+ const t=plain('<Table><Column label="N" align="right"/><Tr><Td value={2} align="left"/></Tr></Table>',20,{presentation:false});assert.match(t,/\n2(?:\n|$)/);
 });
 test('table preserves headerless first row and fills short rows with em dash',()=>{
  const s=plain('<Table><Tr><Td>FIRST</Td><Td>second</Td></Tr><Tr><Td>tail</Td></Tr></Table>');assert.match(s,/FIRST/);assert.match(s,/tail/);assert.match(s,/—/);
@@ -139,7 +139,7 @@ for(const file of ['demo','table','diff','sequence','tree','timeline','layout','
   for(let width=1;width<=160;width++){
    const surface=draw(xml,width),ansi=surface.ansi({colorMode:'truecolor'}),lines=surface.plain();
    assert.ok(surface.height<=400);
-   lines.forEach((line,i)=>{assert.ok(widthOf(line)<=width,`${file} @${width}: ${line}`);assert.equal(ansi[i].replace(/\x1b\[[\d;]*m/g,''),line);assert.ok(!/[\x00-\x08\x0b-\x1f]/.test(line));});
+   lines.forEach((line,i)=>{assert.ok(widthOf(line)<=width,`${file} @${width}: ${line}`);assert.equal(ansi[i].replace(/\x1b\[[\d;]*m/g,'').trimEnd(),line);assert.ok(!/[\x00-\x08\x0b-\x1f]/.test(line));});
   }
  });
 }

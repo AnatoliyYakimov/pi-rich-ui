@@ -9,7 +9,7 @@ Compose panels, comparisons, diagrams, trees, timelines and Braille charts using
 compact, React-inspired XML. Everything stays inside the conversation, with semantic
 colors from your Pi theme and layouts that adapt to terminal width.
 
-![ANSI comparison rendered in the dark sample palette](docs/previews/compare-80-dark.svg)
+![Layered explanations with themed cards and status pills](docs/previews/layers-112-dark.svg)
 
 *Actual output of the cell renderer, exported for documentation with a sample palette.
 These are not browser UI mockups or screenshots of a running Pi. Your theme and font
@@ -23,9 +23,14 @@ choose the final shades and glyphs. The extension itself renders ANSI text, not 
 - **Architecture:** flows, sequence diagrams, dependency graphs and module trees.
 - **Data:** rich tables, numeric/text diffs, Braille plots, thresholds and mini-bars.
 - **A coherent terminal design:** colorful outlines, bold headings, muted captions,
-  inline emphasis and rails for callouts. The terminal background stays untouched.
-- **Independent headings and borders:** put a heading inside a card, above it, on its
-  border, or omit it. A frame is optional, not a requirement for visual content.
+  inline emphasis, themed card surfaces, compact status pills and rails for callouts.
+  Only deliberate surfaces are painted; the surrounding terminal stays untouched.
+- **Nested explanations:** combine an outer environment, a labeled connection and
+  a highlighted inner boundary containing its own cards and responsive groups.
+- **Independent headings, borders and surfaces:** place a heading inside/above/on
+  a frame, omit the border without losing the background, or make a card transparent.
+- **Readable wide layouts:** ordinary compositions use at most 112 cells. Short tables
+  and comparisons stay compact; root `width="full"` opts into a wider diagram.
 
 Model guidance is injected automatically. No extra tool call is needed to draw a block.
 This is static rich text, not a React runtime or an interactive dashboard application.
@@ -60,7 +65,7 @@ pi install git:github.com/AnatoliyYakimov/pi-rich-ui
 For the pinned GitHub release:
 
 ```bash
-pi install git:github.com/AnatoliyYakimov/pi-rich-ui@v0.5.4
+pi install git:github.com/AnatoliyYakimov/pi-rich-ui@v0.6.0
 ```
 
 Alternatively, clone into the extensions directory manually:
@@ -102,16 +107,17 @@ against **official `pi-tui` 1.5.0**; see [validation](#development-and-validatio
 
 Ask Pi:
 
-> Explain why we chose ANSI over PNG using two comparison cards and a caveat.
-> Then show how XML becomes a visual block inside an ordinary assistant response.
+> Explain the difference between permissions, an OS sandbox and a micro-VM using
+> layered cards, status labels and arrows. Then show a trusted host outside an
+> isolated boundary, with controlled Git access and two groups inside the boundary.
 
 The extension guides the model to use a compact visual whenever it improves clarity,
 understanding or retention, replacing long lists and winding explanations with a small
 composition and brief supporting prose. The instruction is English; output labels
 follow your language. Simple facts may remain plain Markdown.
 
-The injected core is 1,646 characters: short rules, a compact element reference and
-three purpose-labeled examples. Advanced attributes stay in a local reference, read
+The injected core is 3,321 UTF-8 bytes: short rules, three explanatory recipes —
+layers, a genuinely nested boundary and a decision comparison — and an explicit-cell table. Advanced attributes stay in a local reference, read
 only when needed; its absolute installed path is included, not its contents.
 
 The extension adds this guide to the model's system prompt. Visual blocks
@@ -119,18 +125,38 @@ appear on their own lines **outside code fences** in assistant replies. Fenced X
 including this documentation example, remains literal code:
 
 ```xml
-<Grid cols={2}>
-  <Card title="ANSI" tone="cyan">
-    <Badge tone="success">Current choice</Badge>
-    <Text>Copyable text, diagrams and Braille charts.</Text>
+<UI gap={1}>
+  <Card border={false}>
+    <Title>Trusted host</Title>
+    <Caption>Personal files and real credentials.</Caption>
   </Card>
-  <Card title="PNG" borderTone="muted" titleTone="text">
-    <Caption>Deferred until pixel graphics are needed.</Caption>
-  </Card>
-</Grid>
+  <Connector direction="both" label="Controlled Git access"/>
+  <Box title="Isolated environment" borderTone="success" titleTone="text">
+    <Card border={false}>
+      <Title align="center">Agent + extensions</Title>
+      <Caption align="center">Potentially untrusted code</Caption>
+    </Card>
+    <Grid cols={2}>
+      <Card border={false}>Isolated clone</Card>
+      <Card border={false}>Network policy</Card>
+    </Grid>
+  </Box>
+</UI>
 ```
 
 ## Visual examples
+
+### Explain layers and boundaries first
+
+![A trusted host outside a highlighted nested execution boundary](docs/previews/boundaries-112-light.svg)
+
+Try `/rich-ui layers`, `/rich-ui boundaries`, `/rich-ui workflow` and
+`/rich-ui decisions`. These explain concepts and relationships without invented
+telemetry. Headers combine a growing title and compact status; nested cards convey
+containment; labeled connectors explain what crosses a boundary. Inner cards can
+have `border={false}` while retaining a themed `surface`.
+
+[Full explanatory recipes](docs/GALLERY.md) · [Dark boundary preview](docs/previews/boundaries-112-dark.svg) · [Narrow boundary preview](docs/previews/boundaries-40-dark.svg)
 
 ### Explain architecture
 
@@ -180,7 +206,10 @@ for explanations without numbers. Try `/rich-ui dashboard`.
 
 | Command | Shows |
 | --- | --- |
-| `/rich-ui demo` or `/rich-ui compare` | ANSI vs PNG comparison |
+| `/rich-ui demo` or `/rich-ui layers` | Layered explanation with status pills |
+| `/rich-ui boundaries` | Trusted environment, labeled access and a nested boundary |
+| `/rich-ui workflow`, `/rich-ui decisions` | Explanatory stages and decision cards |
+| `/rich-ui compare` | ANSI vs PNG comparison |
 | `/rich-ui architecture` | Rendering inside a Pi response |
 | `/rich-ui components` | Layout, content, relationships and data primitives |
 | `/rich-ui titles` | Independent heading/border combinations |
@@ -245,15 +274,15 @@ shell, network or files. The extension itself runs with Pi's normal permissions.
 npm test
 npm run check
 npm run test:package
-npm run preview -- --file examples/compare.xml --width 80 --colors truecolor
+npm run preview -- --file examples/boundaries.xml --width 112 --colors truecolor
 npm run preview:assets
 npm run test:host -- /path/to/pi-tui/dist/index.js
 ```
 
-The local suite includes validation/feedback regressions, including width sweeps from 1–160 columns and
-**39 golden snapshots**. The actual `pi-tui` 1.5.0 smoke test renders 13 compositions,
+The suite includes validation/feedback regressions, width sweeps from 1–160 columns,
+control widths 200/240 and **51 golden snapshots**. The actual `pi-tui` 1.5.0 smoke test renders 17 compositions,
 checks resizing at 24/40/80/120 columns and preserves literal fenced XML. Local host
-mocks remain useful for lifecycle tests. An offline interactive Pi 1.5.0 PTY trial also loaded the extension and displayed
+mocks remain useful for lifecycle tests. An earlier offline interactive Pi 1.5.0 PTY trial loaded the baseline extension and displayed
 its local commands in regular and fullscreen modes, including theme colors and
 NO_COLOR. No LLM request was made. Physical terminal/font combinations remain separate checks.
 See the [TUI smoke record](docs/TUI-SMOKE.txt).
@@ -269,7 +298,7 @@ loops, queued follow-ups, boundary composition, and restored attempt metadata.
 No external model calls or credentials are used. Host modules are peer dependencies
 supplied by Pi, never bundled copies.
 
-Tags such as `v0.5.4` trigger the same checks and a GitHub Release, without requiring
+Tags such as `v0.6.0` trigger the same checks and a GitHub Release, without requiring
 npm publication. npm publishing through OIDC is an optional manual workflow step.
 See [release setup and instructions](docs/RELEASING.md).
 

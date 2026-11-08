@@ -79,11 +79,11 @@ test('narrow container degrades decoration and preserves heading and body',()=>{
 });
 test('table headers use accent while vertical rules are optional',()=>{
  const xml='<Table headers="Name,State"><Tr values="API,healthy"/></Table>';
- const s=renderDocument(xml,50);assert.ok(!s.plain().join('').includes('│'));assert.ok(s.rows[0].some(c=>c.role==='accent'&&c.bold));
+ const s=renderDocument(xml,50,{presentation:false});assert.ok(!s.plain().join('').includes('│'));assert.ok(s.rows[0].some(c=>c.role==='accent'&&c.bold));
  assert.match(plain(xml.replace('<Table ','<Table columnSeparators ')),/│/);
 });
 test('numeric metrics have bright bold values and optional semantic delta',()=>{
- const s=renderDocument('<Metric label="Requests" value={600} delta="+12%"/>',30);assert.equal(s.rows[1][0].role,'text');assert.ok(s.rows[1][0].bold);assert.match(s.plain().join('\n'),/\+12%/);
+ const s=renderDocument('<Metric label="Requests" value={600} delta="+12%"/>',30,{presentation:false});assert.equal(s.rows[1][0].role,'text');assert.ok(s.rows[1][0].bold);assert.match(s.plain().join('\n'),/\+12%/);
 });
 test('each supported density affects frame-free content too',()=>{
  const compact=renderDocument('<Card density="compact" border={false}><Text>A</Text><Text>B</Text></Card>',30),spacious=renderDocument('<Card density="spacious" border={false}><Text>A</Text><Text>B</Text></Card>',30);assert.ok(compact.height<spacious.height);
@@ -98,7 +98,7 @@ for(const name of ['compare','architecture','components','titles','dashboard'])t
  const xml=readFileSync(new URL(`../examples/${name}.xml`,import.meta.url),'utf8');
  for(let w=1;w<=160;w++){
   const s=renderDocument(xml,w),lines=s.ansi({colorMode:'truecolor'}),plain=s.plain();assert.ok(s.height<=400);
-  lines.forEach((l,i)=>{const clean=l.replace(/\x1b\[[\d;]*m/g,'');assert.equal(clean,plain[i]);assert.ok(widthOf(clean)<=w,`${name} ${w}: ${clean}`);});
+  lines.forEach((l,i)=>{const clean=l.replace(/\x1b\[[\d;]*m/g,'');assert.equal(clean.trimEnd(),plain[i]);assert.ok(widthOf(clean)<=w,`${name} ${w}: ${clean}`);});
  }
 });
 test('real discussion examples preserve their decision and architecture wording',()=>{
@@ -108,5 +108,5 @@ test('real discussion examples preserve their decision and architecture wording'
 });
 
 test('a zero delta remains visible instead of being dropped as falsy',()=>{
- const s=renderDocument('<Metric label="Changes" value={2} delta={0}/>',30).plain();assert.equal(s[2],'0');
+ const s=renderDocument('<Metric label="Changes" value={2} delta={0}/>',30,{presentation:false}).plain();assert.equal(s[2],'0');
 });

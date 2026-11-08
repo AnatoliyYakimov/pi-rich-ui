@@ -19,6 +19,28 @@ Namespaced aliases include `Table.Row`, `Table.Cell`, `Table.Head`, `Table.Colum
 `Sequence.Note`, `Tree.Item`, `Tree.Node`, `Timeline.Step`, `Chart.Series` and `Chart.Rule`.
 A layout `Row` is distinct from `Table.Row`.
 
+## Explanatory compositions and section defaults
+
+Prefer layers, nested boundaries, workflows and decision comparisons over synthetic
+metric dashboards. See [the gallery](GALLERY.md) for complete recipes.
+
+Ordinary root compositions use `min(available width, 112)` cells, left aligned.
+Root `width="full"` requests the host budget (still at most 240). A larger root numeric
+`width` can request a larger budget; numeric width remains an ideal preference, not a
+fixed width. `maxWidth` limits root and nested blocks; children never escape parents.
+`width="full"` on a descendant is rejected.
+
+Root UI has a quiet outer frame. Unstyled top-level content blocks (Table, Diff,
+Metric, Graph, Sequence, etc.) receive section panels. Row/Grid/Col remain transparent
+layout: they do not invent another common border around already styled cards.
+Explicitly styled layouts and Card/Box/Callout stop automatic child decoration.
+Text/Title/Caption, Badge/Icon, Spacer/Divider and Connector do not become panels.
+Use Box/Card for a common semantic group; explicit border/surface overrides defaults.
+
+`UI` separates sections with 2 empty lines in normal density (compact 0, spacious 3).
+`Col gap={0}` groups closely related text/captions. Use `UI gap={1}` for card chains
+with arrows. The frame and fields are included in the width budget.
+
 ## Panels, frames and headings
 
 Box, Card and Callout share a container renderer. A frame, a title and a semantic
@@ -31,7 +53,9 @@ accent are separate choices:
 | `border` | `rounded`, `single`, `left`, `none`; boolean false/true are aliases for none/rounded |
 | `borderTone` | Semantic role for the outline, independent of body color |
 | `titleTone` | Semantic role for the heading, independent of the outline |
-| `padding`, `gap`, `density` | Existing spacing options, applied consistently |
+| `surface` | `auto`, `none`, `subtle`, `info`, `success`, `warning`, `error` |
+| `padding` | Horizontal **and vertical** fields: compact 0, normal 1, spacious 2 |
+| `gap`, `density` | Explicit spacing overrides inherited density |
 
 Card defaults to `titlePosition="inside"`; Box defaults to `border`. Both default
 to a rounded outline. Callout defaults to a left rail with an inside heading.
@@ -54,10 +78,63 @@ Equal-height rows/grids retain the exact title placement, square/rounded corners
 </UI>
 ```
 
+### Surfaces and independent controls
+
+Card `surface="auto"` uses subtle shading; Box/UI auto is transparent. Badge auto
+uses a muted status surface by tone. `surface="none"` removes the component's own
+shading and reveals its parent; it does not erase an ancestor to terminal default.
+A child's explicit surface overrides its parent. Filled blank padding and stretched
+rows remain part of the card. Rounded corner cells and above-frame titles retain
+the parent surface.
+
+`border={false}` keeps the surface, and `surface="none"` keeps the border:
+
+```xml
+<UI gap={1}>
+  <Card border={false}><Title>Soft card</Title><Caption>Surface without an outline.</Caption></Card>
+  <Box title="Boundary" borderTone="success" surface="none"><Text>Outline without an own background.</Text></Box>
+</UI>
+```
+
+Backgrounds resolve through Pi's `bg` tokens: subtle/info → customMessageBg,
+success → toolSuccessBg, warning → toolPendingBg, error → toolErrorBg. Theme shades
+and terminal-default backgrounds are respected. Standalone 256/truecolor previews
+use a small light/dark fallback palette; 16-color fallbacks may omit shading.
+NO_COLOR/TERM=dumb omit color and bold; captions/status labels/contours preserve
+structure. Explicit border=false stays off even without color.
+
+### Headers, pills and text alignment
+
+Text/Title/Caption support `align="left|center|right"` per wrapped line. Badge paints
+only its measured label/icon with a small field, not the rest of its allocated row;
+inline Badge in Text follows the same bounds. A responsive header:
+
+```xml
+<Card border={false}>
+  <Row><Title flex={1}>Permissions</Title><Badge tone="warning" flex={0}>Approval</Badge></Row>
+  <Col gap={0}><Text>Checks whether an action is allowed.</Text><Caption>Does not isolate the process.</Caption></Col>
+</Card>
+```
+
 Use one panel per semantic group. Ordinary Markdown can carry the surrounding prose.
 The library is for general visual explanations, not only numerical dashboards.
 Metric supports optional `delta` and `hint` lines: the renderer does not calculate
 or invent either. Values are bold and neutral unless an explicit or inherited tone applies.
+
+## Connector
+
+```xml
+<UI gap={1}>
+  <Card border={false}><Title>Trusted host</Title></Card>
+  <Connector direction="both" label="Controlled access: Git + credential proxy"/>
+  <Box title="Isolated environment" borderTone="success"><Text>Untrusted execution.</Text></Box>
+</UI>
+```
+
+Direction is down (default), up or both. The centered arrow and label express a
+relationship between adjacent areas in composition order. Labels wrap without
+inventing endpoints. Connector has no own panel or outside spacing; parent gap
+controls the distance. It is not a general edge-router for arbitrary nested nodes.
 
 ## Rich Table
 
@@ -83,7 +160,9 @@ or invent either. Values are bold and neutral unless an explicit or inherited to
 
 Numeric columns align right automatically. Column/cell options include
 `align="left|center|right"`, `digits`, `unit`, `format="number|percent"`, `group={false}`,
-`minWidth` and `maxWidth`. For percentages, `0.25` means `25%`. A `value` attribute
+`minWidth` and `maxWidth`. Columns grow toward natural content widths; neither text
+nor numeric columns absorb unused space by default. Explicit `Table.Column flex={1}`
+allows extra growth. Rules stop at the actual column total. For percentages, `0.25` means `25%`. A `value` attribute
 specifies a formatted number. Literal cell text such as `001` retains its leading zeros.
 
 Thresholds `warnAbove/errorAbove/warnBelow/errorBelow` use strict comparisons (`>`/`<`).
@@ -128,7 +207,9 @@ Text Diff uses a deterministic line-based LCS, line numbers, preserved indentati
 `−/+` markers and explicitly counted omissions for distant unchanged context.
 Up to 160 lines per side. `mode="auto"` uses split view from 88 columns, unified below.
 `mode="split"` permits split view from 60 columns; below that it still uses unified.
-`mode="unified"` always uses one column. `beforeLabel/afterLabel` customize headings.
+`mode="unified"` always uses one column. These thresholds use the available **inner**
+budget after section fields. Short split diffs use content-sized equal sides instead
+of filling the screen; long lines use available space. `beforeLabel/afterLabel` customize headings.
 Before/After must contain literal text, with XML brackets escaped. One outer layout
 newline is removed from each end.
 
@@ -247,11 +328,12 @@ use a table or metric alongside the chart when exact values matter.
 Roles: `success/error/warning/info/accent/purple/cyan/muted/text/dim/border`.
 Aliases include green/red/yellow/blue/gray and positive/negative/orange/violet/teal.
 `tone` takes precedence over `color`. Roles resolve through Pi's theme; they are not
-guaranteed RGB values. The terminal background is untouched. Unicode icons are built
+guaranteed RGB values. Only explicit/automatic surfaces are shaded; the surrounding
+terminal background is untouched. Unicode icons are built
 in; Nerd Fonts are not required.
 
 Available components: UI, Box/Card/Callout, Row/Col/Grid/GridItem, Text/Title/Caption, Span,
-Icon, Badge, Divider, Spacer, Metric, Progress, Flow/Step, Graph/Node/Edge, Bars/Bar,
+Icon, Badge, Connector, Divider, Spacer, Metric, Progress, Flow/Step, Graph/Node/Edge, Bars/Bar,
 Chart/Series/Rule, Sparkline, Table/Tr/Th/Td/Column, Diff/Before/After,
 Sequence/Actor/Message/Note, Tree, Timeline, List/Item and Code.
 
@@ -272,11 +354,12 @@ PNG is disabled; image/auto settings select ANSI with a notice.
 
 ## Prompt, history and security
 
-`lib/prompt.mjs` defines an English **1,907-character core guide**: short behavior
-rules, a compact element reference and **four purpose-labeled compositions**
-(compare options, show interactions, highlight a caveat, compare table rows).
-The table example uses explicit cells; arrays are explicitly unsupported. Compact
-`headers`/`values` are delimiter-separated strings, not CSV. It asks the model to use
+`lib/prompt.mjs` defines an English **3,321-byte UTF-8 core guide**: short behavior
+rules, **three explanatory compositions** (layers, a nested boundary and a decision
+comparison) and an explicit-cell table. It shows filled cards, header/status alignment,
+independent border/surface and labeled relationships rather than requiring the model
+to infer them from tag names. Arrays and manual reserved fences are unsupported;
+compact `headers`/`values` are delimiter-separated strings, not CSV. It asks the model to use
 a compact visual whenever it improves clarity, understanding or retention, rather
 than long lists or winding prose. Simple facts can stay Markdown; output labels
 follow the user's language. This guides model behavior; it is not a guarantee of
@@ -354,7 +437,7 @@ npm run test:host
 npm run snapshots:update
 ```
 
-The repository includes per-component examples, unit/integration doubles, 39 golden
+The repository includes explanatory/per-component examples, unit/integration doubles, 51 golden
 snapshots (40/80/120 columns), width sweeps 1–160, and Unicode/ANSI, streaming, validation,
 theme inheritance, prompt and adapter-lifecycle checks.
 
@@ -362,13 +445,13 @@ theme inheritance, prompt and adapter-lifecycle checks.
 checks. `docs/BENCHMARK.json` is a synthetic benchmark, **not** real Pi latency.
 `docs/preview-*.txt` contains monochrome output; view `docs/preview-*.ansi` with `cat`.
 
-The current suite ran on Node 24.22.1. The package requires Node >=22.19.0.
+The readable-layout feature was validated on Node 26.12.0. The package requires Node >=22.19.0.
 The real Markdown integration was exercised against official `@earendil-works/pi-tui`
-1.5.0, covering 13 examples at 24/40/80/120 columns. The suite also covers completed-answer
+1.5.0, covering 17 examples at 24/40/80/120 columns. The suite also covers completed-answer
 validation and correction budgets. With `PI_AGENT_MODULE` set, packed-extension checks
 exercise real offline Pi sessions with a deterministic local provider; they make no
-external model requests.
-An offline interactive Pi 1.5.0 PTY smoke test loaded the extension and its local
+external model requests. See current test output for the suite count.
+An earlier offline interactive Pi 1.5.0 PTY smoke test loaded the baseline extension and its local
 demos in regular/fullscreen modes. No model request was made; physical terminal/font
 behavior remains a separate check. See [TUI smoke record](TUI-SMOKE.txt).
 

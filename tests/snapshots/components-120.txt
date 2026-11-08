@@ -1,28 +1,42 @@
-A small set of composable primitives
-
-Use layout to explain structure, relationships and decisions.
-
-╭─────────────────────────────────────────────────────────╮  ╭─────────────────────────────────────────────────────────╮
-│ Layout                                                  │  │ Content                                                 │
-│                                                         │  │                                                         │
-│ Row · Col · Grid                                        │  │ Text · Span · Badge                                     │
-│                                                         │  │                                                         │
-│ Grouping and alignment                                  │  │ Meaning and emphasis                                    │
-╰─────────────────────────────────────────────────────────╯  ╰─────────────────────────────────────────────────────────╯
-
-╭─────────────────────────────────────────────────────────╮  ╭─────────────────────────────────────────────────────────╮
-│ Relationships                                           │  │ Comparisons and data                                    │
-│                                                         │  │                                                         │
-│ Graph · Sequence · Tree                                 │  │ Table · Diff · Chart                                    │
-│                                                         │  │                                                         │
-│ Structure and interactions                              │  │ Differences and patterns                                │
-╰─────────────────────────────────────────────────────────╯  ╰─────────────────────────────────────────────────────────╯
-
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
-One thought — one emphasis.
-
-✓ The model describes meaning.
-→ The renderer chooses design.
-
-Compact XML. Consistent spacing and palette.
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                              │
+│ A small set of composable primitives                                                                         │
+│                                                                                                              │
+│                                                                                                              │
+│ Use layout to explain structure, relationships and decisions.                                                │
+│                                                                                                              │
+│                                                                                                              │
+│ ╭───────────────────────────────────────────────────╮  ╭───────────────────────────────────────────────────╮ │
+│ │                                                   │  │                                                   │ │
+│ │ Layout                                            │  │ Content                                           │ │
+│ │                                                   │  │                                                   │ │
+│ │ Row · Col · Grid                                  │  │ Text · Span · Badge                               │ │
+│ │                                                   │  │                                                   │ │
+│ │ Grouping and alignment                            │  │ Meaning and emphasis                              │ │
+│ │                                                   │  │                                                   │ │
+│ ╰───────────────────────────────────────────────────╯  ╰───────────────────────────────────────────────────╯ │
+│                                                                                                              │
+│ ╭───────────────────────────────────────────────────╮  ╭───────────────────────────────────────────────────╮ │
+│ │                                                   │  │                                                   │ │
+│ │ Relationships                                     │  │ Comparisons and data                              │ │
+│ │                                                   │  │                                                   │ │
+│ │ Graph · Sequence · Tree                           │  │ Table · Diff · Chart                              │ │
+│ │                                                   │  │                                                   │ │
+│ │ Structure and interactions                        │  │ Differences and patterns                          │ │
+│ │                                                   │  │                                                   │ │
+│ ╰───────────────────────────────────────────────────╯  ╰───────────────────────────────────────────────────╯ │
+│                                                                                                              │
+│                                                                                                              │
+│ ──────────────────────────────────────────────────────────────────────────────────────────────────────────── │
+│                                                                                                              │
+│                                                                                                              │
+│ One thought — one emphasis.                                                                                  │
+│                                                                                                              │
+│                                                                                                              │
+│ ✓ The model describes meaning.                                                                               │
+│ → The renderer chooses design.                                                                               │
+│                                                                                                              │
+│                                                                                                              │
+│ Compact XML. Consistent spacing and palette.                                                                 │
+│                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯

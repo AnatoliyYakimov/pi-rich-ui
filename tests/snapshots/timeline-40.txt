@@ -1,10 +1,15 @@
-Migration plan · illustrative statuses
-  ✓ 1. Prepare [done]
-│ Schema and outbox table
-│
-  ▶ 2. Shadow [active]
-│ Compare deliveries without side
-│ effects
-│
-  ! 3. Cut over [blocked]
-  Await reconciliation results
+╭──────────────────────────────────────╮
+│                                      │
+│ Migration plan · illustrative        │
+│ statuses                             │
+│   ✓ 1. Prepare [done]                │
+│ │ Schema and outbox table            │
+│ │                                    │
+│   ▶ 2. Shadow [active]               │
+│ │ Compare deliveries without side    │
+│ │ effects                            │
+│ │                                    │
+│   ! 3. Cut over [blocked]            │
+│   Await reconciliation results       │
+│                                      │
+╰──────────────────────────────────────╯

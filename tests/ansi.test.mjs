@@ -17,9 +17,9 @@ test('tone overrides color and unknown roles never become host theme tokens',()=
 for(const [role,token]of Object.entries(ROLE_TOKENS))test(`theme mapping ${role} -> ${token}`,()=>{
   const called=[];const result=paint('x',role,{theme:{fg:(k,s)=>{called.push(k);return s;}}});assert.deepEqual(called,[token]);assert.equal(result,'x');
 });
-test('native fallback never emits background or image placement commands',()=>{
+test('native backgrounds use SGR without image or terminal placement commands',()=>{
   const s=draw('<Box><Badge color="green">OK</Badge></Box>').ansi({colorMode:'truecolor'}).join('\n');
-  assert.ok(!/\x1b\[(48|4[0-7])/.test(s));assert.ok(!/\x1b_G|1337;File/.test(s));assert.match(s,/38;2/);
+  assert.match(s,/48;2/);assert.ok(!/\x1b_G|1337;File|\x1b\[\d+[HJK]/.test(s));assert.match(s,/38;2/);
 });
 test('16, 256 and truecolor fallback are explicit and color depth detection is conservative',()=>{
   assert.match(paint('x','success',{colorMode:'16'}),/\x1b\[32m/);
@@ -61,7 +61,7 @@ test('graph edges use their own tone',()=>{
   assert.equal(s.rows.flat().find(c=>c.g==='▶').role,'error');
 });
 test('grid minWidth applies to row sizing as well as column count',()=>{
-  const s=draw('<Grid cols={3} minWidth={18}><Metric label="A" value={1}/><Metric label="B" value={2}/><Metric label="C" value={3}/></Grid>',60);
+  const s=draw('<Grid cols={3} minWidth={18}><Metric label="A" value={1}/><Metric label="B" value={2}/><Metric label="C" value={3}/></Grid>',60,{presentation:false});
   assert.equal(s.height,2);assert.ok(s.plain()[0].includes('A')&&s.plain()[0].includes('C'));
 });
 for(const [name,glyph]of Object.entries(ICONS))test(`icon ${name} stays one text cell`,()=>assert.equal(widthOf(glyph),1));
@@ -82,7 +82,7 @@ test('sample parser preserves explicit missing data and rejects empty entries',(
   for(const values of ['1,,2','1,','',',2','NaN,2','Infinity,2','null,_'])assert.throws(()=>plain(`<Chart values="${values}"/>`));
 });
 test('missing samples break lines rather than interpolating across gaps',()=>{
-  const s=draw('<Sparkline values="1,null,null,1" height={2}/>',20);assert.ok(s.rows.every(r=>r.slice(4,16).every(c=>c.g===' ')));
+  const s=draw('<Sparkline values="1,null,null,1" height={2}/>',20,{presentation:false});assert.ok(s.rows.every(r=>r.slice(4,16).every(c=>c.g===' ')));
 });
 test('series share sample index scale and shorter series do not stretch',()=>{
   const ast=parseDocument('<Chart><Series values="1,2"/><Series values="1,2,3,4,5"/></Chart>');
