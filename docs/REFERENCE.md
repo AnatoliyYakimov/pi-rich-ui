@@ -271,10 +271,23 @@ PNG is disabled; image/auto settings select ANSI with a notice.
 
 ## Prompt, history and security
 
-`lib/prompt.mjs` contains a **2296-character** guide, tag catalog and eight short examples.
-This is a character count, not a token estimate. `before_agent_start` contributes it
-once to promptGuidelines or appends it to systemPrompt on the older API. It does not
-create a history message. Injection is disabled outside TUI mode.
+`lib/prompt.mjs` defines an English **1,646-character core guide**: short behavior
+rules, a compact element reference and **three purpose-labeled compositions**
+(compare options, show interactions, highlight a caveat). It asks the model to use
+a compact visual whenever it improves clarity, understanding or retention, rather
+than long lists or winding prose. Simple facts can stay Markdown; output labels
+follow the user's language. This guides model behavior; it is not a guarantee of
+which composition every model will choose.
+
+The full injected guide appends the absolute installed path of this reference,
+quoted for spaces/platform separators. Advanced attributes can be read using the
+harness's existing file-reading capability only when needed. The reference contents
+and an XSD schema are **not** injected every turn; no new tool schema is added.
+The final character/token count depends on the installation path and model tokenizer.
+
+`before_agent_start` contributes the guide once to promptGuidelines or appends it
+to systemPrompt on the older API. It does not create a history message. Injection
+is disabled outside TUI mode; `PI_RICH_UI_PROMPT=0` also disables it.
 
 Original XML stays in the response/history. Transformation is display-only and applies
 to assistant prose, not user/thinking messages. Markdown and fenced examples remain
@@ -313,7 +326,7 @@ checks. `docs/BENCHMARK.json` is a synthetic benchmark, **not** real Pi latency.
 
 The current suite ran on Node 24.22.1. The package requires Node >=22.19.0.
 The real Markdown integration was exercised against official `@earendil-works/pi-tui`
-1.5.0, covering 13 examples at 24/40/80/120 columns. The unit suite contains 324 tests.
+1.5.0, covering 13 examples at 24/40/80/120 columns. The unit suite contains 329 tests.
 An offline interactive Pi 1.5.0 PTY smoke test loaded the extension and its local
 demos in regular/fullscreen modes. No model request was made; physical terminal/font
 behavior remains a separate check. See [TUI smoke record](TUI-SMOKE.txt).

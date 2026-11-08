@@ -45,7 +45,7 @@ test('native renderer uses current theme at every call without stale rendered ca
   assert.match(native.render('<Text>ok</Text>',20).join(''),/old/);token='new';assert.match(native.render('<Text>ok</Text>',20).join(''),/new/);
 });
 test('compact guide documents color roles and Braille series without excessive instruction length',()=>{
-  assert.ok(SYSTEM_GUIDE.length<2300);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/<Series/);
+  assert.ok(SYSTEM_GUIDE.length<2300);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/Chart\/Series\(label,values\)/);
 });
 test('v0.4 commands create all new display-only examples with no model request',async()=>{
  const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});
@@ -54,8 +54,8 @@ test('v0.4 commands create all new display-only examples with no model request',
  for(const e of h.entries){const view=h.renderers.get(e.t)({data:e.d},{},context.ui.theme);assert.ok(view.render(80).length>0);}
  h.hooks.get('session_shutdown')();
 });
-test('v0.4 guide mentions every new component and contains valid XML examples',()=>{
- for(const t of ['Table.Column','Diff','Sequence','Tree','Timeline','Rule','GridItem'])assert.ok(SYSTEM_GUIDE.includes(t));
+test('guide describes core components and contains valid composition examples',()=>{
+ for(const t of ['Table','Diff','Sequence','Tree','Timeline','Chart','GridItem'])assert.ok(SYSTEM_GUIDE.includes(t));
  const native=new NativeRenderer({},{colors:false});
  for(const line of SYSTEM_GUIDE.split('\n').filter(l=>l.startsWith('<')))assert.doesNotThrow(()=>native.render(line,80));
 });

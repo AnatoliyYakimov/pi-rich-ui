@@ -75,7 +75,16 @@ Ask Pi:
 > Explain why we chose ANSI over PNG using two comparison cards and a caveat.
 > Then show how XML becomes a visual block inside an ordinary assistant response.
 
-The extension adds a concise tag guide to the model's system prompt. Visual blocks
+The extension guides the model to use a compact visual whenever it improves clarity,
+understanding or retention, replacing long lists and winding explanations with a small
+composition and brief supporting prose. The instruction is English; output labels
+follow your language. Simple facts may remain plain Markdown.
+
+The injected core is 1,646 characters: short rules, a compact element reference and
+three purpose-labeled examples. Advanced attributes stay in a local reference, read
+only when needed; its absolute installed path is included, not its contents.
+
+The extension adds this guide to the model's system prompt. Visual blocks
 appear on their own lines **outside code fences** in assistant replies. Fenced XML,
 including this documentation example, remains literal code:
 
@@ -188,7 +197,7 @@ npm run preview:assets
 npm run test:host -- /path/to/pi-tui/dist/index.js
 ```
 
-The local suite has **324 tests**, including width sweeps from 1–160 columns and
+The local suite has **329 tests**, including width sweeps from 1–160 columns and
 **39 golden snapshots**. The actual `pi-tui` 1.5.0 smoke test renders 13 compositions,
 checks resizing at 24/40/80/120 columns and preserves literal fenced XML. Local host
 mocks remain useful for lifecycle tests. An offline interactive Pi 1.5.0 PTY trial also loaded the extension and displayed

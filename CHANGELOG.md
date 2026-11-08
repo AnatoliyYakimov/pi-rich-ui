@@ -1,3 +1,15 @@
+# 0.5.1 — Compact guidance for visual explanations
+
+- English guide now asks for a visual whenever it improves clarity, comprehension or retention.
+- Prefer small compositions over long lists and winding explanations; keep supporting prose brief.
+- Replace eight isolated examples with three purpose-labeled comparison/interaction/caveat compositions.
+- Short rules and element reference: 1,646 core characters, down from 2,296.
+- Append the installed reference path for advanced properties instead of injecting its contents or XSD.
+- Preserve user-language labels, truthful data, scalar-only XML and idempotent prompt injection.
+- No new tools, dependencies or changes to rendering.
+
+---
+
 # 0.5.0 — General-purpose rich terminal design
 
 - btop-inspired semantic outlines, content headings, bold values and muted captions.
