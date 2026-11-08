@@ -1,5 +1,8 @@
 # Pi Rich UI
 
+[![CI](https://github.com/AnatoliyYakimov/pi-rich-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/AnatoliyYakimov/pi-rich-ui/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 **Colorful inline explanations for your Pi terminal.**
 
 Compose panels, comparisons, diagrams, trees, timelines and Braille charts using
@@ -34,6 +37,27 @@ This is static rich text, not a React runtime or an interactive dashboard applic
 - Pi coding agent with `registerMarkdownTransformer()`.
 - Node.js **22.19.0 or newer**.
 - Git and a Unicode terminal. Braille charts require a font with Braille glyphs.
+
+### npm package
+
+After the first npm release is published:
+
+```bash
+pi install npm:pi-rich-ui-inline
+```
+
+Restart Pi or run `/reload`. Update with `pi update npm:pi-rich-ui-inline`.
+For a pinned installation, use `pi install npm:pi-rich-ui-inline@0.5.2`.
+
+### Git installation
+
+Pi can manage a Git installation directly (available before the first npm release):
+
+```bash
+pi install git:github.com/AnatoliyYakimov/pi-rich-ui
+```
+
+Alternatively, clone into the extensions directory manually:
 
 ```bash
 mkdir -p ~/.pi/agent/extensions
@@ -192,12 +216,13 @@ shell, network or files. The extension itself runs with Pi's normal permissions.
 ```bash
 npm test
 npm run check
+npm run test:package
 npm run preview -- --file examples/compare.xml --width 80 --colors truecolor
 npm run preview:assets
 npm run test:host -- /path/to/pi-tui/dist/index.js
 ```
 
-The local suite has **329 tests**, including width sweeps from 1–160 columns and
+The local suite has **332 tests**, including width sweeps from 1–160 columns and
 **39 golden snapshots**. The actual `pi-tui` 1.5.0 smoke test renders 13 compositions,
 checks resizing at 24/40/80/120 columns and preserves literal fenced XML. Local host
 mocks remain useful for lifecycle tests. An offline interactive Pi 1.5.0 PTY trial also loaded the extension and displayed
@@ -207,5 +232,16 @@ See the [TUI smoke record](docs/TUI-SMOKE.txt).
 
 `preview:assets` exports actual terminal cells into static SVG documentation previews;
 it is not an image renderer loaded by the extension and needs no image library.
+
+CI runs syntax checks, tests and npm archive checks on Node 22.19, 24 and 26.
+A separate job tests Pi 1.5.0 and loads the packed `index.ts` through Pi's extension
+loader. Host modules are peer dependencies supplied by Pi, never bundled copies.
+
+Tags such as `v0.5.2` trigger the same checks, npm publishing through OIDC, and a
+GitHub Release. See [release setup and instructions](docs/RELEASING.md).
+
+## License
+
+Copyright 2026 Anatoliy Yakimov. Licensed under the [Apache License 2.0](LICENSE).
 
 [Component reference](docs/REFERENCE.md) · [Gallery](docs/GALLERY.md) · [Integration](docs/INTEGRATION.md) · [Changelog](CHANGELOG.md)

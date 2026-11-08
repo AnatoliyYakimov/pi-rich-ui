@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22.19.0', '24', '26']
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      # The extension has no dependencies to install; Pi supplies its peer modules.
+      - run: npm run check
+      - run: npm test
+      - run: npm run test:package
+
+  host:
+    name: Pi 1.5.0 integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install the supported Pi host outside the extension
+        run: npm install --prefix "$RUNNER_TEMP/pi-host" --ignore-scripts --no-audit --no-fund @earendil-works/pi-coding-agent@1.5.0
+      - name: Check the real Markdown renderer
+        run: npm run test:host -- "$RUNNER_TEMP/pi-host/node_modules/@earendil-works/pi-tui/dist/index.js"
+      - name: Load the npm archive through Pi's real extension loader
+        run: npm run test:package
+        env:
+          PI_AGENT_MODULE: ${{ runner.temp }}/pi-host/node_modules/@earendil-works/pi-coding-agent/dist/core/extensions/loader.js
+          PI_TUI_MODULE: ${{ runner.temp }}/pi-host/node_modules/@earendil-works/pi-tui/dist/index.js

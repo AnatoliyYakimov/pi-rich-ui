@@ -1,15 +1,40 @@
 {
   "name": "pi-rich-ui-inline",
-  "version": "0.5.1",
-  "private": true,
+  "version": "0.5.2",
   "type": "module",
   "description": "Theme-aware inline XML panels, comparisons, diagrams and Braille charts for Pi",
+  "license": "Apache-2.0",
+  "author": "Anatoliy Yakimov",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnatoliyYakimov/pi-rich-ui.git"
+  },
+  "homepage": "https://github.com/AnatoliyYakimov/pi-rich-ui#readme",
+  "bugs": {
+    "url": "https://github.com/AnatoliyYakimov/pi-rich-ui/issues"
+  },
+  "keywords": ["pi-package", "pi-extension", "terminal", "visualization", "tui"],
+  "files": [
+    "index.ts", "lib/", "examples/", "docs/REFERENCE.md", "docs/GALLERY.md",
+    "docs/INTEGRATION.md", "docs/RELEASING.md", "docs/previews/",
+    "LICENSE", "NOTICE", "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  },
   "engines": {
     "node": ">=22.19.0"
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "test:host": "node scripts/test-host.mjs",
+    "test:package": "node scripts/test-package.mjs",
+    "prepublishOnly": "npm run check && npm test && npm run test:package",
     "preview": "node scripts/preview.mjs",
     "check": "node scripts/check.mjs",
     "bench": "node scripts/bench.mjs",

@@ -1,4 +1,16 @@
-# 0.5.1 — Compact guidance for visual explanations
+# Changelog
+
+## [0.5.2] - 2026-11-08
+
+- Apache License 2.0, copyright notice and public npm package metadata.
+- GitHub Actions checks on Node 22.19, 24 and 26, plus real Pi 1.5.0 integration.
+- Verify packed runtime files, reference documentation and every local demo.
+- Load the packed TypeScript entry point through Pi's own extension loader.
+- Tag-driven npm Trusted Publishing with provenance and GitHub Releases.
+- Reject mismatched release tags; safely retry byte-identical npm publications.
+- Read the displayed extension version from package.json.
+
+## [0.5.1] — Compact guidance for visual explanations
 
 - English guide now asks for a visual whenever it improves clarity, comprehension or retention.
 - Prefer small compositions over long lists and winding explanations; keep supporting prose brief.
@@ -10,7 +22,7 @@
 
 ---
 
-# 0.5.0 — General-purpose rich terminal design
+## [0.5.0] — General-purpose rich terminal design
 
 - btop-inspired semantic outlines, content headings, bold values and muted captions.
 - Independent `titlePosition=inside|above|border|none` and `border=rounded|single|left|none`.
@@ -30,7 +42,7 @@
 
 ---
 
-# 0.4.0 — 2026-11-08
+## [0.4.0] — 2026-11-08
 
 - Rich Table: intrinsic column sizing, numeric alignment/formatting, semantic thresholds with
   text markers, nested badges/sparklines, mini-bars, narrow record layout, schema validation.
@@ -51,8 +63,6 @@
 - Host Pi was not available here; adapter is still an isolated internal ABI dependency.
 
 ---
-
-# Changelog
 
 ## 0.3.0
 

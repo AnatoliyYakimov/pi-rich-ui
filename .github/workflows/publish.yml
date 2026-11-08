@@ -1,0 +1,98 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag, e.g. v0.5.2 (also used to retry a release)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      tag: ${{ steps.verify.outputs.tag }}
+      sha: ${{ steps.verify.outputs.sha }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Verify version, tag and main ancestry
+        id: verify
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: node scripts/verify-release.mjs
+
+  checks:
+    needs: verify
+    # Local reusable workflows run at the caller's revision. For manual retries,
+    # validation is also repeated at the exact tag in the publish job below.
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: [verify, checks]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.verify.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Validate the exact release revision
+        run: |
+          npm run check
+          npm test
+          npm install --prefix "$RUNNER_TEMP/pi-host" --ignore-scripts --no-audit --no-fund @earendil-works/pi-coding-agent@1.5.0
+          npm run test:host -- "$RUNNER_TEMP/pi-host/node_modules/@earendil-works/pi-tui/dist/index.js"
+          npm run test:package
+        env:
+          PI_AGENT_MODULE: ${{ runner.temp }}/pi-host/node_modules/@earendil-works/pi-coding-agent/dist/core/extensions/loader.js
+          PI_TUI_MODULE: ${{ runner.temp }}/pi-host/node_modules/@earendil-works/pi-tui/dist/index.js
+      - name: Publish with npm Trusted Publishing
+        run: node scripts/publish.mjs
+
+  release:
+    needs: [verify, publish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.verify.outputs.sha }}
+          persist-credentials: false
+      - name: Create the GitHub Release after npm succeeds
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.verify.outputs.tag }}
+        run: |
+          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" --verify-tag --generate-notes --title "$RELEASE_TAG"
+          fi
