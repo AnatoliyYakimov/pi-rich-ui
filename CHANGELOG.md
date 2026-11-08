@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3] - 2026-11-08
+
+- Preserve Rich UI model guidance when an earlier extension (such as pi-memory)
+  replaces the complete system prompt. Keep structured injection for ordinary prompts.
+- Test the packed extension's model guidance through Pi's real event runner and prompt
+  builder, including legacy prompt handlers in either order and repeated injection.
+
 ## [0.5.2] - 2026-11-08
 
 - Apache License 2.0, copyright notice and public npm package metadata.

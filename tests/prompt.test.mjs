@@ -43,6 +43,33 @@ test('three purpose-labeled compositions parse and render, rather than eight iso
   assert.equal(steps.length,2); // Demonstrates an interaction, not just one isolated node.
 });
 
+test('forced prompt injection preserves earlier instructions and deduplicates after Pi applies the result',()=>{
+  for(const forced of ['Existing prompt\n\n## Memory\nSnapshot','']){
+    const options={forceSystemPrompt:forced,promptGuidelines:['Unrelated guideline',SYSTEM_GUIDE]};
+    const event={systemPromptOptions:options,get systemPrompt(){return options.forceSystemPrompt;}};
+    const result=injectGuidance(event);
+    assert.equal(result?.systemPrompt,forced+'\n\n'+SYSTEM_GUIDE);
+    assert.deepEqual(options.promptGuidelines,['Unrelated guideline',SYSTEM_GUIDE]);
+    // Pi's event runner applies a returned systemPrompt as the next forced prompt.
+    options.forceSystemPrompt=result.systemPrompt;
+    assert.equal(injectGuidance(event),undefined);
+  }
+});
+
+test('forced prompt already containing guidance is left unchanged',()=>{
+  const options={forceSystemPrompt:'Existing prompt\n\n'+SYSTEM_GUIDE,promptGuidelines:[]};
+  const event={systemPrompt:options.forceSystemPrompt,systemPromptOptions:options};
+  assert.equal(injectGuidance(event),undefined);
+  assert.deepEqual(options.promptGuidelines,[]);
+});
+
+test('disabled injection leaves forced prompts and structured options unchanged',()=>{
+  const event={systemPrompt:'Existing prompt',systemPromptOptions:{forceSystemPrompt:'Existing prompt',promptGuidelines:[]}};
+  const before=structuredClone(event);
+  assert.equal(injectGuidance(event,false),undefined);
+  assert.deepEqual(event,before);
+});
+
 test('structured and legacy injection add exactly the same guide and preserve other instructions',()=>{
   const event={systemPromptOptions:{promptGuidelines:['Unrelated guideline']}};
   injectGuidance(event);injectGuidance(event);

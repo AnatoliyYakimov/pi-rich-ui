@@ -47,7 +47,7 @@ pi install npm:pi-rich-ui-inline
 ```
 
 Restart Pi or run `/reload`. Update with `pi update npm:pi-rich-ui-inline`.
-For a pinned installation, use `pi install npm:pi-rich-ui-inline@0.5.2`.
+For a pinned installation, use `pi install npm:pi-rich-ui-inline@0.5.3`.
 
 ### Git installation
 

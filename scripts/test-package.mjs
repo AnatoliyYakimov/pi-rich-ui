@@ -35,7 +35,7 @@ try {
   for (const host of ['@earendil-works/pi-coding-agent', '@earendil-works/pi-tui']) {
     assert.equal(pkg.peerDependencies[host], '*');
   }
-  const { REFERENCE_PATH } = await import(pathToFileURL(join(installed, 'lib/prompt.mjs')));
+  const { REFERENCE_PATH, SYSTEM_GUIDE } = await import(pathToFileURL(join(installed, 'lib/prompt.mjs')));
   assert.equal(realpathSync(REFERENCE_PATH), realpathSync(join(installed, 'docs/REFERENCE.md')));
   assert.match(readFileSync(REFERENCE_PATH, 'utf8'), /titlePosition/);
   const { setup } = await import(pathToFileURL(join(installed, 'lib/extension.mjs')));
@@ -65,8 +65,38 @@ try {
     const extension = loaded.extensions[0];
     assert.ok(extension.commands.has('rich-ui'));
     assert.equal(typeof extension.markdownTransformer, 'function');
+    const agentModule = pathToFileURL(resolve(process.env.PI_AGENT_MODULE));
+    const { ExtensionRunner } = await import(new URL('./runner.js', agentModule));
+    const { buildSystemPrompt } = await import(new URL('../system-prompt.js', agentModule));
+    // Match pi-memory's legacy return before/after our structured prompt handler.
+    const memory = {
+      path: 'memory-fixture',
+      handlers: new Map([['before_agent_start', [event => ({
+        systemPrompt: event.systemPrompt + '\n\n## Memory\nTest snapshot',
+      })]]]),
+    };
+    for (const [name, extensions, forced] of [
+      ['Rich UI alone', [extension], false],
+      ['Memory before Rich UI', [memory, extension], true],
+      ['Memory after Rich UI', [extension, memory], true],
+    ]) {
+      const runner = new ExtensionRunner(extensions, loaded.runtime, installed);
+      runner.setUIContext(context.ui, 'tui');
+      const errors = [];
+      runner.onError(error => errors.push(error));
+      let options = { cwd: installed };
+      for (let turn = 0; turn < 2; turn++) {
+        const result = await runner.emitBeforeAgentStart({ messageType: 'user', prompt: 'Compare options' }, options);
+        assert.deepEqual(errors, [], `${name}: prompt hook failed`);
+        options = result.systemPromptOptions;
+        const prompt = buildSystemPrompt(options);
+        assert.equal(prompt.split(SYSTEM_GUIDE).length - 1, 1, `${name}: guidance missing or duplicated`);
+        assert.equal(options.forceSystemPrompt !== undefined, forced, `${name}: changed prompt mode`);
+        if (forced) assert.ok(prompt.includes('## Memory\nTest snapshot'), `${name}: earlier instructions lost`);
+      }
+    }
     for (const handler of extension.handlers.get('session_shutdown') ?? []) await handler({}, context);
-    console.log('PASS: packed index.ts loads through the real Pi extension loader.');
+    console.log('PASS: packed index.ts loads through Pi; model guidance survives legacy prompt handlers in either order.');
   }
   console.log(`PASS: npm archive (${paths.size} files), Apache license, reference and all 14 demos.`);
 } finally {
