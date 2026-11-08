@@ -1,8 +1,10 @@
-# Pi Rich UI 0.4 — фактический вывод рендерера
+# Pi Rich UI 0.4 — rendered examples
 
-Это вывод standalone renderer, не скриншоты запущенного Pi. Цвета в текстовых блоках не видны.
-Примеры содержат вымышленные данные. ANSI-версию общей демонстрации можно посмотреть
-через `cat docs/preview-wide.ansi`.
+These examples are actual standalone-renderer output, not screenshots of a running Pi session.
+The text blocks do not display ANSI colors. All data is illustrative. To see the colored
+combined demo in your terminal, run `cat docs/preview-wide.ansi` from the repository root.
+
+[Install and get started](../README.md) · [Component reference](REFERENCE.md)
 
 ## table
 
@@ -25,7 +27,7 @@
 </Table>
 ```
 
-### 80 колонок
+### 80 columns
 
 ```text
 Service health · illustrative data
@@ -41,7 +43,7 @@ Payments                                         │     120 │ ✗ 240 ms │ 
                                                  │         │          │ ███████━
 ```
 
-### 40 колонок
+### 40 columns
 
 ```text
 Service health · illustrative data
@@ -96,7 +98,7 @@ worker:
 </Col>
 ```
 
-### 80 колонок
+### 80 columns
 
 ```text
 p99 · demo                               Throughput · demo
@@ -116,7 +118,7 @@ Configuration change · demo
 +  5   idempotency: required
 ```
 
-### 40 колонок
+### 40 columns
 
 ```text
 p99 · demo
@@ -156,7 +158,7 @@ Configuration change · demo
 </Sequence>
 ```
 
-### 80 колонок
+### 80 columns
 
 ```text
 Transactional outbox · example
@@ -190,7 +192,7 @@ Transactional outbox · example
             ┊                  ┊                  ┊                  ┊
 ```
 
-### 40 колонок
+### 40 columns
 
 ```text
 Transactional outbox · example
@@ -237,7 +239,7 @@ sent can cause a repeat publication.
 </Tree>
 ```
 
-### 80 колонок
+### 80 columns
 
 ```text
 orders-service · example
@@ -256,7 +258,7 @@ orders-service · example
 └─ ▸ tests · 2 hidden
 ```
 
-### 40 колонок
+### 40 columns
 
 ```text
 orders-service · example
@@ -285,7 +287,7 @@ orders-service · example
 </Timeline>
 ```
 
-### 80 колонок
+### 80 columns
 
 ```text
 Migration plan · illustrative statuses
@@ -294,7 +296,7 @@ Schema and outbox table     Compare deliveries          Await reconciliation
                             without side effects        results
 ```
 
-### 40 колонок
+### 40 columns
 
 ```text
 Migration plan · illustrative statuses
@@ -324,7 +326,7 @@ Migration plan · illustrative statuses
 </Col>
 ```
 
-### 80 колонок
+### 80 columns
 
 ```text
 Latency · illustrative data · ms
@@ -350,7 +352,7 @@ Queue balance · demo
 min -5 · max 4 · last 1
 ```
 
-### 40 колонок
+### 40 columns
 
 ```text
 Latency · illustrative data · ms
@@ -390,7 +392,7 @@ min -5 · max 4 · last 1
 </UI>
 ```
 
-### 80 колонок
+### 80 columns
 
 ```text
 ╭─ API ──────────────────╮  ╭─ Orders ──────────────╮  ╭─ Kafka ───────────────╮
@@ -404,7 +406,7 @@ min -5 · max 4 · last 1
 ╰───────────────────────────────────────────────────╯  ╰───────────────────────╯
 ```
 
-### 40 колонок
+### 40 columns
 
 ```text
 ╭─ API ───────────╮  ╭─ Orders ────────╮
