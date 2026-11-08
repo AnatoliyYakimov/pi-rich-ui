@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Existing release tag, e.g. v0.5.2 (also used to retry a release)'
+        description: 'Existing tag, e.g. v0.5.2. Select this same tag under Use workflow from.'
         required: true
         type: string
 
@@ -42,8 +42,8 @@ jobs:
 
   checks:
     needs: verify
-    # Local reusable workflows run at the caller's revision. For manual retries,
-    # validation is also repeated at the exact tag in the publish job below.
+    # Verification requires the workflow and release to use the same commit,
+    # keeping checks and npm provenance tied to the actual published source.
     uses: ./.github/workflows/ci.yml
 
   publish:

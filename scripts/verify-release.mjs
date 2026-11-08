@@ -17,6 +17,10 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   verifyTag(tag, pkg);
   const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
   const sha = git('rev-parse', 'HEAD');
+  if (process.env.GITHUB_ACTIONS === 'true') {
+    assert.equal(sha, process.env.GITHUB_SHA,
+      'Workflow revision differs from the release. For an older tag, select that tag under Use workflow from.');
+  }
   assert.equal(git('rev-parse', `refs/tags/${tag}^{commit}`), sha, 'Checkout is not the release tag');
   git('merge-base', '--is-ancestor', sha, 'refs/remotes/origin/main');
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `tag=${tag}\nsha=${sha}\n`);

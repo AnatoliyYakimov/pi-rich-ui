@@ -10,7 +10,9 @@ Repository: `AnatoliyYakimov/pi-rich-ui`. License: Apache-2.0.
 - Tags `vMAJOR.MINOR.PATCH`: verify the tag matches `package.json` and belongs to
   `main`, run CI, publish to npm, then create a GitHub Release with generated notes.
 - Manual **Actions → Publish → Run workflow** accepts an existing tag for retries.
-  Validation is repeated against that exact tag before publication.
+  Select that same tag in **Use workflow from** and in the `tag` input. The
+  workflow must run at the release commit so npm provenance identifies the source
+  correctly. Validation is repeated against that exact tag before publication.
 
 The project has no dependencies to install for the unit suite. Pi's host packages
 are peers; the integration job installs Pi separately at a pinned version. No
