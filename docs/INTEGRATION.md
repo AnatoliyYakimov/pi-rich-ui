@@ -4,6 +4,8 @@
 
 - `registerMarkdownTransformer(fn, {messageTypes:['assistant']})`: display-only string transform.
 - `on('before_agent_start', ...)`: structured promptGuidelines or legacy systemPrompt extension.
+- `on('agent_before_settle', ...)`: Pi 1.5.0 actionable feedback/continuation boundary;
+  `message_end` observes consumed real user messages, not streaming markup.
 - `registerEntryRenderer` + `appendEntry`: local examples, persisted but not model context.
 - `registerCommand`, session_start/session_shutdown, current `ctx.ui.theme`.
 
@@ -16,6 +18,41 @@ caching and invalidates on resize/theme changes.
 assistant XML -> public Markdown transformer -> sentinel code token
              -> guarded Markdown.renderToken adapter -> layout/Surface -> ANSI strings
 ```
+
+## Model-visible validation feedback
+
+Display transformation remains side-effect-free. A separate final-boundary handler
+checks the current projected assistant answer, not cached render output. It reuses the
+parser walk with optional diagnostic observers and checks existing renderer constraints
+at widths 24 and 80. At most three bounded, sanitized issues are included in an English
+`custom_message` with `customType: pi-rich-ui-validation`, `display: false`, and
+`details: {version: 1, requestEntryId, assistantEntryId}`. That entry is also the durable
+attempt marker. The proposal preserves earlier entries and requests one continuation;
+no-op paths leave other extensions' continuation decisions untouched.
+
+Only eligible completed user-originated TUI work is checked. Pending work, existing
+continuation proposals, tool calls, errors/aborts, unsupported lifecycle previews, and
+uncertain persisted provenance are skipped. Guidance disabled, missing transformer,
+non-TUI mode, or `PI_RICH_UI_REPAIR=0` disables correction. A marker on the active raw
+branch prevents another attempt for that request, including after restoration or
+compaction; an in-memory guard prevents repeat proposals for the same live candidate.
+The original answer remains untouched. A correction is another assistant message and
+may cost another provider request. Tool avoidance is instructed, not enforced by a
+permission change. Facts and every possible layout width are outside validation scope.
+
+`test:package` with `PI_AGENT_MODULE` loads the archive into actual Pi 1.5.0 sessions,
+replaces only the provider stream with deterministic local responses, and checks request
+counts, provider-visible feedback, original history, one-attempt limits, independent
+user requests, natural tool loops, queued follow-ups, errors/aborts, earlier boundary
+proposals, and suppressed continuation. A fresh actual event runner also checks spent
+metadata against a restored active projection; unit tests cover ambiguous/compacted
+projections and additional mode/composition cases. No external model requests or user
+credentials are used. This is stronger than mocked lifecycle hooks, but is not a claim
+of exhaustive provider, recovery, terminal, or multi-extension compatibility.
+
+Automatic correction requires the Pi 1.5.0 final actionable boundary. Older hosts retain
+rendering; absent/unsupported boundary data produces no correction. No alternative
+legacy event or fabricated user prompt is used to force continuation.
 
 ## Internal ABI (not guaranteed)
 

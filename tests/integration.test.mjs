@@ -15,6 +15,38 @@ test('bridge errors safely delegate, rather than breaking transcript',()=>{const
 test('missing internal ABI is a supported fallback',()=>assert.equal(installBridge(class{},()=>[]).ok,false));
 function host(){const hooks=new Map(),commands=new Map(),entries=[],renderers=new Map();const pi={on:(k,h)=>hooks.set(k,h),registerMarkdownTransformer(f){this.transform=f;},registerCommand:(k,h)=>commands.set(k,h),appendEntry:(t,d)=>entries.push({t,d}),registerEntryRenderer:(t,f)=>renderers.set(t,f)};return {pi,hooks,commands,entries,renderers};}
 const context={mode:'tui',hasUI:true,ui:{theme:{appearance:'dark'},notify(){}}};
+function feedbackFixture(){
+ const branch=[
+  {type:'message',id:'u',message:{role:'user',content:[{type:'text',text:'Show status'}]}},
+  {type:'message',id:'a',message:{role:'assistant',stopReason:'stop',content:[{type:'text',text:'<Table headers={["Service"]}/>'}]}},
+ ];
+ const event={outcome:'completed',entries:[],continue:false,context:{contextEntries:branch.map(sourceEntry=>({sourceEntry,messages:[sourceEntry.message]})),contextMessages:branch.map(e=>e.message),pendingMessages:[]}};
+ return {event,ctx:{...context,sessionManager:{getBranch:()=>branch,getSessionId:()=> 'fixture'}}};
+}
+test('automatic correction honors mode, opt-outs, transformer, disposal, and run origin',async()=>{
+ for(const [env,mode,transformer,origin,want] of [
+  [{},'tui',true,'user',true],[{PI_RICH_UI_RENDER:'text'},'tui',true,'user',true],
+  [{PI_RICH_UI_REPAIR:'0'},'tui',true,'user',false],[{PI_RICH_UI_PROMPT:'0'},'tui',true,'user',false],
+  [{},'rpc',true,'user',false],[{},'print',true,'user',false],[{},'json',true,'user',false],
+  [{},'tui',false,'user',false],[{},'tui',true,'custom',false],
+ ]){
+  const h=host();if(!transformer)delete h.pi.registerMarkdownTransformer;
+  await setup(h.pi,{Markdown:fakeClass()},{probe:false,env});
+  const {event,ctx}=feedbackFixture();ctx.mode=mode;
+  h.hooks.get('before_agent_start')({messageType:origin,systemPromptOptions:{promptGuidelines:[]}},ctx);
+  assert.equal(typeof h.hooks.get('agent_before_settle'),'function');
+  assert.equal(h.hooks.get('agent_before_settle')(event,ctx)?.continue===true,want);
+  h.hooks.get('session_shutdown')();
+  assert.equal(h.hooks.get('agent_before_settle')(event,ctx),undefined);
+ }
+});
+test('rendering and streaming never send feedback or UI notices',async()=>{
+ const h=host(),notices=[];await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});
+ const {ctx}=feedbackFixture();ctx.ui={...ctx.ui,notify:m=>notices.push(m)};
+ h.hooks.get('before_agent_start')({messageType:'user',systemPromptOptions:{promptGuidelines:[]}},ctx);
+ for(let i=0;i<5;i++)h.pi.transform('<Table headers={["Service"]}/>',{messageType:'assistant',isStreaming:i%2===0});
+ assert.deepEqual(notices,[]);h.hooks.get('session_shutdown')();
+});
 test('extension transforms only assistant text and leaves input unchanged',async()=>{const h=host(),api=await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});const xml='<Metric label="RPS" value={600}/>';assert.equal(h.pi.transform(xml,{messageType:'user'}),xml);assert.match(h.pi.transform(xml,{messageType:'assistant',availableWidth:80}),new RegExp(LANGUAGE));h.hooks.get('session_shutdown')();assert.equal(api.bridge.ok,false);});
 test('extension skips prompt injection in RPC / print / JSON modes',async()=>{const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});for(const mode of ['rpc','print','json']){const e={systemPromptOptions:{promptGuidelines:[]}};h.hooks.get('before_agent_start')(e,{...context,mode});assert.equal(e.systemPromptOptions.promptGuidelines.length,0);}h.hooks.get('session_shutdown')();});
 test('extension demo creates display-only session entry, no user/model message',async()=>{const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});await h.commands.get('rich-ui').handler('demo',context);assert.equal(h.entries.length,1);assert.equal(h.entries[0].t,'pi-rich-ui-demo');assert.match(h.entries[0].d.xml,/<UI>/);h.hooks.get('session_shutdown')();});

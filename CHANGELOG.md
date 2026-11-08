@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.4] - 2026-11-08
+
+- Add a valid explicit-cell table example to the compact model guide; explicitly reject
+  JSX arrays and manual reserved fences, and explain delimiter-separated strings.
+- Validate completed TUI answers with the existing parser/renderer and send bounded
+  English errors to the model, with one automatic correction attempt per real user
+  request on Pi 1.5.0. Keep original history; never trigger feedback from rendering.
+- Persist attempt attribution with diagnostics, skip pending/ambiguous work, stop after
+  a failed correction, and add `PI_RICH_UI_REPAIR=0` as an independent opt-out.
+- Test actual packed-extension feedback delivery and request counts in offline Pi
+  sessions, including tools, queued follow-ups, boundary composition, and restoration.
+
 ## [0.5.3] - 2026-11-08
 
 - Create GitHub Releases without requiring npm publication; npm publishing is now

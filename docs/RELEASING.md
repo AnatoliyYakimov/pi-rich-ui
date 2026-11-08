@@ -81,8 +81,8 @@ GitHub Release job. It stores no `NPM_TOKEN` secret. See
 3. Tag that exact commit and push the tag:
 
    ```bash
-   git tag v0.5.3
-   git push origin v0.5.3
+   git tag -a v0.5.4 -m "Release v0.5.4"
+   git push origin v0.5.4
    ```
 
 4. Open **Actions → Publish** and confirm verification, checks and the GitHub

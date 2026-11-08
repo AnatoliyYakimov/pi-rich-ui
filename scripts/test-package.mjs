@@ -97,6 +97,8 @@ try {
     }
     for (const handler of extension.handlers.get('session_shutdown') ?? []) await handler({}, context);
     console.log('PASS: packed index.ts loads through Pi; model guidance survives legacy prompt handlers in either order.');
+    const { testFeedbackHost } = await import('./test-feedback-host.mjs');
+    await testFeedbackHost({ installed, agentModule });
   }
   console.log(`PASS: npm archive (${paths.size} files), Apache license, reference and all 14 demos.`);
 } finally {

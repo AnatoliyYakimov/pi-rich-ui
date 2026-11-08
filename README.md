@@ -47,7 +47,7 @@ pi install npm:pi-rich-ui-inline
 ```
 
 Restart Pi or run `/reload`. Update with `pi update npm:pi-rich-ui-inline`.
-For a pinned installation, use `pi install npm:pi-rich-ui-inline@0.5.3`.
+Pin an npm version only after that version has been published to npm.
 
 ### Git installation
 
@@ -55,6 +55,12 @@ Pi can manage a Git installation directly (available before the first npm releas
 
 ```bash
 pi install git:github.com/AnatoliyYakimov/pi-rich-ui
+```
+
+For the pinned GitHub release:
+
+```bash
+pi install git:github.com/AnatoliyYakimov/pi-rich-ui@v0.5.4
 ```
 
 Alternatively, clone into the extensions directory manually:
@@ -192,12 +198,34 @@ Demo commands create display-only session entries, not model requests.
 ```bash
 NO_COLOR=1 pi                 # No color/bold; keep Unicode and Braille
 PI_RICH_UI_RENDER=text pi     # Public-hook text fallback; no native adapter
-PI_RICH_UI_PROMPT=0 pi        # Disable automatic model guidance
+PI_RICH_UI_PROMPT=0 pi        # Disable model guidance and automatic correction
+PI_RICH_UI_REPAIR=0 pi        # Keep guidance/rendering; disable automatic correction
 ```
 
 Colors follow **Pi's active theme**. Aliases include green → success, red → error,
 yellow → warning and blue → info. Color is paired with status symbols or labels.
 No external icon font is required. [Full configuration](docs/REFERENCE.md#configuration).
+
+## Model feedback
+
+The compact guide includes a valid table example and explicitly rejects JSX arrays.
+Use explicit cells for arbitrary prose, including commas and pipe characters:
+
+```xml
+<Table headers="Service|Status"><Tr><Td>API</Td><Td>Healthy, no errors</Td></Tr></Table>
+```
+
+On Pi **1.5.0**, completed TUI answers with invalid Rich UI markup receive bounded
+English diagnostics and **one automatic correction attempt per user request**.
+This can add one model request, with extra latency and token cost; valid answers
+and ordinary fenced examples add none. The original answer stays in history and
+the corrected visuals appear in a new answer. A failed correction stops with a
+warning. Disable this behavior with `PI_RICH_UI_REPAIR=0`.
+
+Validation checks restricted syntax and renderer-supported structure, not facts.
+It never runs during streaming, resizing, scrolling, or history restoration.
+Older hosts without the final actionable boundary keep rendering without automatic
+correction. Unsupported or ambiguous session provenance is skipped safely.
 
 ## Scope and limitations
 
@@ -222,7 +250,7 @@ npm run preview:assets
 npm run test:host -- /path/to/pi-tui/dist/index.js
 ```
 
-The local suite has **332 tests**, including width sweeps from 1–160 columns and
+The local suite includes validation/feedback regressions, including width sweeps from 1–160 columns and
 **39 golden snapshots**. The actual `pi-tui` 1.5.0 smoke test renders 13 compositions,
 checks resizing at 24/40/80/120 columns and preserves literal fenced XML. Local host
 mocks remain useful for lifecycle tests. An offline interactive Pi 1.5.0 PTY trial also loaded the extension and displayed
@@ -235,9 +263,13 @@ it is not an image renderer loaded by the extension and needs no image library.
 
 CI runs syntax checks, tests and npm archive checks on Node 22.19, 24 and 26.
 A separate job tests Pi 1.5.0 and loads the packed `index.ts` through Pi's extension
-loader. Host modules are peer dependencies supplied by Pi, never bundled copies.
+loader. With `PI_AGENT_MODULE` set, package checks also use a deterministic offline
+provider and real Pi sessions to verify feedback delivery, request counts, tool
+loops, queued follow-ups, boundary composition, and restored attempt metadata.
+No external model calls or credentials are used. Host modules are peer dependencies
+supplied by Pi, never bundled copies.
 
-Tags such as `v0.5.3` trigger the same checks and a GitHub Release, without requiring
+Tags such as `v0.5.4` trigger the same checks and a GitHub Release, without requiring
 npm publication. npm publishing through OIDC is an optional manual workflow step.
 See [release setup and instructions](docs/RELEASING.md).
 

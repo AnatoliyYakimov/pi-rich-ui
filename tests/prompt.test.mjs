@@ -14,7 +14,7 @@ test('English guide prioritizes comprehension over long lists, without demanding
 });
 
 test('core guide stays within a compact budget without embedding the full reference',()=>{
-  assert.ok(GUIDE_CORE.length<=1700);
+  assert.ok(GUIDE_CORE.length<=2100);
   assert.ok(!SYSTEM_GUIDE.includes(readFileSync(REFERENCE_PATH,'utf8')));
   assert.match(GUIDE_CORE,/never invent data; label illustrative data/);
   assert.match(GUIDE_CORE,/OUTSIDE fences/);
@@ -28,11 +28,11 @@ test('advanced reference resolves to the installed module, not the user project 
   for(const attr of ['titlePosition','borderTone','Table.Column','zeroLine'])assert.ok(reference.includes(attr));
 });
 
-test('three purpose-labeled compositions parse and render, rather than eight isolated tags',()=>{
+test('four purpose-labeled compositions include a delimiter-safe table',()=>{
   const examples=GUIDE_CORE.split('\n').filter(s=>s.startsWith('<'));
-  assert.equal(examples.length,3);
+  assert.equal(examples.length,4);
   const tags=examples.map(s=>parseDocument(s).tag);
-  assert.deepEqual(tags,['grid','sequence','callout']);
+  assert.deepEqual(tags,['grid','sequence','callout','table']);
   for(const xml of examples){
     assert.match(transformMarkdown(xml),new RegExp(LANGUAGE));
     for(const width of [24,40,80])assert.ok(renderDocument(xml,width).plain().length>0);
@@ -41,6 +41,12 @@ test('three purpose-labeled compositions parse and render, rather than eight iso
   assert.equal(cards.length,2);
   const steps=parseDocument(examples[1]).children.filter(n=>typeof n!=='string');
   assert.equal(steps.length,2); // Demonstrates an interaction, not just one isolated node.
+  const table=parseDocument(examples[3]);
+  assert.equal(table.attrs.headers,'Service|Status');
+  assert.equal(table.children[0].children[1].children[0],'Healthy, no errors');
+  assert.match(GUIDE_CORE,/arrays.*unsupported/i);
+  assert.match(GUIDE_CORE,/not CSV/);
+  assert.match(GUIDE_CORE,/never.*reserved.*fence/i);
 });
 
 test('forced prompt injection preserves earlier instructions and deduplicates after Pi applies the result',()=>{
