@@ -3,6 +3,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { renderDocument } from '../lib/render.mjs';
 import { PALETTES, SURFACE_PALETTES } from '../lib/theme.mjs';
+import { RECIPES } from '../lib/recipes.mjs';
 const output = new URL('../docs/previews/', import.meta.url);
 mkdirSync(output, { recursive: true });
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&apos;' })[c]);
@@ -30,8 +31,9 @@ function structure(g,x,y,color) {
   }
 }
 const renders = [['layers',112,'dark'],['layers',112,'light'],['boundaries',112,'dark'],['boundaries',112,'light'],['boundaries',40,'dark'],['workflow',112,'dark'],['decisions',112,'dark'],['compare',80,'dark'],['compare',80,'light'],['compare',40,'dark'],['architecture',80,'dark'],['components',80,'dark'],['titles',80,'dark'],['dashboard',100,'dark']];
+renders.push(['recipe-vps',80,'light'],['recipe-site-sketch',112,'dark']);
 for (const [name, columns, appearance] of renders) {
-  const source = readFileSync(new URL(`../examples/${name}.xml`, import.meta.url), 'utf8');
+  const source = name.startsWith('recipe-') ? RECIPES.find(r=>r.id===name.slice(7)).xml : readFileSync(new URL(`../examples/${name}.xml`, import.meta.url), 'utf8');
   const surface = renderDocument(source, columns); surface.markTruncated();
   const palette = PALETTES[appearance], cw = 9, ch = 22, padding = 24, heading = 42;
   const width = surface.width * cw + padding * 2, height = surface.height * ch + heading + padding;

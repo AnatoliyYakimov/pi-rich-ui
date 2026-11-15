@@ -5,6 +5,7 @@ import { LANGUAGE } from '../lib/parser.mjs';
 import { injectGuidance,SYSTEM_GUIDE } from '../lib/prompt.mjs';
 import { setup } from '../lib/extension.mjs';
 import { NativeRenderer } from '../lib/native.mjs';
+import { RECIPES } from '../lib/recipes.mjs';
 const fakeClass=()=>class {render(){return [];}renderToken(t,w){return [`original:${t.text}:${w}`];}};
 test('system guidance is injected exactly once into structured options',()=>{const e={systemPromptOptions:{promptGuidelines:['Existing']}};injectGuidance(e);injectGuidance(e);assert.deepEqual(e.systemPromptOptions.promptGuidelines,['Existing',SYSTEM_GUIDE]);});
 test('legacy prompt injection preserves existing text and deduplicates',()=>{const r=injectGuidance({systemPrompt:'Existing'});assert.ok(r.systemPrompt.startsWith('Existing\n'));assert.equal(injectGuidance(r),undefined);});
@@ -77,7 +78,20 @@ test('native renderer uses current theme at every call without stale rendered ca
   assert.match(native.render('<Text>ok</Text>',20).join(''),/old/);token='new';assert.match(native.render('<Text>ok</Text>',20).join(''),/new/);
 });
 test('compact guide documents color roles and Braille series without excessive instruction length',()=>{
-  assert.ok(Buffer.byteLength(SYSTEM_GUIDE,'utf8')<3900);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/Chart\/Series\(label,values\)/);
+  assert.ok(Buffer.byteLength(SYSTEM_GUIDE,'utf8')<7200);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/<Chart.*<Series/);
+});
+test('recipe demos use exactly the examples seen by the model without requesting inference',async()=>{
+ const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});
+ await h.commands.get('rich-ui').handler('recipes',context);assert.equal(h.entries.length,0);
+ for(const recipe of RECIPES){
+  await h.commands.get('rich-ui').handler('recipe '+recipe.id,context);
+  const e=h.entries.at(-1);assert.equal(e.d.xml,recipe.xml);
+  assert.ok(h.renderers.get(e.t)({data:e.d},{},context.ui.theme).render(80).length>0);
+ }
+ const count=h.entries.length;
+ await h.commands.get('rich-ui').handler('recipe unknown',context);
+ await h.commands.get('rich-ui').handler('recipe vps',{...context,mode:'print'});
+ assert.equal(h.entries.length,count);h.hooks.get('session_shutdown')();
 });
 test('explanatory commands render canonical compositions without a model request',async()=>{
  const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});

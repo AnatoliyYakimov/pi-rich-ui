@@ -7,6 +7,21 @@ machine. Pi uses its active theme; colors and glyphs vary by terminal and font.
 
 [Install](../README.md) · [Component reference](REFERENCE.md)
 
+## Model-visible compositions
+
+The model now sees task-selection rules and ten complete, varied recipes, not just
+component names. Preview exactly those examples with `/rich-ui recipes` and
+`/rich-ui recipe <name>`. See [all injected recipes](RECIPES.md).
+
+![Shared VPS constraint, actual terminal renderer](previews/recipe-vps-80-light.svg)
+
+`/rich-ui recipe vps` combines a shared heading, peer cards, status labels and a conclusion.
+
+![Static site sketch, actual terminal renderer](previews/recipe-site-sketch-112-dark.svg)
+
+`/rich-ui recipe site-sketch` combines a header, hero and navigation cards. It is a
+static explanation of layout; it does not create a website or interactive navigation.
+
 ## 1. Explain layers, not just numbers
 
 ![Layered explanation, light sample palette](previews/layers-112-light.svg)
