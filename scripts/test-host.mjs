@@ -8,6 +8,7 @@ import { readFileSync } from 'node:fs';
 import { installBridge, probeBridge } from '../lib/bridge.mjs';
 import { NativeRenderer } from '../lib/native.mjs';
 import { transformMarkdown } from '../lib/parser.mjs';
+import { RECIPES } from '../lib/recipes.mjs';
 async function loadHost(){
   const explicit=process.argv[2]||process.env.PI_TUI_MODULE;
   if(explicit)return import(explicit.startsWith('file:')?explicit:pathToFileURL(explicit).href);
@@ -32,6 +33,15 @@ for(const name of ['layers','boundaries','workflow','decisions','demo','compare'
  }
 }
 const literal='```xml\n<Box>literal</Box>\n```';
+for(const recipe of RECIPES){
+ const md=new tui.Markdown('Before\n\n'+recipe.xml+'\n\nAfter',1,0,theme,undefined,{transform:s=>transformMarkdown(s)});
+ for(const width of [24,40,80,120]){
+  md.invalidate();const lines=md.render(width),text=lines.join('\n');
+  assert.ok(text.includes('Before')&&text.includes('After'),`${recipe.id}: prose lost`);
+  assert.ok(!text.includes('__pi_rich_ui')&&!text.includes(recipe.xml),`${recipe.id}: adapter did not run`);
+  assert.ok(lines.every(s=>tui.visibleWidth(s)<=width),`${recipe.id}: width overflow`);
+ }
+}
 const control=new tui.Markdown(literal,0,0,theme,undefined,{transform:s=>transformMarkdown(s)});
 assert.ok(control.render(80).join('\n').includes('<Box>literal</Box>'));
-bridge.release();console.log('PASS: actual host Markdown, 17 examples including layered cards and nested boundaries, width/resize and fenced-code isolation.');
+bridge.release();console.log(`PASS: actual host Markdown, 17 existing examples + ${RECIPES.length} model recipes, width/resize and fenced-code isolation.`);

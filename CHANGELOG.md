@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Teach visual selection by task structure, with ten complete, varied compositions
+  instead of mostly sandbox examples and terse names for advanced components.
+- Share the injected recipe XML with `/rich-ui recipes` and `/rich-ui recipe <name>`;
+  include shared-constraint VPS cards and a static site sketch with terminal previews.
+- Preserve user prose/code/table preferences, truthful data, existing mode gates,
+  prompt deduplication and the one-attempt syntax correction budget. Add no provider
+  calls, adoption quota, runtime dependency or model-controlled renderer setting.
+- Add a source-only 24-question A/B export/scorer with a frozen 0.6.0 baseline,
+  paired-sample reporting and plain/code controls. No live-model uplift is claimed.
+
 ## [0.6.0] - 2026-11-08
 
 - Default to a readable 112-cell root budget with root full/numeric width opt-ins,

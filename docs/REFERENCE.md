@@ -354,16 +354,26 @@ PNG is disabled; image/auto settings select ANSI with a notice.
 
 ## Prompt, history and security
 
-`lib/prompt.mjs` defines an English **3,321-byte UTF-8 core guide**: short behavior
-rules, **three explanatory compositions** (layers, a nested boundary and a decision
-comparison) and an explicit-cell table. It shows filled cards, header/status alignment,
-independent border/surface and labeled relationships rather than requiring the model
-to infer them from tag names. Arrays and manual reserved fences are unsupported;
+`lib/prompt.mjs` defines an English core guide with a **6,800-byte UTF-8 budget**.
+It maps task structure to the appropriate composition and embeds **ten complete
+recipes** from `lib/recipes.mjs`: shared-constraint peer cards, a nested boundary,
+grouped workflow, Sequence, Timeline, Tree, Graph, Chart, interface sketch and Table.
+It asks the model to choose a useful visual without waiting for a direct request,
+while respecting explicit prose/code/table preferences. A table is recommended for
+repeated fields and lookup, rather than every explanation. Examples illustrate shape;
+their facts/statuses must be adapted and measurements must not be fabricated.
+Arrays and manual reserved fences are unsupported;
 compact `headers`/`values` are delimiter-separated strings, not CSV. It asks the model to use
 a compact visual whenever it improves clarity, understanding or retention, rather
 than long lists or winding prose. Simple facts can stay Markdown; output labels
 follow the user's language. This guides model behavior; it is not a guarantee of
 which composition every model will choose.
+
+`/rich-ui recipes` lists these recipes; `/rich-ui recipe <name>` previews the exact
+model-visible XML without a model request. See [all recipes](RECIPES.md). The full
+gallery and local demos do not otherwise become model context. The optional source-only
+[A/B evaluation](EVALUATION.md) compares adoption, syntax, non-table composition and
+plain-answer controls; renderer tests alone do not establish a behavioral improvement.
 
 The full injected guide appends the absolute installed path of this reference,
 quoted for spaces/platform separators. Advanced attributes can be read using the

@@ -9,6 +9,13 @@
 - `registerEntryRenderer` + `appendEntry`: local examples, persisted but not model context.
 - `registerCommand`, session_start/session_shutdown, current `ctx.ui.theme`.
 
+`lib/recipes.mjs` is the single source for ten model-visible compositions and the
+`/rich-ui recipe <name>` previews. Their XML is embedded directly in the guide, so
+using a recipe needs no file-reading tool. The full guide has a bounded core budget
+and retains the installed advanced-reference path. Explicit prose/code/table requests
+remain valid; no adoption quota or automatic continuation for omitted visuals exists.
+Source-only A/B export/scoring is documented in [EVALUATION.md](EVALUATION.md).
+
 The model emits restricted XML in standalone blocks. Parser canonicalizes namespaced tags,
 validates nesting/literals/limits and emits an internal sentinel fence. The AST is cached
 (maximum 48 documents); rendered lines are NOT cached by this package. Pi owns transcript

@@ -16,13 +16,13 @@ try {
   ], { cwd: root, encoding: 'utf8' }));
   const paths = new Set(pack.files.map(f => f.path));
   const required = ['index.ts', 'package.json', 'LICENSE', 'NOTICE', 'README.md', 'CHANGELOG.md',
-    'docs/REFERENCE.md', 'docs/GALLERY.md', 'docs/INTEGRATION.md', 'docs/RELEASING.md'];
+    'docs/REFERENCE.md', 'docs/GALLERY.md', 'docs/INTEGRATION.md', 'docs/RECIPES.md', 'docs/EVALUATION.md', 'docs/RELEASING.md'];
   for (const dir of ['lib', 'examples']) {
     for (const name of readdirSync(join(root, dir))) required.push(`${dir}/${name}`);
   }
   for (const path of required) assert.ok(paths.has(path), `Missing runtime/documentation file: ${path}`);
   for (const path of paths) {
-    assert.ok(!/(^|\/)(?:node_modules|tests|scripts|\.github|\.git|\.npm-cache)(\/|$)/.test(path), `Development file shipped: ${path}`);
+    assert.ok(!/(^|\/)(?:node_modules|tests|scripts|eval|\.github|\.git|\.npm-cache)(\/|$)/.test(path), `Development file shipped: ${path}`);
     assert.ok(!/(^|\/)\.[^/]+/.test(path), `Hidden file shipped: ${path}`);
   }
   execFileSync('tar', ['-xzf', join(temp, pack.filename), '-C', temp]);
@@ -36,6 +36,7 @@ try {
     assert.equal(pkg.peerDependencies[host], '*');
   }
   const { REFERENCE_PATH, SYSTEM_GUIDE } = await import(pathToFileURL(join(installed, 'lib/prompt.mjs')));
+  const { RECIPES } = await import(pathToFileURL(join(installed, 'lib/recipes.mjs')));
   assert.equal(realpathSync(REFERENCE_PATH), realpathSync(join(installed, 'docs/REFERENCE.md')));
   assert.match(readFileSync(REFERENCE_PATH, 'utf8'), /titlePosition/);
   const { setup } = await import(pathToFileURL(join(installed, 'lib/extension.mjs')));
@@ -55,6 +56,13 @@ try {
     const entry = entries.at(-1);
     const view = renderers.get(entry.type)(entry, {}, context.ui.theme);
     for (const width of [24, 40, 80, 120]) assert.ok(view.render(width).length > 0, name);
+  }
+  for(const recipe of RECIPES){
+    assert.ok(SYSTEM_GUIDE.includes(recipe.xml));
+    await commands.get('rich-ui').handler('recipe '+recipe.id,context);
+    const entry=entries.at(-1);assert.equal(entry.data.xml,recipe.xml);
+    const view=renderers.get(entry.type)(entry,{},context.ui.theme);
+    for(const width of [24,40,80,120])assert.ok(view.render(width).length>0,recipe.id);
   }
   hooks.get('session_shutdown')();
   if (process.env.PI_AGENT_MODULE) {
@@ -100,7 +108,7 @@ try {
     const { testFeedbackHost } = await import('./test-feedback-host.mjs');
     await testFeedbackHost({ installed, agentModule });
   }
-  console.log(`PASS: npm archive (${paths.size} files), Apache license, reference and all 18 demos.`);
+  console.log(`PASS: npm archive (${paths.size} files), Apache license, reference, 18 existing demos and ${RECIPES.length} model recipes.`);
 } finally {
   rmSync(temp, { recursive: true, force: true });
 }

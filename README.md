@@ -116,9 +116,18 @@ understanding or retention, replacing long lists and winding explanations with a
 composition and brief supporting prose. The instruction is English; output labels
 follow your language. Simple facts may remain plain Markdown.
 
-The injected core is 3,321 UTF-8 bytes: short rules, three explanatory recipes —
-layers, a genuinely nested boundary and a decision comparison — and an explicit-cell table. Advanced attributes stay in a local reference, read
-only when needed; its absolute installed path is included, not its contents.
+The injected core maps the question's structure to a composition before showing
+ten complete recipes: shared-constraint cards, containment, grouped stages,
+message exchanges, chronology, hierarchy, dependencies, a numeric trend, an interface
+sketch and exact table records. It asks the model to act without waiting for an explicit
+request to draw, while respecting prose/code/table requests and avoiding invented data.
+The English core has a 6,800-byte UTF-8 budget; advanced attributes stay in the local
+reference, whose installed path is included rather than its contents.
+
+Try `/rich-ui recipes`, `/rich-ui recipe vps` or `/rich-ui recipe site-sketch`.
+These previews use exactly the same XML that the model sees. The full gallery is
+not injected separately. See [model recipes](docs/RECIPES.md) and the optional
+[A/B evaluation](docs/EVALUATION.md), which measures selection separately from rendering.
 
 The extension adds this guide to the model's system prompt. Visual blocks
 appear on their own lines **outside code fences** in assistant replies. Fenced XML,
