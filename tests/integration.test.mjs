@@ -5,6 +5,7 @@ import { LANGUAGE } from '../lib/parser.mjs';
 import { injectGuidance,SYSTEM_GUIDE } from '../lib/prompt.mjs';
 import { setup } from '../lib/extension.mjs';
 import { NativeRenderer } from '../lib/native.mjs';
+import { setIconSet } from '../lib/icons.mjs';
 const fakeClass=()=>class {render(){return [];}renderToken(t,w){return [`original:${t.text}:${w}`];}};
 test('system guidance is injected exactly once into structured options',()=>{const e={systemPromptOptions:{promptGuidelines:['Existing']}};injectGuidance(e);injectGuidance(e);assert.deepEqual(e.systemPromptOptions.promptGuidelines,['Existing',SYSTEM_GUIDE]);});
 test('legacy prompt injection preserves existing text and deduplicates',()=>{const r=injectGuidance({systemPrompt:'Existing'});assert.ok(r.systemPrompt.startsWith('Existing\n'));assert.equal(injectGuidance(r),undefined);});
@@ -77,7 +78,7 @@ test('native renderer uses current theme at every call without stale rendered ca
   assert.match(native.render('<Text>ok</Text>',20).join(''),/old/);token='new';assert.match(native.render('<Text>ok</Text>',20).join(''),/new/);
 });
 test('compact guide documents color roles and Braille series without excessive instruction length',()=>{
-  assert.ok(Buffer.byteLength(SYSTEM_GUIDE,'utf8')<3900);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/Chart\/Series\(label,values\)/);
+  assert.ok(Buffer.byteLength(SYSTEM_GUIDE,'utf8')<4600);assert.match(SYSTEM_GUIDE,/success\|error\|warning/);assert.match(SYSTEM_GUIDE,/Chart\/Series\(label,values\)/);
 });
 test('explanatory commands render canonical compositions without a model request',async()=>{
  const h=host();await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{}});
@@ -104,4 +105,12 @@ test('session shutdown/start reinstalls the bridge without duplicate wrappers',a
  h.hooks.get('session_start')({},context);assert.notEqual(M.prototype.renderToken,orig);
  assert.match(h.pi.transform('<Timeline><Step label="x"/></Timeline>',{messageType:'assistant'}),new RegExp(LANGUAGE));
  h.hooks.get('session_shutdown')();assert.equal(M.prototype.renderToken,orig);
+});
+test('status reports the icon set chosen from the environment',async()=>{
+ const h=host(),notices=[];
+ try{
+  await setup(h.pi,{Markdown:fakeClass()},{probe:false,env:{PI_RICH_UI_ICONS:'nerd'}});
+  await h.commands.get('rich-ui').handler('status',{...context,ui:{notify:m=>notices.push(m)}});
+  assert.match(notices[0],/icons=nerd/);
+ }finally{setIconSet('unicode');h.hooks.get('session_shutdown')();}
 });

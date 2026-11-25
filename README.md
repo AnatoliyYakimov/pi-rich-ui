@@ -111,12 +111,14 @@ Ask Pi:
 > layered cards, status labels and arrows. Then show a trusted host outside an
 > isolated boundary, with controlled Git access and two groups inside the boundary.
 
-The extension guides the model to use a compact visual whenever it improves clarity,
-understanding or retention, replacing long lists and winding explanations with a small
-composition and brief supporting prose. The instruction is English; output labels
-follow your language. Simple facts may remain plain Markdown.
+The extension asks the model to draw a compact visual on its own initiative whenever
+the answer relates items to each other: comparisons become a table or cards, cause and
+consequence become connected cards, steps and finished work become a timeline with
+statuses, and before/after becomes two columns or a diff. Three or more parallel items
+count as a cue. One-line answers, single values, code and unstructured reasoning stay
+plain Markdown. The instruction is English; output labels follow your language.
 
-The injected core is 3,321 UTF-8 bytes: short rules, three explanatory recipes —
+The injected core is 4,316 UTF-8 bytes: short rules, three explanatory recipes —
 layers, a genuinely nested boundary and a decision comparison — and an explicit-cell table. Advanced attributes stay in a local reference, read
 only when needed; its absolute installed path is included, not its contents.
 
@@ -229,11 +231,12 @@ NO_COLOR=1 pi                 # No color/bold; keep Unicode and Braille
 PI_RICH_UI_RENDER=text pi     # Public-hook text fallback; no native adapter
 PI_RICH_UI_PROMPT=0 pi        # Disable model guidance and automatic correction
 PI_RICH_UI_REPAIR=0 pi        # Keep guidance/rendering; disable automatic correction
+PI_RICH_UI_ICONS=unicode pi   # Plain Unicode icons even in a Nerd Font terminal
 ```
 
 Colors follow **Pi's active theme**. Aliases include green → success, red → error,
 yellow → warning and blue → info. Color is paired with status symbols or labels.
-No external icon font is required. [Full configuration](docs/REFERENCE.md#configuration).
+Icons use Nerd Font Material Design glyphs in Ghostty, iTerm, WezTerm, kitty and Alacritty, and plain Unicode elsewhere, so no font is required. [Full configuration](docs/REFERENCE.md#configuration).
 
 ## Model feedback
 

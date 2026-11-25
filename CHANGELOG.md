@@ -1,5 +1,31 @@
 # Changelog
 
+## [Unreleased]
+
+- The guide asks for visuals proactively and maps relations between items to
+  components: comparison, cause and consequence, steps, finished work, contrast and
+  containment. Core budget raised to 4,000 bytes.
+- Custom system prompts receive the guide as a structured section that Pi renders.
+- Framed surfaces fill only inside the frame; the fill no longer spills past the line
+  or leaves notches at rounded corners.
+- Default cards use the neutral toolPendingBg instead of the violet customMessageBg;
+  info uses selectedBg and warning uses searchMatchBg.
+- Text, Caption and Span accept italic, underline and strike; Title accepts
+  level={1|2|3}; borders add double, heavy and dashed. The guide gives each a meaning.
+- About 100 short icon names (db, k8s, kafka, branch…) with Nerd Font Material Design
+  glyphs where the terminal has them and Unicode fallbacks elsewhere; long names stay as
+  aliases. The guide lists the main names. Core budget raised to 4,400 bytes.
+- Tables draw vertical column rules and a rule between every row by default, so a
+  wrapped cell no longer reads as a separate row; `separators={false}` and
+  `columnSeparators={false}` turn them off. Narrow columns keep their natural width
+  before long columns take the remaining room.
+- Timeline markers sit on the line: the horizontal view is a single track with labels
+  under the markers, and the vertical rail runs through them. Step numbers and `[done]`
+  words are gone; a step without a status gets ●.
+- A text tag closed by another unopened text tag (`<Text>…</Caption>`) renders instead
+  of leaving the whole block as raw XML. Correction feedback for parse errors names the
+  expected and found tags, gives the failing line and quotes the text around it.
+
 ## [0.6.0] - 2026-11-08
 
 - Default to a readable 112-cell root budget with root full/numeric width opt-ins,

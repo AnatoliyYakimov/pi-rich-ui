@@ -99,3 +99,25 @@ test('validation bounds message, block, node, and scan sizes',()=>{
   assert.equal(issues.length,1);
   assert.match(issues[0].message,/64/);
 });
+
+test('parse diagnostics point at the failing tag, not the block start',()=>{
+  const cases=[
+    ['Intro\n\n<UI>\n<Card>\n<Text>a</Text>\n</Row>\n</Card>\n</UI>',6,/expected <\/Card>, found <\/Row>/,'</Row>'],
+    ['<UI>\n<Card>\n<Text>see git diff <base_sha></Text>\n</Card>\n</UI>',3,/Unknown tag: base_sha/,'git diff <base_sha>'],
+    ['<UI>\n<Card>\n<Text>a</Text>',2,/Unclosed tag <Card>/,'<Card>'],
+  ];
+  for(const [source,line,message,excerpt] of cases){
+    const issues=validate(source);
+    assert.equal(issues.length,1,source);
+    assert.equal(issues[0].line,line,source);
+    assert.match(issues[0].message,message);
+    assert.ok(issues[0].excerpt.includes(excerpt),issues[0].excerpt);
+  }
+});
+
+test('tag mistakes get their own hints, even when a tag name mentions a table',()=>{
+  const [mismatch]=validate('<Table><Table.Row><Td>a</Td></Tr></Table>');
+  assert.match(mismatch.hint,/same name/);
+  const [unknown]=validate('<UI>\n<Text>git diff <base_sha></Text>\n</UI>');
+  assert.match(unknown.hint,/&lt;/);
+});

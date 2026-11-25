@@ -50,7 +50,7 @@ accent are separate choices:
 | --- | --- |
 | `title` | Optional text; no title is invented when omitted |
 | `titlePosition` | `border`, `inside`, `above`, `none` |
-| `border` | `rounded`, `single`, `left`, `none`; boolean false/true are aliases for none/rounded |
+| `border` | `rounded`, `single`, `double`, `heavy`, `dashed`, `left`, `none`; boolean false/true are aliases for none/rounded. Give the style a meaning: `double` for a trust or ownership boundary, `heavy` for the area to look at first, `dashed` for something optional, external or planned |
 | `borderTone` | Semantic role for the outline, independent of body color |
 | `titleTone` | Semantic role for the heading, independent of the outline |
 | `surface` | `auto`, `none`, `subtle`, `info`, `success`, `warning`, `error` |
@@ -96,8 +96,9 @@ the parent surface.
 </UI>
 ```
 
-Backgrounds resolve through Pi's `bg` tokens: subtle/info → customMessageBg,
-success → toolSuccessBg, warning → toolPendingBg, error → toolErrorBg. Theme shades
+Backgrounds resolve through Pi's `bg` tokens: subtle → toolPendingBg (neutral),
+info → selectedBg, success → toolSuccessBg, warning → searchMatchBg (Pi falls back
+to selectedBg when a theme omits it), error → toolErrorBg. Theme shades
 and terminal-default backgrounds are respected. Standalone 256/truecolor previews
 use a small light/dark fallback palette; 16-color fallbacks may omit shading.
 NO_COLOR/TERM=dumb omit color and bold; captions/status labels/contours preserve
@@ -105,7 +106,10 @@ structure. Explicit border=false stays off even without color.
 
 ### Headers, pills and text alignment
 
-Text/Title/Caption support `align="left|center|right"` per wrapped line. Badge paints
+Text/Title/Caption support `align="left|center|right"` per wrapped line. Title accepts
+`level={1|2|3}`: 1 is a section heading with a rule in its tone under it, 2 is the
+default, 3 is a muted subheading. A terminal cannot enlarge text, so levels differ by
+weight, tone and the rule. Badge paints
 only its measured label/icon with a small field, not the rest of its allocated row;
 inline Badge in Text follows the same bounds. A responsive header:
 
@@ -114,6 +118,17 @@ inline Badge in Text follows the same bounds. A responsive header:
   <Row><Title flex={1}>Permissions</Title><Badge tone="warning" flex={0}>Approval</Badge></Row>
   <Col gap={0}><Text>Checks whether an action is allowed.</Text><Caption>Does not isolate the process.</Caption></Col>
 </Card>
+```
+
+Text, Title, Caption and Span accept `bold`, `italic`, `underline` and `strike`; children
+inherit them, and `italic={false}` turns one off for a nested Span. Use italic for notes
+and asides, underline for the key term of a sentence, and strike for replaced or
+cancelled values. Underline and strike stay continuous across spaces inside one span.
+The host theme supplies these styles; without color they are omitted, like bold.
+
+```xml
+<Text>Timeout <Span strike>30 s</Span> <Span bold>5 s</Span>, see <Span underline>retry budget</Span>.</Text>
+<Caption italic>Measured on staging.</Caption>
 ```
 
 Use one panel per semantic group. Ordinary Markdown can carry the surrounding prose.
@@ -161,7 +176,8 @@ controls the distance. It is not a general edge-router for arbitrary nested node
 Numeric columns align right automatically. Column/cell options include
 `align="left|center|right"`, `digits`, `unit`, `format="number|percent"`, `group={false}`,
 `minWidth` and `maxWidth`. Columns grow toward natural content widths; neither text
-nor numeric columns absorb unused space by default. Explicit `Table.Column flex={1}`
+nor numeric columns absorb unused space by default. When the room is short, narrow
+columns keep their natural width first and the longest columns wrap. Explicit `Table.Column flex={1}`
 allows extra growth. Rules stop at the actual column total. For percentages, `0.25` means `25%`. A `value` attribute
 specifies a formatted number. Literal cell text such as `001` retains its leading zeros.
 
@@ -171,9 +187,10 @@ marker. Color priority: cell → row → threshold → column → container. An 
 or row tone overrides both threshold styling and its marker.
 
 Cells may contain Badge, Span/Icon, Sparkline and other blocks. `bar` with `min/max`
-adds a mini-bar; out-of-range values receive a visible clipping note. `separators`
-adds rules between rows. `columnSeparators` restores optional vertical column rules;
-the default table uses open columns with an accented header and a subdued horizontal rule. Narrow tables become labeled records; `layout="stacked"`
+adds a mini-bar; out-of-range values receive a visible clipping note. The header is
+accented, and thin rules separate columns, the header and every row, so wrapped cells
+stay inside their row. `separators={false}` removes the rules between rows;
+`columnSeparators={false}` removes the vertical rules. Narrow tables become labeled records; `layout="stacked"`
 forces this view. `headers`/`values` use commas or `|`: this is **not a CSV parser**.
 Use explicit cells for values containing delimiters.
 
@@ -261,11 +278,14 @@ Aliases inside Tree: Item, Tree.Item, Tree.Node and Node.
 </Timeline>
 ```
 
-Timeline adapts between horizontal and vertical views. `direction="TB"` always uses
-vertical layout. Steps accept `label`, `detail`, `date/time` and nested Text/other blocks.
-Statuses: done, active, pending, blocked, error, skipped. Each has a symbol, word and color.
-No status is inferred when omitted. Up to 40 steps. Content labels come from XML;
-built-in annotations such as `[done]` and `improved` are English.
+Timeline adapts between horizontal and vertical views. The horizontal view puts the
+step markers on one track with labels under them; the vertical view runs a rail
+through the markers. Track and rail segments after a done step take its color.
+`direction="TB"` always uses vertical layout. Steps accept `label`, `detail`,
+`date/time` and nested Text/other blocks. Statuses: done ✓, active ▶, pending ○,
+blocked !, error ✗, skipped −; each has a symbol and a color. A step without a status
+gets a neutral ●. Up to 40 steps. Content labels come from XML; built-in annotations
+such as `improved` are English.
 
 ## Adaptive layout
 
@@ -329,8 +349,15 @@ Roles: `success/error/warning/info/accent/purple/cyan/muted/text/dim/border`.
 Aliases include green/red/yellow/blue/gray and positive/negative/orange/violet/teal.
 `tone` takes precedence over `color`. Roles resolve through Pi's theme; they are not
 guaranteed RGB values. Only explicit/automatic surfaces are shaded; the surrounding
-terminal background is untouched. Unicode icons are built
-in; Nerd Fonts are not required.
+terminal background is untouched.
+
+Icons use short names (`db`, `k8s`, `kafka`, `branch`, `warn`…; `ICON_NAMES` in
+`lib/icons.mjs` lists all of them). Earlier long names such as `database`, `settings`
+and `arrow-right` still work. Each name has a Material Design glyph from Nerd Fonts and
+a plain Unicode fallback, both one cell wide. Rich UI picks the Nerd set with the same
+rule as pi-powerline-footer: `PI_RICH_UI_ICONS=nerd|unicode`, then
+`POWERLINE_NERD_FONTS=1|0`, then Ghostty (including inside tmux), iTerm, WezTerm, kitty,
+Alacritty and Kaku. Other terminals get Unicode, so a missing font never shows boxes.
 
 Available components: UI, Box/Card/Callout, Row/Col/Grid/GridItem, Text/Title/Caption, Span,
 Icon, Badge, Connector, Divider, Spacer, Metric, Progress, Flow/Step, Graph/Node/Edge, Bars/Bar,
@@ -345,6 +372,7 @@ PI_RICH_UI_RENDER=text pi    # Public hook + plain code fence; no native adapter
 PI_RICH_UI_PROMPT=0 pi       # Disable model guidance and automatic correction
 PI_RICH_UI_REPAIR=0 pi       # Disable correction; keep guidance/rendering
 NO_COLOR=1 pi               # Disable colors/bold; retain Unicode/Braille
+PI_RICH_UI_ICONS=unicode pi # Plain Unicode icons even in a Nerd Font terminal
 ```
 
 `PI_RICH_UI_COLORS=16|256|truecolor|none|auto` controls fallback/CLI colors. The active
@@ -359,10 +387,13 @@ rules, **three explanatory compositions** (layers, a nested boundary and a decis
 comparison) and an explicit-cell table. It shows filled cards, header/status alignment,
 independent border/surface and labeled relationships rather than requiring the model
 to infer them from tag names. Arrays and manual reserved fences are unsupported;
-compact `headers`/`values` are delimiter-separated strings, not CSV. It asks the model to use
-a compact visual whenever it improves clarity, understanding or retention, rather
-than long lists or winding prose. Simple facts can stay Markdown; output labels
-follow the user's language. This guides model behavior; it is not a guarantee of
+compact `headers`/`values` are delimiter-separated strings, not CSV. It asks the model to
+draw a visual without being asked whenever the content relates items, and maps each
+relation to a component: comparison to Table or a Grid of Cards, cause and consequence
+to Connector, steps to Timeline or Sequence, progress and finished work to Timeline
+statuses, contrast to a two-column Grid or Diff, containment to nested Box/Card. Three
+or more parallel items are a cue to draw. One-line answers, single values, code and
+unstructured reasoning can stay Markdown; output labels follow the user's language. This guides model behavior; it is not a guarantee of
 which composition every model will choose.
 
 The full injected guide appends the absolute installed path of this reference,
@@ -386,7 +417,10 @@ text data. XML cannot access the network, shell or filesystem. Limits: 24,000 ch
 per block, 300 nodes, depth 20, width up to 240 columns and height 400 rows. Truncation is
 explicitly marked. Very narrow windows or oversized documents may not fit all content;
 split large visuals into multiple blocks. Invalid original blocks remain source/fenced
-XML and are never executed or silently rewritten.
+XML and are never executed or silently rewritten. The parser forgives one slip: when a
+text tag (Text, Caption, Title, Span or Badge) is closed by another text tag that is not
+open, as in `<Text>…</Caption>`, the closing tag ends the open one and the opening tag
+decides the style. Every other mismatch stays invalid.
 
 ### Automatic correction feedback
 
@@ -401,7 +435,9 @@ nested example inside an ordinary documentation fence remains literal.
 
 For actionable failures it appends a hidden, model-visible English diagnostic and
 requests one continuation. The diagnostic includes up to three errors, source lines,
-short sanitized excerpts, and syntax hints (at most 2,400 characters total). The model
+short sanitized excerpts, and syntax hints (at most 2,400 characters total). A parse
+error points at the failing tag: its own line, the expected and found closing tag, and
+an excerpt around it rather than the start of the block. The model
 is asked to return only corrected visuals, preserving content, without tools or repeated
 work; it may fall back to ordinary Markdown. These are model instructions, not changes
 to tool permissions or a guarantee that every model obeys them.

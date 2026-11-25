@@ -5,16 +5,41 @@ import { isAbsolute } from 'node:path';
 import { GUIDE_CORE, SYSTEM_GUIDE, REFERENCE_PATH, injectGuidance } from '../lib/prompt.mjs';
 import { renderDocument } from '../lib/render.mjs';
 import { parseDocument, LANGUAGE, transformMarkdown } from '../lib/parser.mjs';
+import { ICON_NAMES } from '../lib/icons.mjs';
 
 test('English guide prioritizes comprehension over long lists, without demanding visuals for trivial facts',()=>{
-  assert.match(GUIDE_CORE,/whenever it improves clarity, understanding or retention/);
+  assert.match(GUIDE_CORE,/Be proactive/);
   assert.match(GUIDE_CORE,/Prefer visuals to long lists and winding explanations/);
   assert.match(GUIDE_CORE,/Simple facts may stay Markdown/);
   assert.doesNotMatch(GUIDE_CORE,/use sparingly|optional inline|[\p{Script=Cyrillic}\p{Script=Han}]/iu);
 });
 
+test('guide maps each kind of relation between items to a component',()=>{
+  for(const relation of [/compar\w+[^;]*→ Table/,/cause[^;]*→[^;]*Connector/,/steps[^;]*→ Timeline/,/what was done[^;]*status=done/,/contrast[^;]*→ Grid\(cols=2\)/])
+    assert.match(GUIDE_CORE,relation);
+  assert.match(GUIDE_CORE,/3\+ parallel items/);
+});
+
+test('guide gives text marks, title levels and border styles a meaning',()=>{
+  assert.match(GUIDE_CORE,/italic[^;.]*note/);
+  assert.match(GUIDE_CORE,/underline[^;.]*key term/);
+  assert.match(GUIDE_CORE,/strike[^;.]*replaced/);
+  assert.match(GUIDE_CORE,/Title level=1\|2\|3/);
+  assert.match(GUIDE_CORE,/border=false\|rounded\|single\|double\|heavy\|dashed\|left/);
+  assert.match(GUIDE_CORE,/double=trust boundary, heavy=look here first, dashed=optional or external/);
+});
+
+test('guide lists only short icon names the renderer knows',()=>{
+  const line=GUIDE_CORE.split('\n').find(l=>l.startsWith('Icons:'));
+  assert.ok(line);
+  const names=line.slice(line.lastIndexOf(':')+1).trim().replace(/\.$/,'').split(/\s+/);
+  assert.ok(names.length>=40);
+  for(const name of names)assert.ok(ICON_NAMES.includes(name),name);
+  for(const name of ['db','k8s','kafka','branch','ok','warn'])assert.ok(names.includes(name),name);
+});
+
 test('core guide stays within a compact budget without embedding the full reference',()=>{
-  assert.ok(Buffer.byteLength(GUIDE_CORE,'utf8')<=3500);
+  assert.ok(Buffer.byteLength(GUIDE_CORE,'utf8')<=4400);
   assert.ok(!SYSTEM_GUIDE.includes(readFileSync(REFERENCE_PATH,'utf8')));
   assert.match(GUIDE_CORE,/never invent data; label illustrative data/);
   assert.match(GUIDE_CORE,/OUTSIDE fences/);
@@ -62,6 +87,15 @@ test('forced prompt injection preserves earlier instructions and deduplicates af
     options.forceSystemPrompt=result.systemPrompt;
     assert.equal(injectGuidance(event),undefined);
   }
+});
+
+test('custom prompt receives the guide as a structured section that Pi renders',()=>{
+  const options={customPrompt:'Custom preamble',promptGuidelines:['Unrelated guideline'],sections:{memory:'Snapshot'}};
+  const event={systemPromptOptions:options};
+  assert.equal(injectGuidance(event),undefined);
+  assert.equal(injectGuidance(event),undefined);
+  assert.deepEqual(options.sections,{memory:'Snapshot',rich_ui:SYSTEM_GUIDE});
+  assert.deepEqual(options.promptGuidelines,['Unrelated guideline']);
 });
 
 test('forced prompt already containing guidance is left unchanged',()=>{

@@ -77,15 +77,13 @@
 │                                      │
 │ ╭───────────────╮  ╭───────────────╮ │
 │ │               │  │               │ │
-│ │ Example       │  │   ✓ 1.        │ │
-│ │ modules       │  │ │ Prepare     │ │
-│ │ ├─ domain     │  │ │ [done]      │ │
+│ │ Example       │  │ ✓ Prepare     │ │
+│ │ modules       │  │ │             │ │
+│ │ ├─ domain     │  │ ▶ Shadow      │ │
 │ │ …2 Order.kt   │  │ │             │ │
-│ │ └─ infra      │  │   ▶ 2. Shadow │ │
-│ │ …2 OutboxRela │  │ │ [active]    │ │
-│ │    y.kt       │  │ │             │ │
-│ │               │  │   ○ 3. Switch │ │
-│ │               │  │   [pending]   │ │
+│ │ └─ infra      │  │ ○ Switch      │ │
+│ │ …2 OutboxRela │  │               │ │
+│ │    y.kt       │  │               │ │
 │ │               │  │               │ │
 │ ╰───────────────╯  ╰───────────────╯ │
 │                                      │

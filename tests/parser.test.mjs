@@ -24,3 +24,12 @@ test('stream renders complete blocks and placeholder for incomplete tail',()=>{c
 test('no partial transformation when closing tag shares prose',()=>{const s='<Box>x</Box> prose';assert.equal(t(s),s);});
 test('fences containing backticks inside markup are safely lengthened',()=>{const r=t('<Text>```</Text>');assert.ok(r.includes('````'+LANGUAGE));});
 test('all v0.1 tag names remain accepted',()=>{for(const tag of ['ui','box','card','row','col','grid','text','title','caption','badge','icon','divider','spacer','metric','progress','flow','graph','bars','table','list','code'])assert.equal(parseDocument(`<${tag}/>`).tag,tag);});
+test('a text tag closed by another unopened text tag keeps its content and own style',()=>{
+ const n=parseDocument('<Card><Text>a</Caption><Caption>b</Caption><Title>c</Text></Card>');
+ assert.deepEqual(n.children.map(c=>[c.tag,c.children[0]]),[['text','a'],['caption','b'],['title','c']]);
+ const s='<UI>\n<Card title="x">\n<Text>В `review-mr` находка ставится на файл.</Caption>\n</Card>\n</UI>';
+ assert.ok(t(s).includes(LANGUAGE));
+});
+test('structural and ancestor mismatches stay strict',()=>{
+ for(const xml of ['<Card><Text>a</Card>','<Text>a <Span>b</Text></Text>','<Card><Text>a</Row></Card>','<Card>a</Caption>','<Table><Tr><Td>a</Th></Tr></Table>'])assert.throws(()=>parseDocument(xml),/Mismatched/,xml);
+});

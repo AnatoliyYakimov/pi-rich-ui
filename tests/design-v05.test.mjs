@@ -43,7 +43,7 @@ test('explicit title suppression retains the body',()=>{
  const s=plain('<Box title="hidden" titlePosition="none"><Text>visible</Text></Box>');assert.ok(!s.includes('hidden'));assert.match(s,/visible/);
 });
 test('invalid design enums fail safely instead of doing unintended layouts',()=>{
- for(const xml of ['<Box border="double"/>','<Card titlePosition="floating"/>'])assert.throws(()=>plain(xml));
+ for(const xml of ['<Box border="dotted"/>','<Card titlePosition="floating"/>'])assert.throws(()=>plain(xml));
 });
 test('borderTone/titleTone do not recolor body prose',()=>{
  const s=renderDocument('<Card title="HEADER" borderTone="red" titleTone="purple"><Text>BODY</Text></Card>',40);
@@ -77,10 +77,10 @@ for(const border of ['rounded','single','left','none'])for(const position of ['i
 test('narrow container degrades decoration and preserves heading and body',()=>{
  for(let w=1;w<8;w++){const s=plain('<Card title="END"><Text>BODY</Text></Card>',w).replaceAll('\n','');assert.ok(s.includes('END'));assert.ok(s.includes('BODY'));}
 });
-test('table headers use accent while vertical rules are optional',()=>{
+test('table headers use accent while vertical rules can be turned off',()=>{
  const xml='<Table headers="Name,State"><Tr values="API,healthy"/></Table>';
- const s=renderDocument(xml,50,{presentation:false});assert.ok(!s.plain().join('').includes('│'));assert.ok(s.rows[0].some(c=>c.role==='accent'&&c.bold));
- assert.match(plain(xml.replace('<Table ','<Table columnSeparators ')),/│/);
+ const s=renderDocument(xml,50,{presentation:false});assert.ok(s.plain().join('').includes('│'));assert.ok(s.rows[0].some(c=>c.role==='accent'&&c.bold));
+ assert.doesNotMatch(renderDocument(xml.replace('<Table ','<Table columnSeparators={false} '),50,{presentation:false}).plain().join('\n'),/[│┼]/);
 });
 test('numeric metrics have bright bold values and optional semantic delta',()=>{
  const s=renderDocument('<Metric label="Requests" value={600} delta="+12%"/>',30,{presentation:false});assert.equal(s.rows[1][0].role,'text');assert.ok(s.rows[1][0].bold);assert.match(s.plain().join('\n'),/\+12%/);

@@ -123,10 +123,10 @@ test('tree collapsed subtrees disclose hidden count, not child content',()=>{
 test('long tree labels preserve final token at narrow widths',()=>assert.match(plain('<Tree><Item label="a long label with END"/></Tree>',12),/END/));
 test('tree rejects unrelated child tags instead of silently hiding them',()=>assert.throws(()=>plain('<Tree><Metric label="x"/></Tree>')));
 
-test('timeline displays explicit status names and symbols in monochrome',()=>{
- const s=plain('<Timeline direction="TB"><Step label="A" status="done"/><Step label="B" status="blocked"/><Step label="C" status="pending"/></Timeline>',50,{monochrome:true});for(const t of ['✓ 1. A [done]','! 2. B [blocked]','○ 3. C [pending]'])assert.ok(s.includes(t),s);
+test('timeline displays explicit status symbols in monochrome',()=>{
+ const s=plain('<Timeline direction="TB"><Step label="A" status="done"/><Step label="B" status="blocked"/><Step label="C" status="pending"/></Timeline>',50,{monochrome:true});for(const t of ['✓ A','! B','○ C'])assert.ok(s.includes(t),s);
 });
-test('timeline does not silently assume completion status',()=>{const s=plain('<Timeline><Step label="A"/></Timeline>');assert.ok(!s.includes('[pending]'));assert.match(s,/1. A/);});
+test('timeline does not silently assume completion status',()=>{const s=plain('<Timeline><Step label="A"/></Timeline>');assert.ok(!/[✓○]/.test(s),s);assert.match(s,/●/);assert.match(s,/A/);});
 test('timeline wraps to vertical and retains dates and details',()=>{
  const xml='<Timeline><Step label="First" status="done" date="2026-11-08" detail="Ready"/><Step label="Second" status="active"><Text>Review</Text></Step></Timeline>';
  assert.ok(draw(xml,30).height>draw(xml,100).height);const s=plain(xml,30);for(const t of ['2026-11-08','Ready','Review'])assert.ok(s.includes(t));
